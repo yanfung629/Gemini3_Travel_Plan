@@ -4,26 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>九州慢旅 | Kyushu Trip</title>
-    <!-- Tailwind CSS for Styling -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Alpine.js for Interactivity -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <!-- Google Fonts: Noto Sans TC -->
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        body { font-family: 'Noto Sans TC', sans-serif; background-color: #F5F5F0; /* 日式米色 */ -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #F5F5F0; -webkit-tap-highlight-color: transparent; }
         .zen-card { background: white; border-radius: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); border: 1px solid #E5E5E5; }
         .tag-food { background-color: #FFF0F0; color: #C53030; border: 1px solid #FECACA; }
         .tag-transport { background-color: #F0F9FF; color: #0369A1; border: 1px solid #BAE6FD; }
         .tag-tip { background-color: #F0FDF4; color: #15803D; border: 1px solid #BBF7D0; }
+        .tag-sight { background-color: #FAF5FF; color: #6B21A8; border: 1px solid #E9D5FF; }
         .nav-active { color: #1F2937; font-weight: 700; }
         .nav-inactive { color: #9CA3AF; }
-        /* Hide scrollbar for clean look */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        /* Safe area for iPhone home indicator */
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
     </style>
 </head>
 <body class="text-stone-800 h-screen flex flex-col overflow-hidden" x-data="tripApp()">
@@ -45,11 +47,11 @@
     <main class="flex-1 overflow-y-auto pt-20 pb-24 px-4 no-scrollbar scroll-smooth">
         
         <!-- Tab 1: 行程 (Itinerary) -->
-        <div x-show="activeTab === 'itinerary'" class="space-y-6">
+        <div x-show="activeTab === 'itinerary'" class="space-y-6" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
             <template x-for="(day, index) in itinerary" :key="index">
                 <div class="space-y-3">
                     <!-- Date Header -->
-                    <div class="flex items-center space-x-2 sticky top-0 bg-[#F5F5F0] py-2 z-0">
+                    <div class="flex items-center space-x-2 sticky top-0 bg-[#F5F5F0]/95 backdrop-blur-sm py-2 z-10">
                         <div class="w-2 h-8 bg-indigo-600 rounded-full"></div>
                         <h2 class="text-lg font-bold text-stone-700" x-text="day.date"></h2>
                         <span class="text-sm text-stone-500" x-text="day.location"></span>
@@ -57,13 +59,13 @@
 
                     <!-- Events Loop -->
                     <template x-for="event in day.events">
-                        <div class="zen-card p-4 relative overflow-hidden">
+                        <div class="zen-card p-4 relative overflow-hidden transition active:scale-[0.98]">
                             <!-- Type Indicator Line -->
                             <div class="absolute left-0 top-0 bottom-0 w-1" 
                                  :class="{
                                     'bg-red-400': event.type === 'food',
                                     'bg-blue-400': event.type === 'transport',
-                                    'bg-green-400': event.type === 'sight'
+                                    'bg-purple-400': event.type === 'sight'
                                  }"></div>
                             
                             <div class="pl-3">
@@ -71,28 +73,29 @@
                                     <span class="text-xs font-mono text-stone-400 bg-stone-100 px-1.5 py-0.5 rounded" x-text="event.time"></span>
                                     <!-- Navigation Button -->
                                     <a :href="'https://www.google.com/maps/search/?api=1&query=' + event.title" target="_blank" 
-                                       class="text-stone-400 hover:text-indigo-600 transition-colors">
+                                       class="text-stone-400 hover:text-indigo-600 transition-colors p-1">
                                         <i class="fas fa-location-arrow text-lg"></i>
                                     </a>
                                 </div>
                                 
                                 <h3 class="font-bold text-lg mb-1" x-text="event.title"></h3>
                                 
-                                <!-- Tags/Highlights -->
-                                <div class="flex flex-wrap gap-2 mb-2" x-show="event.tags.length > 0">
+                                <!-- Tags -->
+                                <div class="flex flex-wrap gap-2 mb-2" x-show="event.tags && event.tags.length > 0">
                                     <template x-for="tag in event.tags">
-                                        <span class="text-xs px-2 py-0.5 rounded-full"
+                                        <span class="text-[10px] px-2 py-0.5 rounded-full border"
                                               :class="{
                                                 'tag-food': tag.type === 'food',
                                                 'tag-transport': tag.type === 'transport',
-                                                'tag-tip': tag.type === 'tip'
+                                                'tag-tip': tag.type === 'tip',
+                                                'tag-sight': tag.type === 'sight'
                                               }" x-text="tag.text"></span>
                                     </template>
                                 </div>
 
                                 <p class="text-sm text-stone-600 leading-relaxed" x-html="event.desc"></p>
                                 
-                                <!-- Tabelog Rating if exists -->
+                                <!-- Rating -->
                                 <div x-show="event.rating" class="mt-2 flex items-center text-sm">
                                     <span class="text-yellow-500 mr-1"><i class="fas fa-star"></i></span>
                                     <span class="font-bold text-stone-800" x-text="event.rating"></span>
@@ -103,16 +106,13 @@
                     </template>
                 </div>
             </template>
-            
-            <!-- Bottom Spacer -->
             <div class="h-10"></div>
         </div>
 
         <!-- Tab 2: 資訊 (Info) -->
-        <div x-show="activeTab === 'info'" class="space-y-4">
+        <div x-show="activeTab === 'info'" class="space-y-4" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
             <h2 class="text-xl font-bold mb-4">旅程資訊</h2>
             
-            <!-- Flight Card -->
             <div class="zen-card p-5">
                 <h3 class="font-bold text-stone-800 mb-3"><i class="fas fa-plane text-indigo-500 mr-2"></i>航班資訊</h3>
                 <div class="space-y-3 text-sm">
@@ -125,32 +125,29 @@
                         <span class="font-medium">HX641 | 14:55 起飛</span>
                     </div>
                     <div class="bg-red-50 p-2 rounded text-xs text-red-600 mt-2">
-                        <i class="fas fa-exclamation-circle mr-1"></i>
-                        回程請務必於 13:00 前抵達福岡機場國際線航廈。
+                        <i class="fas fa-exclamation-circle mr-1"></i> 回程請於 13:00 前抵達機場。
                     </div>
                 </div>
             </div>
 
-            <!-- Hotel Card -->
             <div class="zen-card p-5">
                 <h3 class="font-bold text-stone-800 mb-3"><i class="fas fa-bed text-indigo-500 mr-2"></i>住宿清單</h3>
                 <ul class="space-y-3 text-sm text-stone-600">
-                    <li><strong class="text-stone-800">鹿兒島 (2晚):</strong> 中央站附近 (Solaria/JR Kyushu)</li>
-                    <li><strong class="text-stone-800">熊本 (1晚):</strong> 熊本站前 (The Blossom)</li>
-                    <li><strong class="text-stone-800">宮崎 (2晚):</strong> 宮崎溫泉旅館</li>
-                    <li><strong class="text-stone-800">博多 (1晚):</strong> 博多站築紫口附近</li>
+                    <li><strong class="text-stone-800">鹿兒島 (2晚):</strong> 中央站附近</li>
+                    <li><strong class="text-stone-800">熊本 (1晚):</strong> 熊本站前</li>
+                    <li><strong class="text-stone-800">宮崎 (2晚):</strong> 溫泉旅館</li>
+                    <li><strong class="text-stone-800">博多 (1晚):</strong> 博多站築紫口</li>
                 </ul>
             </div>
 
-             <!-- Emergency Card -->
              <div class="zen-card p-5 border-l-4 border-red-400">
                 <h3 class="font-bold text-stone-800 mb-3"><i class="fas fa-phone-alt text-red-500 mr-2"></i>緊急聯絡</h3>
                 <div class="grid grid-cols-2 gap-4 text-sm">
-                    <div class="bg-stone-50 p-2 rounded">
+                    <div class="bg-stone-50 p-2 rounded text-center">
                         <div class="text-xs text-stone-400">報警</div>
                         <div class="font-bold text-xl">110</div>
                     </div>
-                    <div class="bg-stone-50 p-2 rounded">
+                    <div class="bg-stone-50 p-2 rounded text-center">
                         <div class="text-xs text-stone-400">救護車</div>
                         <div class="font-bold text-xl">119</div>
                     </div>
@@ -159,7 +156,7 @@
         </div>
 
         <!-- Tab 3: 預算 (Budget) -->
-        <div x-show="activeTab === 'budget'" class="space-y-4">
+        <div x-show="activeTab === 'budget'" class="space-y-4" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
              <h2 class="text-xl font-bold mb-4">預算管理</h2>
              <div class="zen-card p-5 text-center">
                  <p class="text-stone-500 text-sm">總預算 (估計)</p>
@@ -169,46 +166,30 @@
              <div class="zen-card p-0 overflow-hidden">
                  <table class="w-full text-sm text-left">
                      <thead class="bg-stone-100 text-stone-600">
-                         <tr>
-                             <th class="p-3">項目</th>
-                             <th class="p-3 text-right">金額 (¥)</th>
-                         </tr>
+                         <tr><th class="p-3">項目</th><th class="p-3 text-right">金額 (¥)</th></tr>
                      </thead>
                      <tbody class="divide-y divide-stone-100">
-                         <tr>
-                             <td class="p-3">JR Pass (全九州)</td>
-                             <td class="p-3 text-right">20,000</td>
-                         </tr>
-                         <tr>
-                             <td class="p-3">36+3 豪華列車</td>
-                             <td class="p-3 text-right">25,000</td>
-                         </tr>
-                         <tr>
-                             <td class="p-3">住宿 (6晚)</td>
-                             <td class="p-3 text-right">90,000</td>
-                         </tr>
-                         <tr>
-                             <td class="p-3">餐飲 (預估)</td>
-                             <td class="p-3 text-right">70,000</td>
-                         </tr>
+                         <tr><td class="p-3">JR Pass</td><td class="p-3 text-right">20,000</td></tr>
+                         <tr><td class="p-3">36+3 列車</td><td class="p-3 text-right">25,000</td></tr>
+                         <tr><td class="p-3">住宿 (6晚)</td><td class="p-3 text-right">90,000</td></tr>
+                         <tr><td class="p-3">餐飲</td><td class="p-3 text-right">70,000</td></tr>
                      </tbody>
                  </table>
              </div>
         </div>
-
     </main>
 
     <!-- Bottom Navigation Bar -->
     <nav class="fixed bottom-0 w-full bg-white border-t border-stone-200 pb-safe pt-2 px-6 flex justify-between items-center z-20 h-20 shadow-[0_-5px_15px_rgba(0,0,0,0.02)]">
-        <button @click="activeTab = 'itinerary'" class="flex flex-col items-center space-y-1 w-1/3" :class="activeTab === 'itinerary' ? 'nav-active' : 'nav-inactive'">
+        <button @click="activeTab = 'itinerary'" class="flex flex-col items-center space-y-1 w-1/3 transition" :class="activeTab === 'itinerary' ? 'nav-active' : 'nav-inactive'">
             <i class="fas fa-map-marked-alt text-xl"></i>
             <span class="text-[10px]">行程</span>
         </button>
-        <button @click="activeTab = 'info'" class="flex flex-col items-center space-y-1 w-1/3" :class="activeTab === 'info' ? 'nav-active' : 'nav-inactive'">
+        <button @click="activeTab = 'info'" class="flex flex-col items-center space-y-1 w-1/3 transition" :class="activeTab === 'info' ? 'nav-active' : 'nav-inactive'">
             <i class="fas fa-passport text-xl"></i>
             <span class="text-[10px]">資訊</span>
         </button>
-        <button @click="activeTab = 'budget'" class="flex flex-col items-center space-y-1 w-1/3" :class="activeTab === 'budget' ? 'nav-active' : 'nav-inactive'">
+        <button @click="activeTab = 'budget'" class="flex flex-col items-center space-y-1 w-1/3 transition" :class="activeTab === 'budget' ? 'nav-active' : 'nav-inactive'">
             <i class="fas fa-wallet text-xl"></i>
             <span class="text-[10px]">預算</span>
         </button>
@@ -218,25 +199,25 @@
         function tripApp() {
             return {
                 activeTab: 'itinerary',
-                currentWeather: '福岡 12°C 晴', // Placeholder
+                currentWeather: '福岡 12°C 晴',
                 itinerary: [
                     {
                         date: 'Day 1 (2/27 週五)',
                         location: '福岡 → 鹿兒島',
                         events: [
-                            { time: '14:25', title: '博多站 (Hakata Sta.)', type: 'transport', desc: '取 JR Pass 並劃位。建議在車站購買便當。', tags: [{text:'重要', type:'tip'}] },
-                            { time: '15:00', title: '36+3 豪華列車', type: 'sight', desc: '前往鹿兒島中央。途中停靠玉名(足湯)、牛之濱(海景)。<br><b>亮點：</b>車上享用豪華海鮮便當。', tags: [{text:'觀光列車', type:'transport'}] },
+                            { time: '14:25', title: '博多站 (Hakata)', type: 'transport', desc: '取 JR Pass 並劃位。建議在車站購買便當。', tags: [{text:'重要', type:'tip'}] },
+                            { time: '15:00', title: '36+3 豪華列車', type: 'sight', desc: '前往鹿兒島中央。途中停靠玉名(足湯)、牛之濱(海景)。', tags: [{text:'觀光列車', type:'transport'}] },
                             { time: '21:26', title: '抵達鹿兒島中央', type: 'transport', desc: '入住車站附近飯店。', tags: [] },
-                            { time: '晚餐', title: '吾愛人 (Wakana)', type: 'food', desc: '鹿兒島黑豚涮涮鍋名店。湯頭鮮美，無雜味。', rating: '3.72', tags: [{text:'必吃', type:'food'}] }
+                            { time: '晚餐', title: '吾愛人 (Wakana)', type: 'food', desc: '鹿兒島黑豚涮涮鍋名店。', rating: '3.72', tags: [{text:'必吃', type:'food'}] }
                         ]
                     },
                     {
                         date: 'Day 2 (2/28 週六)',
                         location: '鹿兒島深度遊',
                         events: [
-                            { time: '09:00', title: '仙巖園', type: 'sight', desc: '借景櫻島火山的日式庭園。必吃：兩棒餅 (Jambo Mochi)。', tags: [{text:'世界遺產', type:'sight'}] },
-                            { time: '12:00', title: '炸豬排 川久 (Kawakyu)', type: 'food', desc: '鹿兒島必吃炸豬排。肉質厚實多汁。', rating: '3.75', tags: [{text:'排隊名店', type:'food'}] },
-                            { time: '14:00', title: '天文館通商店街', type: 'sight', desc: '逛街購物，必吃「白熊冰」。', tags: [] }
+                            { time: '09:00', title: '仙巖園', type: 'sight', desc: '借景櫻島火山的日式庭園。', tags: [{text:'世界遺產', type:'sight'}] },
+                            { time: '12:00', title: '炸豬排 川久', type: 'food', desc: '鹿兒島必吃炸豬排。', rating: '3.75', tags: [{text:'排隊名店', type:'food'}] },
+                            { time: '14:00', title: '天文館通', type: 'sight', desc: '逛街購物，必吃「白熊冰」。', tags: [] }
                         ]
                     },
                     {
@@ -244,8 +225,8 @@
                         location: '鹿兒島 → 熊本',
                         events: [
                             { time: '10:00', title: '新幹線 Tsubame', type: 'transport', desc: '前往熊本 (1小時)。', tags: [{text:'舒適', type:'transport'}] },
-                            { time: '12:00', title: '勝烈亭 (Katsuretsu Tei)', type: 'food', desc: '熊本排名第一炸豬排。米其林推薦。', rating: '3.80', tags: [{text:'米其林', type:'food'}] },
-                            { time: '14:00', title: '熊本城 & 櫻之馬場', type: 'sight', desc: '參觀日本三大名城之一。', tags: [] }
+                            { time: '12:00', title: '勝烈亭', type: 'food', desc: '熊本排名第一炸豬排。', rating: '3.80', tags: [{text:'米其林', type:'food'}] },
+                            { time: '14:00', title: '熊本城', type: 'sight', desc: '參觀日本三大名城之一。', tags: [] }
                         ]
                     },
                     {
@@ -253,7 +234,7 @@
                         location: '熊本 → 宮崎',
                         events: [
                             { time: '10:00', title: '特急 Kirishima', type: 'transport', desc: '前往宮崎 (2小時)。', tags: [] },
-                            { time: '13:00', title: 'Ogura Honten (おぐら本店)', type: 'food', desc: '宮崎名物「南蠻雞」創始店。', rating: '3.65', tags: [{text:'元祖', type:'food'}] },
+                            { time: '13:00', title: 'Ogura Honten', type: 'food', desc: '宮崎名物「南蠻雞」創始店。', rating: '3.65', tags: [{text:'元祖', type:'food'}] },
                             { time: '15:00', title: '宮崎溫泉', type: 'sight', desc: '入住溫泉旅館放鬆。', tags: [] }
                         ]
                     },
@@ -261,9 +242,29 @@
                         date: 'Day 5 (3/3 週二)',
                         location: '宮崎深度遊',
                         events: [
-                            { time: '09:00', title: '青島神社 & 鬼之洗衣板', type: 'sight', desc: '海邊的神社，奇特地質景觀。', tags: [{text:'絕景', type:'sight'}] },
-                            { time: '14:00', title: '海幸山幸 觀光列車', type: 'transport', desc: '宮崎 → 南鄉。全木造內裝，極具特色。', tags: [{text:'需預約', type:'transport'}] }
+                            { time: '09:00', title: '青島神社', type: 'sight', desc: '海邊的神社，鬼之洗衣板。', tags: [{text:'絕景', type:'sight'}] },
+                            { time: '14:00', title: '海幸山幸', type: 'transport', desc: '宮崎 → 南鄉。全木造觀光列車。', tags: [{text:'需預約', type:'transport'}] }
                         ]
                     },
                     {
-                        date: 'Day 
+                        date: 'Day 6 (3/4 週三)',
+                        location: '宮崎 → 博多',
+                        events: [
+                            { time: '10:00', title: '博多回程', type: 'transport', desc: '搭乘 JR 返回博多。', tags: [] },
+                            { time: '18:00', title: '中洲屋台', type: 'food', desc: '體驗博多夜市文化。', tags: [{text:'體驗', type:'food'}] }
+                        ]
+                    },
+                    {
+                        date: 'Day 7 (3/5 週四)',
+                        location: '博多 → 機場',
+                        events: [
+                            { time: '11:00', title: '博多運河城', type: 'sight', desc: '最後購物。', tags: [] },
+                            { time: '13:00', title: '前往機場', type: 'transport', desc: '務必提早抵達。', tags: [{text:'重要', type:'tip'}] }
+                        ]
+                    }
+                ]
+            }
+        }
+    </script>
+</body>
+</html>
