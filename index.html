@@ -1,0 +1,308 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2299">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 16.0px Helvetica; color: #000000; -webkit-text-stroke: #000000}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 16.0px Helvetica; color: #000000; -webkit-text-stroke: #000000; min-height: 19.0px}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;html lang="zh-TW"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;head&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;title&gt;九州慢旅 | Kyushu Trip&lt;/title&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Tailwind CSS for Styling --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Alpine.js for Interactivity --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Google Fonts: Noto Sans TC --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;display=swap" rel="stylesheet"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Font Awesome --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;style&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>body { font-family: 'Noto Sans TC', sans-serif; background-color: #F5F5F0; /* 日式米色 */ -webkit-tap-highlight-color: transparent; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.zen-card { background: white; border-radius: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); border: 1px solid #E5E5E5; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.tag-food { background-color: #FFF0F0; color: #C53030; border: 1px solid #FECACA; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.tag-transport { background-color: #F0F9FF; color: #0369A1; border: 1px solid #BAE6FD; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.tag-tip { background-color: #F0FDF4; color: #15803D; border: 1px solid #BBF7D0; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.nav-active { color: #1F2937; font-weight: 700; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.nav-inactive { color: #9CA3AF; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>/* Hide scrollbar for clean look */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.no-scrollbar::-webkit-scrollbar { display: none; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;body class="text-stone-800 h-screen flex flex-col overflow-hidden" x-data="tripApp()"&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Header --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;header class="bg-white/90 backdrop-blur-md border-b border-stone-200 px-6 py-4 flex justify-between items-center z-10 fixed top-0 w-full"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;h1 class="text-xl font-bold tracking-widest text-stone-800"&gt;九州慢旅&lt;/h1&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;p class="text-xs text-stone-500"&gt;2/27 - 3/5 (7 Days)&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="text-right"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="text-xs font-bold bg-stone-100 px-2 py-1 rounded text-stone-600"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;i class="fas fa-cloud-sun mr-1"&gt;&lt;/i&gt;&lt;span x-text="currentWeather"&gt;&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Main Content Area --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;main class="flex-1 overflow-y-auto pt-20 pb-24 px-4 no-scrollbar scroll-smooth"&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Tab 1: 行程 (Itinerary) --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div x-show="activeTab === 'itinerary'" class="space-y-6"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;template x-for="(day, index) in itinerary" :key="index"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="space-y-3"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;!-- Date Header --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="flex items-center space-x-2 sticky top-0 bg-[#F5F5F0] py-2 z-0"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="w-2 h-8 bg-indigo-600 rounded-full"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;h2 class="text-lg font-bold text-stone-700" x-text="day.date"&gt;&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;span class="text-sm text-stone-500" x-text="day.location"&gt;&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;!-- Events Loop --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;template x-for="event in day.events"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="zen-card p-4 relative overflow-hidden"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;!-- Type Indicator Line --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div class="absolute left-0 top-0 bottom-0 w-1"<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                 </span>:class="{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>'bg-red-400': event.type === 'food',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>'bg-blue-400': event.type === 'transport',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>'bg-green-400': event.type === 'sight'</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                 </span>}"&gt;&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div class="pl-3"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div class="flex justify-between items-start mb-2"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;span class="text-xs font-mono text-stone-400 bg-stone-100 px-1.5 py-0.5 rounded" x-text="event.time"&gt;&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;!-- Navigation Button --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;a :href="'https://www.google.com/maps/search/?api=1&amp;query=' + event.title" target="_blank"<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                       </span>class="text-stone-400 hover:text-indigo-600 transition-colors"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;i class="fas fa-location-arrow text-lg"&gt;&lt;/i&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/a&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;h3 class="font-bold text-lg mb-1" x-text="event.title"&gt;&lt;/h3&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;!-- Tags/Highlights --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div class="flex flex-wrap gap-2 mb-2" x-show="event.tags.length &gt; 0"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;template x-for="tag in event.tags"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;span class="text-xs px-2 py-0.5 rounded-full"</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                              </span>:class="{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                </span>'tag-food': tag.type === 'food',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                </span>'tag-transport': tag.type === 'transport',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                </span>'tag-tip': tag.type === 'tip'</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                              </span>}" x-text="tag.text"&gt;&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/template&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;p class="text-sm text-stone-600 leading-relaxed" x-html="event.desc"&gt;&lt;/p&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;!-- Tabelog Rating if exists --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div x-show="event.rating" class="mt-2 flex items-center text-sm"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;span class="text-yellow-500 mr-1"&gt;&lt;i class="fas fa-star"&gt;&lt;/i&gt;&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;span class="font-bold text-stone-800" x-text="event.rating"&gt;&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;span class="text-xs text-stone-400 ml-1"&gt;(Tabelog)&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/template&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/template&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;!-- Bottom Spacer --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="h-10"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Tab 2: 資訊 (Info) --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div x-show="activeTab === 'info'" class="space-y-4"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-xl font-bold mb-4"&gt;旅程資訊&lt;/h2&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;!-- Flight Card --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="zen-card p-5"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h3 class="font-bold text-stone-800 mb-3"&gt;&lt;i class="fas fa-plane text-indigo-500 mr-2"&gt;&lt;/i&gt;航班資訊&lt;/h3&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="space-y-3 text-sm"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="flex justify-between border-b border-stone-100 pb-2"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;span class="text-stone-500"&gt;去程 (2/27)&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;span class="font-medium"&gt;HX640 | 13:55 抵達福岡&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="flex justify-between"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;span class="text-stone-500"&gt;回程 (3/5)&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;span class="font-medium"&gt;HX641 | 14:55 起飛&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-red-50 p-2 rounded text-xs text-red-600 mt-2"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;i class="fas fa-exclamation-circle mr-1"&gt;&lt;/i&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>回程請務必於 13:00 前抵達福岡機場國際線航廈。</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;!-- Hotel Card --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="zen-card p-5"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h3 class="font-bold text-stone-800 mb-3"&gt;&lt;i class="fas fa-bed text-indigo-500 mr-2"&gt;&lt;/i&gt;住宿清單&lt;/h3&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;ul class="space-y-3 text-sm text-stone-600"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;li&gt;&lt;strong class="text-stone-800"&gt;鹿兒島 (2晚):&lt;/strong&gt; 中央站附近 (Solaria/JR Kyushu)&lt;/li&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;li&gt;&lt;strong class="text-stone-800"&gt;熊本 (1晚):&lt;/strong&gt; 熊本站前 (The Blossom)&lt;/li&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;li&gt;&lt;strong class="text-stone-800"&gt;宮崎 (2晚):&lt;/strong&gt; 宮崎溫泉旅館&lt;/li&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;li&gt;&lt;strong class="text-stone-800"&gt;博多 (1晚):&lt;/strong&gt; 博多站築紫口附近&lt;/li&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/ul&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">             </span>&lt;!-- Emergency Card --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">             </span>&lt;div class="zen-card p-5 border-l-4 border-red-400"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h3 class="font-bold text-stone-800 mb-3"&gt;&lt;i class="fas fa-phone-alt text-red-500 mr-2"&gt;&lt;/i&gt;緊急聯絡&lt;/h3&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="grid grid-cols-2 gap-4 text-sm"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-stone-50 p-2 rounded"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="text-xs text-stone-400"&gt;報警&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="font-bold text-xl"&gt;110&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-stone-50 p-2 rounded"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="text-xs text-stone-400"&gt;救護車&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="font-bold text-xl"&gt;119&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Tab 3: 預算 (Budget) --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div x-show="activeTab === 'budget'" class="space-y-4"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">             </span>&lt;h2 class="text-xl font-bold mb-4"&gt;預算管理&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">             </span>&lt;div class="zen-card p-5 text-center"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                 </span>&lt;p class="text-stone-500 text-sm"&gt;總預算 (估計)&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                 </span>&lt;p class="text-3xl font-bold text-indigo-600 mt-1"&gt;¥ 250,000&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">             </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">             </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">             </span>&lt;div class="zen-card p-0 overflow-hidden"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                 </span>&lt;table class="w-full text-sm text-left"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                     </span>&lt;thead class="bg-stone-100 text-stone-600"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;tr&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;th class="p-3"&gt;項目&lt;/th&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;th class="p-3 text-right"&gt;金額 (¥)&lt;/th&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;/tr&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                     </span>&lt;/thead&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                     </span>&lt;tbody class="divide-y divide-stone-100"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;tr&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;td class="p-3"&gt;JR Pass (全九州)&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;td class="p-3 text-right"&gt;20,000&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;/tr&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;tr&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;td class="p-3"&gt;36+3 豪華列車&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;td class="p-3 text-right"&gt;25,000&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;/tr&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;tr&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;td class="p-3"&gt;住宿 (6晚)&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;td class="p-3 text-right"&gt;90,000&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;/tr&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;tr&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;td class="p-3"&gt;餐飲 (預估)&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;td class="p-3 text-right"&gt;70,000&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;/tr&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                     </span>&lt;/tbody&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                 </span>&lt;/table&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">             </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Bottom Navigation Bar --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;nav class="fixed bottom-0 w-full bg-white border-t border-stone-200 pb-safe pt-2 px-6 flex justify-between items-center z-20 h-20 shadow-[0_-5px_15px_rgba(0,0,0,0.02)]"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button @click="activeTab = 'itinerary'" class="flex flex-col items-center space-y-1 w-1/3" :class="activeTab === 'itinerary' ? 'nav-active' : 'nav-inactive'"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;i class="fas fa-map-marked-alt text-xl"&gt;&lt;/i&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;span class="text-[10px]"&gt;行程&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button @click="activeTab = 'info'" class="flex flex-col items-center space-y-1 w-1/3" :class="activeTab === 'info' ? 'nav-active' : 'nav-inactive'"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;i class="fas fa-passport text-xl"&gt;&lt;/i&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;span class="text-[10px]"&gt;資訊&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button @click="activeTab = 'budget'" class="flex flex-col items-center space-y-1 w-1/3" :class="activeTab === 'budget' ? 'nav-active' : 'nav-inactive'"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;i class="fas fa-wallet text-xl"&gt;&lt;/i&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;span class="text-[10px]"&gt;預算&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/nav&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>function tripApp() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>return {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>activeTab: 'itinerary',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>currentWeather: '福岡 12°C 晴', // Placeholder</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>itinerary: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>date: 'Day 1 (2/27 週五)',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>location: '福岡 → 鹿兒島',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>events: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '14:25', title: '博多站 (Hakata Sta.)', type: 'transport', desc: '取 JR Pass 並劃位。建議在車站購買便當。', tags: [{text:'重要', type:'tip'}] },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '15:00', title: '36+3 豪華列車', type: 'sight', desc: '前往鹿兒島中央。途中停靠玉名(足湯)、牛之濱(海景)。&lt;br&gt;&lt;b&gt;亮點：&lt;/b&gt;車上享用豪華海鮮便當。', tags: [{text:'觀光列車', type:'transport'}] },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '21:26', title: '抵達鹿兒島中央', type: 'transport', desc: '入住車站附近飯店。', tags: [] },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '晚餐', title: '吾愛人 (Wakana)', type: 'food', desc: '鹿兒島黑豚涮涮鍋名店。湯頭鮮美，無雜味。', rating: '3.72', tags: [{text:'必吃', type:'food'}] }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>]</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>date: 'Day 2 (2/28 週六)',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>location: '鹿兒島深度遊',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>events: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '09:00', title: '仙巖園', type: 'sight', desc: '借景櫻島火山的日式庭園。必吃：兩棒餅 (Jambo Mochi)。', tags: [{text:'世界遺產', type:'sight'}] },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '12:00', title: '炸豬排 川久 (Kawakyu)', type: 'food', desc: '鹿兒島必吃炸豬排。肉質厚實多汁。', rating: '3.75', tags: [{text:'排隊名店', type:'food'}] },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '14:00', title: '天文館通商店街', type: 'sight', desc: '逛街購物，必吃「白熊冰」。', tags: [] }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>]</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>date: 'Day 3 (3/1 週日)',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>location: '鹿兒島 → 熊本',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>events: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '10:00', title: '新幹線 Tsubame', type: 'transport', desc: '前往熊本 (1小時)。', tags: [{text:'舒適', type:'transport'}] },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '12:00', title: '勝烈亭 (Katsuretsu Tei)', type: 'food', desc: '熊本排名第一炸豬排。米其林推薦。', rating: '3.80', tags: [{text:'米其林', type:'food'}] },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '14:00', title: '熊本城 &amp; 櫻之馬場', type: 'sight', desc: '參觀日本三大名城之一。', tags: [] }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>]</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>date: 'Day 4 (3/2 週一)',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>location: '熊本 → 宮崎',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>events: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '10:00', title: '特急 Kirishima', type: 'transport', desc: '前往宮崎 (2小時)。', tags: [] },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '13:00', title: 'Ogura Honten (おぐら本店)', type: 'food', desc: '宮崎名物「南蠻雞」創始店。', rating: '3.65', tags: [{text:'元祖', type:'food'}] },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '15:00', title: '宮崎溫泉', type: 'sight', desc: '入住溫泉旅館放鬆。', tags: [] }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>]</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>date: 'Day 5 (3/3 週二)',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>location: '宮崎深度遊',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>events: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '09:00', title: '青島神社 &amp; 鬼之洗衣板', type: 'sight', desc: '海邊的神社，奇特地質景觀。', tags: [{text:'絕景', type:'sight'}] },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '14:00', title: '海幸山幸 觀光列車', type: 'transport', desc: '宮崎 → 南鄉。全木造內裝，極具特色。', tags: [{text:'需預約', type:'transport'}] }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>]</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>date: 'Day 6 (3/4 週三)',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>location: '宮崎 → 博多',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>events: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '10:00', title: '特急 Sonic', type: 'transport', desc: '前往博多 (3小時)。', tags: [] },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '14:00', title: '博多運河城', type: 'sight', desc: '購物中心，每整點有水舞秀。', tags: [] },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '晚餐', title: '博多水炊き とり田 (Toriden)', type: 'food', desc: '博多名物水炊雞肉鍋 (Mizutaki)。湯頭濃郁膠原蛋白豐富 (非內臟類)。', rating: '3.68', tags: [{text:'預約推薦', type:'food'}] }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>]</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>date: 'Day 7 (3/5 週四)',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>location: '返程',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>events: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '09:00', title: '吉塚鰻魚屋', type: 'food', desc: '早午餐推薦。博多最有名鰻魚飯，就在運河城附近。', rating: '3.76', tags: [{text:'百年老店', type:'food'}] },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>{ time: '12:00', title: '福岡機場 (國際線)', type: 'transport', desc: '&lt;b&gt;務必抵達機場！&lt;/b&gt;&lt;br&gt;從博多站搭乘巴士直達國際線(約20分)，或地鐵到國內線轉接駁車(較費時)。', tags: [{text:'Strict Time', type:'tip'}] },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '14:55', title: 'HX641 起飛', type: 'transport', desc: '再見九州！', tags: [] }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>]</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>]</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+</body>
+</html>
