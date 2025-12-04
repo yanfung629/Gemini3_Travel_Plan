@@ -316,7 +316,7 @@
                     this.modalOpen = true;
                 },
                 uploadImage(event, dIndex, eIndex) {
-                    const file = event.target.files,[object Object],;
+                    const file = event.target.files[0];
                     if (file) {
                         const reader = new FileReader();
                         reader.onload = (e) => {
@@ -474,3 +474,4 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
 </body>
 </html>
+```
