@@ -7,249 +7,264 @@
   <meta name="Generator" content="Cocoa HTML Writer">
   <meta name="CocoaVersion" content="2299">
   <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 16.0px Helvetica; color: #000000; -webkit-text-stroke: #000000}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 16.0px Helvetica; color: #000000; -webkit-text-stroke: #000000; min-height: 19.0px}
-    span.s1 {font-kerning: none}
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
   </style>
 </head>
 <body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
-<p class="p1"><span class="s1">&lt;html lang="zh-TW"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;head&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;title&gt;九州慢旅 | Kyushu Trip&lt;/title&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Tailwind CSS for Styling --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Alpine.js for Interactivity --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Google Fonts: Noto Sans TC --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;display=swap" rel="stylesheet"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Font Awesome --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;style&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>body { font-family: 'Noto Sans TC', sans-serif; background-color: #F5F5F0; /* 日式米色 */ -webkit-tap-highlight-color: transparent; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.zen-card { background: white; border-radius: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); border: 1px solid #E5E5E5; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.tag-food { background-color: #FFF0F0; color: #C53030; border: 1px solid #FECACA; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.tag-transport { background-color: #F0F9FF; color: #0369A1; border: 1px solid #BAE6FD; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.tag-tip { background-color: #F0FDF4; color: #15803D; border: 1px solid #BBF7D0; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.nav-active { color: #1F2937; font-weight: 700; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.nav-inactive { color: #9CA3AF; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>/* Hide scrollbar for clean look */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.no-scrollbar::-webkit-scrollbar { display: none; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
-<p class="p1"><span class="s1">&lt;body class="text-stone-800 h-screen flex flex-col overflow-hidden" x-data="tripApp()"&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Header --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;header class="bg-white/90 backdrop-blur-md border-b border-stone-200 px-6 py-4 flex justify-between items-center z-10 fixed top-0 w-full"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;h1 class="text-xl font-bold tracking-widest text-stone-800"&gt;九州慢旅&lt;/h1&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;p class="text-xs text-stone-500"&gt;2/27 - 3/5 (7 Days)&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="text-right"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="text-xs font-bold bg-stone-100 px-2 py-1 rounded text-stone-600"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;i class="fas fa-cloud-sun mr-1"&gt;&lt;/i&gt;&lt;span x-text="currentWeather"&gt;&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Main Content Area --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;main class="flex-1 overflow-y-auto pt-20 pb-24 px-4 no-scrollbar scroll-smooth"&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Tab 1: 行程 (Itinerary) --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div x-show="activeTab === 'itinerary'" class="space-y-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;template x-for="(day, index) in itinerary" :key="index"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="space-y-3"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;!-- Date Header --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="flex items-center space-x-2 sticky top-0 bg-[#F5F5F0] py-2 z-0"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="w-2 h-8 bg-indigo-600 rounded-full"&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;h2 class="text-lg font-bold text-stone-700" x-text="day.date"&gt;&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;span class="text-sm text-stone-500" x-text="day.location"&gt;&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;!-- Events Loop --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;template x-for="event in day.events"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="zen-card p-4 relative overflow-hidden"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;!-- Type Indicator Line --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div class="absolute left-0 top-0 bottom-0 w-1"<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                 </span>:class="{</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>'bg-red-400': event.type === 'food',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>'bg-blue-400': event.type === 'transport',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>'bg-green-400': event.type === 'sight'</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                 </span>}"&gt;&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                            </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div class="pl-3"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div class="flex justify-between items-start mb-2"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;span class="text-xs font-mono text-stone-400 bg-stone-100 px-1.5 py-0.5 rounded" x-text="event.time"&gt;&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;!-- Navigation Button --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;a :href="'https://www.google.com/maps/search/?api=1&amp;query=' + event.title" target="_blank"<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                       </span>class="text-stone-400 hover:text-indigo-600 transition-colors"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;i class="fas fa-location-arrow text-lg"&gt;&lt;/i&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                                </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;h3 class="font-bold text-lg mb-1" x-text="event.title"&gt;&lt;/h3&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                                </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;!-- Tags/Highlights --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div class="flex flex-wrap gap-2 mb-2" x-show="event.tags.length &gt; 0"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;template x-for="tag in event.tags"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;span class="text-xs px-2 py-0.5 rounded-full"</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                              </span>:class="{</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                </span>'tag-food': tag.type === 'food',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                </span>'tag-transport': tag.type === 'transport',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                </span>'tag-tip': tag.type === 'tip'</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                              </span>}" x-text="tag.text"&gt;&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/template&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;p class="text-sm text-stone-600 leading-relaxed" x-html="event.desc"&gt;&lt;/p&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                                </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;!-- Tabelog Rating if exists --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div x-show="event.rating" class="mt-2 flex items-center text-sm"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;span class="text-yellow-500 mr-1"&gt;&lt;i class="fas fa-star"&gt;&lt;/i&gt;&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;span class="font-bold text-stone-800" x-text="event.rating"&gt;&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;span class="text-xs text-stone-400 ml-1"&gt;(Tabelog)&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/template&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/template&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;!-- Bottom Spacer --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="h-10"&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Tab 2: 資訊 (Info) --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div x-show="activeTab === 'info'" class="space-y-4"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-xl font-bold mb-4"&gt;旅程資訊&lt;/h2&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;!-- Flight Card --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="zen-card p-5"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h3 class="font-bold text-stone-800 mb-3"&gt;&lt;i class="fas fa-plane text-indigo-500 mr-2"&gt;&lt;/i&gt;航班資訊&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="space-y-3 text-sm"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="flex justify-between border-b border-stone-100 pb-2"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;span class="text-stone-500"&gt;去程 (2/27)&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;span class="font-medium"&gt;HX640 | 13:55 抵達福岡&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="flex justify-between"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;span class="text-stone-500"&gt;回程 (3/5)&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;span class="font-medium"&gt;HX641 | 14:55 起飛&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-red-50 p-2 rounded text-xs text-red-600 mt-2"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;i class="fas fa-exclamation-circle mr-1"&gt;&lt;/i&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>回程請務必於 13:00 前抵達福岡機場國際線航廈。</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;!-- Hotel Card --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="zen-card p-5"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h3 class="font-bold text-stone-800 mb-3"&gt;&lt;i class="fas fa-bed text-indigo-500 mr-2"&gt;&lt;/i&gt;住宿清單&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;ul class="space-y-3 text-sm text-stone-600"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;li&gt;&lt;strong class="text-stone-800"&gt;鹿兒島 (2晚):&lt;/strong&gt; 中央站附近 (Solaria/JR Kyushu)&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;li&gt;&lt;strong class="text-stone-800"&gt;熊本 (1晚):&lt;/strong&gt; 熊本站前 (The Blossom)&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;li&gt;&lt;strong class="text-stone-800"&gt;宮崎 (2晚):&lt;/strong&gt; 宮崎溫泉旅館&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;li&gt;&lt;strong class="text-stone-800"&gt;博多 (1晚):&lt;/strong&gt; 博多站築紫口附近&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/ul&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">             </span>&lt;!-- Emergency Card --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">             </span>&lt;div class="zen-card p-5 border-l-4 border-red-400"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h3 class="font-bold text-stone-800 mb-3"&gt;&lt;i class="fas fa-phone-alt text-red-500 mr-2"&gt;&lt;/i&gt;緊急聯絡&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="grid grid-cols-2 gap-4 text-sm"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-stone-50 p-2 rounded"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="text-xs text-stone-400"&gt;報警&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="font-bold text-xl"&gt;110&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-stone-50 p-2 rounded"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="text-xs text-stone-400"&gt;救護車&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="font-bold text-xl"&gt;119&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Tab 3: 預算 (Budget) --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div x-show="activeTab === 'budget'" class="space-y-4"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">             </span>&lt;h2 class="text-xl font-bold mb-4"&gt;預算管理&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">             </span>&lt;div class="zen-card p-5 text-center"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                 </span>&lt;p class="text-stone-500 text-sm"&gt;總預算 (估計)&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                 </span>&lt;p class="text-3xl font-bold text-indigo-600 mt-1"&gt;¥ 250,000&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">             </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">             </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">             </span>&lt;div class="zen-card p-0 overflow-hidden"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                 </span>&lt;table class="w-full text-sm text-left"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                     </span>&lt;thead class="bg-stone-100 text-stone-600"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;tr&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;th class="p-3"&gt;項目&lt;/th&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;th class="p-3 text-right"&gt;金額 (¥)&lt;/th&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;/tr&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                     </span>&lt;/thead&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                     </span>&lt;tbody class="divide-y divide-stone-100"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;tr&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;td class="p-3"&gt;JR Pass (全九州)&lt;/td&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;td class="p-3 text-right"&gt;20,000&lt;/td&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;/tr&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;tr&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;td class="p-3"&gt;36+3 豪華列車&lt;/td&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;td class="p-3 text-right"&gt;25,000&lt;/td&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;/tr&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;tr&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;td class="p-3"&gt;住宿 (6晚)&lt;/td&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;td class="p-3 text-right"&gt;90,000&lt;/td&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;/tr&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;tr&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;td class="p-3"&gt;餐飲 (預估)&lt;/td&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;td class="p-3 text-right"&gt;70,000&lt;/td&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;/tr&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                     </span>&lt;/tbody&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                 </span>&lt;/table&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">             </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Bottom Navigation Bar --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;nav class="fixed bottom-0 w-full bg-white border-t border-stone-200 pb-safe pt-2 px-6 flex justify-between items-center z-20 h-20 shadow-[0_-5px_15px_rgba(0,0,0,0.02)]"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button @click="activeTab = 'itinerary'" class="flex flex-col items-center space-y-1 w-1/3" :class="activeTab === 'itinerary' ? 'nav-active' : 'nav-inactive'"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;i class="fas fa-map-marked-alt text-xl"&gt;&lt;/i&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;span class="text-[10px]"&gt;行程&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button @click="activeTab = 'info'" class="flex flex-col items-center space-y-1 w-1/3" :class="activeTab === 'info' ? 'nav-active' : 'nav-inactive'"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;i class="fas fa-passport text-xl"&gt;&lt;/i&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;span class="text-[10px]"&gt;資訊&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button @click="activeTab = 'budget'" class="flex flex-col items-center space-y-1 w-1/3" :class="activeTab === 'budget' ? 'nav-active' : 'nav-inactive'"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;i class="fas fa-wallet text-xl"&gt;&lt;/i&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;span class="text-[10px]"&gt;預算&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/nav&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>function tripApp() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>return {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>activeTab: 'itinerary',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>currentWeather: '福岡 12°C 晴', // Placeholder</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>itinerary: [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>date: 'Day 1 (2/27 週五)',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>location: '福岡 → 鹿兒島',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>events: [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '14:25', title: '博多站 (Hakata Sta.)', type: 'transport', desc: '取 JR Pass 並劃位。建議在車站購買便當。', tags: [{text:'重要', type:'tip'}] },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '15:00', title: '36+3 豪華列車', type: 'sight', desc: '前往鹿兒島中央。途中停靠玉名(足湯)、牛之濱(海景)。&lt;br&gt;&lt;b&gt;亮點：&lt;/b&gt;車上享用豪華海鮮便當。', tags: [{text:'觀光列車', type:'transport'}] },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '21:26', title: '抵達鹿兒島中央', type: 'transport', desc: '入住車站附近飯店。', tags: [] },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '晚餐', title: '吾愛人 (Wakana)', type: 'food', desc: '鹿兒島黑豚涮涮鍋名店。湯頭鮮美，無雜味。', rating: '3.72', tags: [{text:'必吃', type:'food'}] }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>]</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>},</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>date: 'Day 2 (2/28 週六)',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>location: '鹿兒島深度遊',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>events: [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '09:00', title: '仙巖園', type: 'sight', desc: '借景櫻島火山的日式庭園。必吃：兩棒餅 (Jambo Mochi)。', tags: [{text:'世界遺產', type:'sight'}] },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{ time: '12:00', title: '炸豬排 川久 (Kawakyu)', type: 'food', desc: '鹿兒島必吃炸豬排。肉質厚,[object Object]</span></p>
+<p class="p1">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"&gt;</p>
+<p class="p1">&lt;html&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta http-equiv="Content-Style-Type" content="text/css"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="Generator" content="Cocoa HTML Writer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="CocoaVersion" content="2299"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;style type="text/css"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 16.0px Helvetica; color: #000000; -webkit-text-stroke: #000000}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 16.0px Helvetica; color: #000000; -webkit-text-stroke: #000000; min-height: 19.0px}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>span.s1 {font-kerning: none}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&amp;lt;html lang="zh-TW"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&amp;lt;head&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;meta charset="UTF-8"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;title&amp;gt;九州慢旅 | Kyushu Trip&amp;lt;/title&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;!-- Tailwind CSS for Styling --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;script src="https://cdn.tailwindcss.com"&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;!-- Alpine.js for Interactivity --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;!-- Google Fonts: Noto Sans TC --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;amp;display=swap" rel="stylesheet"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;!-- Font Awesome --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;/span&gt;&lt;br&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;style&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;body { font-family: 'Noto Sans TC', sans-serif; background-color: #F5F5F0; /* 日式米色 */ -webkit-tap-highlight-color: transparent; }&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;.zen-card { background: white; border-radius: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); border: 1px solid #E5E5E5; }&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;.tag-food { background-color: #FFF0F0; color: #C53030; border: 1px solid #FECACA; }&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;.tag-transport { background-color: #F0F9FF; color: #0369A1; border: 1px solid #BAE6FD; }&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;.tag-tip { background-color: #F0FDF4; color: #15803D; border: 1px solid #BBF7D0; }&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;.nav-active { color: #1F2937; font-weight: 700; }&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;.nav-inactive { color: #9CA3AF; }&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;/* Hide scrollbar for clean look */&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;.no-scrollbar::-webkit-scrollbar { display: none; }&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;/style&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&amp;lt;body class="text-stone-800 h-screen flex flex-col overflow-hidden" x-data="tripApp()"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;/span&gt;&lt;br&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;!-- Header --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;header class="bg-white/90 backdrop-blur-md border-b border-stone-200 px-6 py-4 flex justify-between items-center z-10 fixed top-0 w-full"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&amp;lt;div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;h1 class="text-xl font-bold tracking-widest text-stone-800"&amp;gt;九州慢旅&amp;lt;/h1&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;p class="text-xs text-stone-500"&amp;gt;2/27 - 3/5 (7 Days)&amp;lt;/p&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&amp;lt;div class="text-right"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;div class="text-xs font-bold bg-stone-100 px-2 py-1 rounded text-stone-600"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                &lt;/span&gt;&amp;lt;i class="fas fa-cloud-sun mr-1"&amp;gt;&amp;lt;/i&amp;gt;&amp;lt;span x-text="currentWeather"&amp;gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;/header&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;/span&gt;&lt;br&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;!-- Main Content Area --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;main class="flex-1 overflow-y-auto pt-20 pb-24 px-4 no-scrollbar scroll-smooth"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&amp;lt;!-- Tab 1: 行程 (Itinerary) --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&amp;lt;div x-show="activeTab === 'itinerary'" class="space-y-6"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;template x-for="(day, index) in itinerary" :key="index"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                &lt;/span&gt;&amp;lt;div class="space-y-3"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;!-- Date Header --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;div class="flex items-center space-x-2 sticky top-0 bg-[#F5F5F0] py-2 z-0"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;&amp;lt;div class="w-2 h-8 bg-indigo-600 rounded-full"&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;&amp;lt;h2 class="text-lg font-bold text-stone-700" x-text="day.date"&amp;gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;&amp;lt;span class="text-sm text-stone-500" x-text="day.location"&amp;gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;/span&gt;&lt;br&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;!-- Events Loop --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;template x-for="event in day.events"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;&amp;lt;div class="zen-card p-4 relative overflow-hidden"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                            &lt;/span&gt;&amp;lt;!-- Type Indicator Line --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                            &lt;/span&gt;&amp;lt;div class="absolute left-0 top-0 bottom-0 w-1"&lt;span class="Apple-converted-space"&gt; &lt;/span&gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                 &lt;/span&gt;:class="{&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                    &lt;/span&gt;'bg-red-400': event.type === 'food',&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                    &lt;/span&gt;'bg-blue-400': event.type === 'transport',&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                    &lt;/span&gt;'bg-green-400': event.type === 'sight'&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                 &lt;/span&gt;}"&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                            &lt;/span&gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                            &lt;/span&gt;&amp;lt;div class="pl-3"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                &lt;/span&gt;&amp;lt;div class="flex justify-between items-start mb-2"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                    &lt;/span&gt;&amp;lt;span class="text-xs font-mono text-stone-400 bg-stone-100 px-1.5 py-0.5 rounded" x-text="event.time"&amp;gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                    &lt;/span&gt;&amp;lt;!-- Navigation Button --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                    &lt;/span&gt;&amp;lt;a :href="'https://www.google.com/maps/search/?api=1&amp;amp;query=' + event.title" target="_blank"&lt;span class="Apple-converted-space"&gt; &lt;/span&gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                       &lt;/span&gt;class="text-stone-400 hover:text-indigo-600 transition-colors"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                        &lt;/span&gt;&amp;lt;i class="fas fa-location-arrow text-lg"&amp;gt;&amp;lt;/i&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                    &lt;/span&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                &lt;/span&gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                &lt;/span&gt;&amp;lt;h3 class="font-bold text-lg mb-1" x-text="event.title"&amp;gt;&amp;lt;/h3&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                &lt;/span&gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                &lt;/span&gt;&amp;lt;!-- Tags/Highlights --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                &lt;/span&gt;&amp;lt;div class="flex flex-wrap gap-2 mb-2" x-show="event.tags.length &amp;gt; 0"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                    &lt;/span&gt;&amp;lt;template x-for="tag in event.tags"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                        &lt;/span&gt;&amp;lt;span class="text-xs px-2 py-0.5 rounded-full"&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                              &lt;/span&gt;:class="{&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                                &lt;/span&gt;'tag-food': tag.type === 'food',&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                                &lt;/span&gt;'tag-transport': tag.type === 'transport',&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                                &lt;/span&gt;'tag-tip': tag.type === 'tip'&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                              &lt;/span&gt;}" x-text="tag.text"&amp;gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                    &lt;/span&gt;&amp;lt;/template&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;/span&gt;&lt;br&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                &lt;/span&gt;&amp;lt;p class="text-sm text-stone-600 leading-relaxed" x-html="event.desc"&amp;gt;&amp;lt;/p&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                &lt;/span&gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                &lt;/span&gt;&amp;lt;!-- Tabelog Rating if exists --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                &lt;/span&gt;&amp;lt;div x-show="event.rating" class="mt-2 flex items-center text-sm"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                    &lt;/span&gt;&amp;lt;span class="text-yellow-500 mr-1"&amp;gt;&amp;lt;i class="fas fa-star"&amp;gt;&amp;lt;/i&amp;gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                    &lt;/span&gt;&amp;lt;span class="font-bold text-stone-800" x-text="event.rating"&amp;gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                    &lt;/span&gt;&amp;lt;span class="text-xs text-stone-400 ml-1"&amp;gt;(Tabelog)&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                                &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                            &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;/template&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;/template&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;!-- Bottom Spacer --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;div class="h-10"&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;/span&gt;&lt;br&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&amp;lt;!-- Tab 2: 資訊 (Info) --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&amp;lt;div x-show="activeTab === 'info'" class="space-y-4"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;h2 class="text-xl font-bold mb-4"&amp;gt;旅程資訊&amp;lt;/h2&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;!-- Flight Card --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;div class="zen-card p-5"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                &lt;/span&gt;&amp;lt;h3 class="font-bold text-stone-800 mb-3"&amp;gt;&amp;lt;i class="fas fa-plane text-indigo-500 mr-2"&amp;gt;&amp;lt;/i&amp;gt;航班資訊&amp;lt;/h3&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                &lt;/span&gt;&amp;lt;div class="space-y-3 text-sm"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;div class="flex justify-between border-b border-stone-100 pb-2"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;&amp;lt;span class="text-stone-500"&amp;gt;去程 (2/27)&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;&amp;lt;span class="font-medium"&amp;gt;HX640 | 13:55 抵達福岡&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;div class="flex justify-between"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;&amp;lt;span class="text-stone-500"&amp;gt;回程 (3/5)&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;&amp;lt;span class="font-medium"&amp;gt;HX641 | 14:55 起飛&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;div class="bg-red-50 p-2 rounded text-xs text-red-600 mt-2"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;&amp;lt;i class="fas fa-exclamation-circle mr-1"&amp;gt;&amp;lt;/i&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;回程請務必於 13:00 前抵達福岡機場國際線航廈。&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;/span&gt;&lt;br&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;!-- Hotel Card --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;div class="zen-card p-5"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                &lt;/span&gt;&amp;lt;h3 class="font-bold text-stone-800 mb-3"&amp;gt;&amp;lt;i class="fas fa-bed text-indigo-500 mr-2"&amp;gt;&amp;lt;/i&amp;gt;住宿清單&amp;lt;/h3&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                &lt;/span&gt;&amp;lt;ul class="space-y-3 text-sm text-stone-600"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;li&amp;gt;&amp;lt;strong class="text-stone-800"&amp;gt;鹿兒島 (2晚):&amp;lt;/strong&amp;gt; 中央站附近 (Solaria/JR Kyushu)&amp;lt;/li&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;li&amp;gt;&amp;lt;strong class="text-stone-800"&amp;gt;熊本 (1晚):&amp;lt;/strong&amp;gt; 熊本站前 (The Blossom)&amp;lt;/li&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;li&amp;gt;&amp;lt;strong class="text-stone-800"&amp;gt;宮崎 (2晚):&amp;lt;/strong&amp;gt; 宮崎溫泉旅館&amp;lt;/li&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;li&amp;gt;&amp;lt;strong class="text-stone-800"&amp;gt;博多 (1晚):&amp;lt;/strong&amp;gt; 博多站築紫口附近&amp;lt;/li&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                &lt;/span&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;/span&gt;&lt;br&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;             &lt;/span&gt;&amp;lt;!-- Emergency Card --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;             &lt;/span&gt;&amp;lt;div class="zen-card p-5 border-l-4 border-red-400"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                &lt;/span&gt;&amp;lt;h3 class="font-bold text-stone-800 mb-3"&amp;gt;&amp;lt;i class="fas fa-phone-alt text-red-500 mr-2"&amp;gt;&amp;lt;/i&amp;gt;緊急聯絡&amp;lt;/h3&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                &lt;/span&gt;&amp;lt;div class="grid grid-cols-2 gap-4 text-sm"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;div class="bg-stone-50 p-2 rounded"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;&amp;lt;div class="text-xs text-stone-400"&amp;gt;報警&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;&amp;lt;div class="font-bold text-xl"&amp;gt;110&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;div class="bg-stone-50 p-2 rounded"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;&amp;lt;div class="text-xs text-stone-400"&amp;gt;救護車&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;&amp;lt;div class="font-bold text-xl"&amp;gt;119&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;/span&gt;&lt;br&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&amp;lt;!-- Tab 3: 預算 (Budget) --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&amp;lt;div x-show="activeTab === 'budget'" class="space-y-4"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;             &lt;/span&gt;&amp;lt;h2 class="text-xl font-bold mb-4"&amp;gt;預算管理&amp;lt;/h2&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;             &lt;/span&gt;&amp;lt;div class="zen-card p-5 text-center"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                 &lt;/span&gt;&amp;lt;p class="text-stone-500 text-sm"&amp;gt;總預算 (估計)&amp;lt;/p&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                 &lt;/span&gt;&amp;lt;p class="text-3xl font-bold text-indigo-600 mt-1"&amp;gt;¥ 250,000&amp;lt;/p&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;             &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;             &lt;/span&gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;             &lt;/span&gt;&amp;lt;div class="zen-card p-0 overflow-hidden"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                 &lt;/span&gt;&amp;lt;table class="w-full text-sm text-left"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                     &lt;/span&gt;&amp;lt;thead class="bg-stone-100 text-stone-600"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                         &lt;/span&gt;&amp;lt;tr&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                             &lt;/span&gt;&amp;lt;th class="p-3"&amp;gt;項目&amp;lt;/th&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                             &lt;/span&gt;&amp;lt;th class="p-3 text-right"&amp;gt;金額 (¥)&amp;lt;/th&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                         &lt;/span&gt;&amp;lt;/tr&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                     &lt;/span&gt;&amp;lt;/thead&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                     &lt;/span&gt;&amp;lt;tbody class="divide-y divide-stone-100"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                         &lt;/span&gt;&amp;lt;tr&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                             &lt;/span&gt;&amp;lt;td class="p-3"&amp;gt;JR Pass (全九州)&amp;lt;/td&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                             &lt;/span&gt;&amp;lt;td class="p-3 text-right"&amp;gt;20,000&amp;lt;/td&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                         &lt;/span&gt;&amp;lt;/tr&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                         &lt;/span&gt;&amp;lt;tr&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                             &lt;/span&gt;&amp;lt;td class="p-3"&amp;gt;36+3 豪華列車&amp;lt;/td&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                             &lt;/span&gt;&amp;lt;td class="p-3 text-right"&amp;gt;25,000&amp;lt;/td&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                         &lt;/span&gt;&amp;lt;/tr&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                         &lt;/span&gt;&amp;lt;tr&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                             &lt;/span&gt;&amp;lt;td class="p-3"&amp;gt;住宿 (6晚)&amp;lt;/td&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                             &lt;/span&gt;&amp;lt;td class="p-3 text-right"&amp;gt;90,000&amp;lt;/td&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                         &lt;/span&gt;&amp;lt;/tr&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                         &lt;/span&gt;&amp;lt;tr&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                             &lt;/span&gt;&amp;lt;td class="p-3"&amp;gt;餐飲 (預估)&amp;lt;/td&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                             &lt;/span&gt;&amp;lt;td class="p-3 text-right"&amp;gt;70,000&amp;lt;/td&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                         &lt;/span&gt;&amp;lt;/tr&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                     &lt;/span&gt;&amp;lt;/tbody&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                 &lt;/span&gt;&amp;lt;/table&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;             &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;/span&gt;&lt;br&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;/main&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;/span&gt;&lt;br&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;!-- Bottom Navigation Bar --&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;nav class="fixed bottom-0 w-full bg-white border-t border-stone-200 pb-safe pt-2 px-6 flex justify-between items-center z-20 h-20 shadow-[0_-5px_15px_rgba(0,0,0,0.02)]"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&amp;lt;button @click="activeTab = 'itinerary'" class="flex flex-col items-center space-y-1 w-1/3" :class="activeTab === 'itinerary' ? 'nav-active' : 'nav-inactive'"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;i class="fas fa-map-marked-alt text-xl"&amp;gt;&amp;lt;/i&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;span class="text-[10px]"&amp;gt;行程&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&amp;lt;button @click="activeTab = 'info'" class="flex flex-col items-center space-y-1 w-1/3" :class="activeTab === 'info' ? 'nav-active' : 'nav-inactive'"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;i class="fas fa-passport text-xl"&amp;gt;&amp;lt;/i&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;span class="text-[10px]"&amp;gt;資訊&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&amp;lt;button @click="activeTab = 'budget'" class="flex flex-col items-center space-y-1 w-1/3" :class="activeTab === 'budget' ? 'nav-active' : 'nav-inactive'"&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;i class="fas fa-wallet text-xl"&amp;gt;&amp;lt;/i&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;&amp;lt;span class="text-[10px]"&amp;gt;預算&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;/nav&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p2"&gt;&lt;span class="s1"&gt;&lt;/span&gt;&lt;br&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;    &lt;/span&gt;&amp;lt;script&amp;gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;        &lt;/span&gt;function tripApp() {&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;            &lt;/span&gt;return {&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                &lt;/span&gt;activeTab: 'itinerary',&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                &lt;/span&gt;currentWeather: '福岡 12°C 晴', // Placeholder&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                &lt;/span&gt;itinerary: [&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;{&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;date: 'Day 1 (2/27 週五)',&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;location: '福岡 → 鹿兒島',&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;events: [&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                            &lt;/span&gt;{ time: '14:25', title: '博多站 (Hakata Sta.)', type: 'transport', desc: '取 JR Pass 並劃位。建議在車站購買便當。', tags: [{text:'重要', type:'tip'}] },&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                            &lt;/span&gt;{ time: '15:00', title: '36+3 豪華列車', type: 'sight', desc: '前往鹿兒島中央。途中停靠玉名(足湯)、牛之濱(海景)。&amp;lt;br&amp;gt;&amp;lt;b&amp;gt;亮點：&amp;lt;/b&amp;gt;車上享用豪華海鮮便當。', tags: [{text:'觀光列車', type:'transport'}] },&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                            &lt;/span&gt;{ time: '21:26', title: '抵達鹿兒島中央', type: 'transport', desc: '入住車站附近飯店。', tags: [] },&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                            &lt;/span&gt;{ time: '晚餐', title: '吾愛人 (Wakana)', type: 'food', desc: '鹿兒島黑豚涮涮鍋名店。湯頭鮮美，無雜味。', rating: '3.72', tags: [{text:'必吃', type:'food'}] }&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;]&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;},&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                    &lt;/span&gt;{&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;date: 'Day 2 (2/28 週六)',&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;location: '鹿兒島深度遊',&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                        &lt;/span&gt;events: [&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                            &lt;/span&gt;{ time: '09:00', title: '仙巖園', type: 'sight', desc: '借景櫻島火山的日式庭園。必吃：兩棒餅 (Jambo Mochi)。', tags: [{text:'世界遺產', type:'sight'}] },&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;p class="p1"&gt;&lt;span class="s1"&gt;&lt;span class="Apple-converted-space"&gt;                            &lt;/span&gt;{ time: '12:00', title: '炸豬排 川久 (Kawakyu)', type: 'food', desc: '鹿兒島必吃炸豬排。肉質厚,[object Object]&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
 </body>
 </html>
