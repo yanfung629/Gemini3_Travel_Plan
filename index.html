@@ -6,22 +6,22 @@
     <title>九州慢旅 | Kyushu Trip</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Alpine.js -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
-    <!-- Google Fonts: Noto Serif TC (質感關鍵) & Noto Sans TC -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Alpine.js (放在最後載入) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'paper': '#F9F9F7', // 日式米紙色背景
-                        'ink': '#2D2D2D',   // 墨色文字
-                        'gold': '#C5A065',  // 質感金
-                        'sub': '#8E8E93',   // 副標灰
+                        'paper': '#F9F9F7',
+                        'ink': '#2D2D2D',
+                        'gold': '#C5A065',
+                        'sub': '#8E8E93',
                     },
                     fontFamily: {
                         sans: ['"Noto Sans TC"', 'sans-serif'],
@@ -35,129 +35,132 @@
         body { background-color: #F9F9F7; -webkit-tap-highlight-color: transparent; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .glass-panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.5); }
-        .fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease; }
-        .fade-enter-from, .fade-leave-to { opacity: 0; }
-        /* 模擬雜誌排版 */
-        .vertical-text { writing-mode: vertical-rl; text-orientation: mixed; }
+        .glass-panel { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.5); }
+        [x-cloak] { display: none !important; }
     </style>
 </head>
-<body class="text-ink h-screen flex flex-col font-sans" x-data="tripApp()">
+<body class="text-ink h-screen flex flex-col font-sans" x-data="tripApp">
 
-    <!-- Top Navigation / Date Picker -->
-    <header class="fixed top-0 w-full z-30 bg-paper/95 backdrop-blur-sm border-b border-stone-200 pt-safe transition-all duration-300" 
-            :class="{'shadow-sm': scrolled}">
-        <div class="flex justify-between items-center px-5 py-3">
+    <!-- Top Navigation (Transparent to White on scroll) -->
+    <header class="fixed top-0 w-full z-30 transition-all duration-300" 
+            :class="scrolled ? 'bg-paper/95 backdrop-blur shadow-sm pt-safe' : 'bg-transparent pt-safe text-white'">
+        <div class="flex justify-between items-center px-5 py-4">
             <div>
-                <div class="text-[10px] tracking-[0.2em] text-gold font-bold uppercase mb-1">Family Trip</div>
-                <h1 class="text-xl font-serif font-bold tracking-wide">九州旅行 <span class="text-xs font-sans font-normal text-sub ml-1 border border-stone-300 rounded-full px-2 py-0.5">2025</span></h1>
+                <h1 class="text-lg font-serif font-bold tracking-wide" :class="scrolled ? 'text-ink' : 'text-white drop-shadow-md'">九州慢旅</h1>
             </div>
-            <button class="w-8 h-8 rounded-full bg-stone-200 flex items-center justify-center text-stone-500">
-                <i class="fas fa-user"></i>
-            </button>
+            <div class="text-xs font-bold px-3 py-1 rounded-full border backdrop-blur-md" 
+                 :class="scrolled ? 'border-stone-300 text-stone-600' : 'border-white/30 text-white bg-black/20'">
+                7 Days
+            </div>
         </div>
         
-        <!-- Date Slider -->
-        <div class="flex overflow-x-auto hide-scrollbar px-4 pb-3 space-x-4">
-            <template x-for="(day, index) in itinerary" :key="index">
-                <button @click="scrollToDay(index)" 
-                        class="flex flex-col items-center min-w-[50px] space-y-1 transition-all duration-300"
-                        :class="activeDayIndex === index ? 'opacity-100 scale-110' : 'opacity-40 scale-90'">
-                    <span class="text-[10px] font-bold tracking-widest uppercase" x-text="day.weekday_en"></span>
-                    <span class="text-lg font-serif font-bold" :class="activeDayIndex === index ? 'text-ink' : 'text-sub'" x-text="day.day"></span>
-                    <div class="w-1 h-1 rounded-full bg-gold" x-show="activeDayIndex === index"></div>
-                </button>
-            </template>
+        <!-- Date Slider (Only visible when scrolled down) -->
+        <div class="overflow-hidden transition-all duration-300" :style="scrolled ? 'max-height: 80px; opacity: 1;' : 'max-height: 0; opacity: 0;'">
+            <div class="flex overflow-x-auto hide-scrollbar px-4 pb-2 space-x-4">
+                <template x-for="(day, index) in itinerary" :key="index">
+                    <button @click="scrollToDay(index)" 
+                            class="flex flex-col items-center min-w-[50px] space-y-1 transition-all duration-300"
+                            :class="activeDayIndex === index ? 'opacity-100 scale-110' : 'opacity-40 scale-90'">
+                        <span class="text-[10px] font-bold tracking-widest uppercase text-sub" x-text="day.weekday_en"></span>
+                        <span class="text-lg font-serif font-bold text-ink" x-text="day.day"></span>
+                        <div class="w-1 h-1 rounded-full bg-gold" x-show="activeDayIndex === index"></div>
+                    </button>
+                </template>
+            </div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto pt-[130px] pb-28 px-0 hide-scrollbar scroll-smooth" id="mainContainer" @scroll="handleScroll">
+    <main class="flex-1 overflow-y-auto px-0 hide-scrollbar scroll-smooth bg-paper" id="mainContainer" @scroll="handleScroll">
         
         <!-- Tab: 行程 (Itinerary) -->
-        <div x-show="activeTab === 'itinerary'" class="space-y-12 pb-10">
-            <template x-for="(day, dIndex) in itinerary" :key="dIndex">
-                <div :id="'day-' + dIndex" class="relative">
-                    
-                    <!-- Day Header (Magazine Style) -->
-                    <div class="px-6 mb-4 flex items-end justify-between">
-                        <div>
-                            <h2 class="text-4xl font-serif font-bold text-ink/10 relative z-0 -mb-8 ml-[-10px]" x-text="'Day ' + (dIndex + 1)"></h2>
-                            <div class="relative z-10 pl-2">
-                                <span class="block text-xs font-bold tracking-widest text-gold mb-1" x-text="day.date_full"></span>
-                                <span class="text-2xl font-serif font-bold text-ink" x-text="day.location"></span>
-                            </div>
-                        </div>
-                        <!-- Weather Widget (Mini) -->
-                        <div class="text-right">
-                            <i class="text-2xl text-stone-400 mb-1" :class="day.weatherIcon"></i>
-                            <div class="text-xs text-sub font-mono">11° / 18°</div>
-                        </div>
-                    </div>
-
-                    <!-- Weather Timeline (Like Screenshot) -->
-                    <div class="mx-4 mb-6 bg-white rounded-xl p-4 shadow-[0_2px_15px_rgba(0,0,0,0.03)] border border-stone-100 flex justify-between text-center overflow-x-auto">
-                        <template x-for="t in [9, 12, 15, 18, 21]">
-                            <div class="min-w-[40px]">
-                                <div class="text-[10px] text-sub mb-2" x-text="t + ':00'"></div>
-                                <i class="fas fa-sun text-gold text-lg mb-2" x-show="t < 18"></i>
-                                <i class="fas fa-moon text-indigo-300 text-lg mb-2" x-show="t >= 18"></i>
-                                <div class="text-xs font-bold text-ink">12°</div>
-                            </div>
-                        </template>
-                    </div>
-
-                    <!-- Events Timeline -->
-                    <div class="space-y-6 px-4">
-                        <template x-for="(event, eIndex) in day.events" :key="eIndex">
-                            <div @click="openModal(event)" class="group relative bg-white rounded-2xl overflow-hidden shadow-[0_5px_20px_rgba(0,0,0,0.04)] transition-all duration-300 active:scale-[0.98] border border-stone-100 cursor-pointer">
-                                
-                                <!-- Image Section -->
-                                <div class="relative h-48 w-full overflow-hidden">
-                                    <img :src="event.image" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" :id="'img-' + dIndex + '-' + eIndex">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                                    
-                                    <!-- Upload Button (Hidden by default, visible on card) -->
-                                    <div class="absolute top-3 right-3 z-20" @click.stop>
-                                        <label class="bg-black/30 backdrop-blur text-white text-[10px] px-2 py-1 rounded-full cursor-pointer hover:bg-black/50 transition">
-                                            <i class="fas fa-camera mr-1"></i>更換
-                                            <input type="file" class="hidden" accept="image/*" @change="uploadImage($event, dIndex, eIndex)">
-                                        </label>
-                                    </div>
-
-                                    <div class="absolute bottom-4 left-4 text-white">
-                                        <div class="flex items-center space-x-2 mb-1">
-                                            <span class="bg-white/20 backdrop-blur px-2 py-0.5 rounded text-[10px] font-mono tracking-wider" x-text="event.time"></span>
-                                            <span class="text-[10px] uppercase tracking-widest opacity-80" x-text="event.category"></span>
-                                        </div>
-                                        <h3 class="text-xl font-serif font-bold tracking-wide shadow-black drop-shadow-md" x-text="event.title"></h3>
-                                    </div>
-                                </div>
-
-                                <!-- Mini Details -->
-                                <div class="p-4 flex justify-between items-center">
-                                    <p class="text-sm text-sub line-clamp-1" x-text="event.desc"></p>
-                                    <i class="fas fa-chevron-right text-stone-300 text-xs"></i>
-                                </div>
-                            </div>
-                        </template>
-                    </div>
+        <div x-show="activeTab === 'itinerary'">
+            
+            <!-- Hero Cover Section -->
+            <div class="relative h-[60vh] w-full overflow-hidden">
+                <img src="https://res.klook.com/image/upload/fl_lossy.progressive,q_85/c_fill,w_1000/v1601446347/blog/y8s8s8s8s8s8s8s8.jpg" 
+                     class="w-full h-full object-cover object-center">
+                <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-paper"></div>
+                <div class="absolute bottom-10 left-6 text-ink">
+                    <p class="text-gold font-bold tracking-[0.3em] text-xs mb-2 uppercase">Family Trip 2025</p>
+                    <h2 class="text-4xl font-serif font-bold mb-2">九州鐵道紀行</h2>
+                    <p class="text-sm opacity-80 font-medium"><i class="fas fa-map-marker-alt mr-1"></i>福岡 · 鹿兒島 · 宮崎</p>
                 </div>
-            </template>
+            </div>
+
+            <div class="space-y-12 pb-28 -mt-6 relative z-10 px-4">
+                <template x-for="(day, dIndex) in itinerary" :key="dIndex">
+                    <div :id="'day-' + dIndex" class="relative pt-6">
+                        
+                        <!-- Day Header -->
+                        <div class="mb-4 flex items-end justify-between px-2">
+                            <div>
+                                <h2 class="text-5xl font-serif font-bold text-stone-200 relative z-0 -mb-9 -ml-1 select-none" x-text="'0' + (dIndex + 1)"></h2>
+                                <div class="relative z-10 pl-2">
+                                    <span class="block text-xs font-bold tracking-widest text-gold mb-0.5" x-text="day.date_full"></span>
+                                    <span class="text-2xl font-serif font-bold text-ink" x-text="day.location"></span>
+                                </div>
+                            </div>
+                            <!-- Weather Widget -->
+                            <div class="flex flex-col items-end">
+                                <i class="text-xl text-stone-400 mb-1" :class="day.weatherIcon"></i>
+                                <div class="text-xs text-sub font-mono">11° / 18°</div>
+                            </div>
+                        </div>
+
+                        <!-- Events Timeline -->
+                        <div class="space-y-6">
+                            <template x-for="(event, eIndex) in day.events" :key="eIndex">
+                                <div @click="openModal(event)" class="group relative bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-transform active:scale-[0.98] border border-stone-100 cursor-pointer">
+                                    
+                                    <!-- Image Section -->
+                                    <div class="relative h-48 w-full overflow-hidden">
+                                        <img :src="event.image" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                                        
+                                        <!-- Upload Button -->
+                                        <div class="absolute top-3 right-3 z-20" @click.stop>
+                                            <label class="bg-black/30 backdrop-blur text-white text-[10px] px-2 py-1 rounded-full cursor-pointer hover:bg-black/50 transition flex items-center">
+                                                <i class="fas fa-camera mr-1"></i>更換
+                                                <input type="file" class="hidden" accept="image/*" @change="uploadImage($event, dIndex, eIndex)">
+                                            </label>
+                                        </div>
+
+                                        <div class="absolute bottom-3 left-4 text-white">
+                                            <div class="flex items-center space-x-2 mb-1">
+                                                <span class="bg-white/20 backdrop-blur px-2 py-0.5 rounded text-[10px] font-mono tracking-wider" x-text="event.time"></span>
+                                                <span class="text-[10px] uppercase tracking-widest opacity-90 border border-white/30 px-1.5 rounded" x-text="event.category"></span>
+                                            </div>
+                                            <h3 class="text-lg font-serif font-bold tracking-wide shadow-black drop-shadow-md" x-text="event.title"></h3>
+                                        </div>
+                                    </div>
+
+                                    <!-- Mini Details -->
+                                    <div class="p-4 flex justify-between items-center bg-white">
+                                        <p class="text-sm text-stone-500 line-clamp-1" x-text="event.desc"></p>
+                                        <i class="fas fa-chevron-right text-stone-300 text-xs"></i>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </div>
         </div>
 
         <!-- Tab: 鐵道時刻 (Trains) -->
-        <div x-show="activeTab === 'trains'" class="px-4 space-y-6" x-transition:enter="transition ease-out duration-300">
-            <div class="text-center py-6">
+        <div x-show="activeTab === 'trains'" class="px-4 space-y-6 pt-24 pb-28" x-transition:enter="transition ease-out duration-300">
+            <div class="text-center mb-8">
                 <h2 class="text-2xl font-serif font-bold text-ink">鐵道時刻表</h2>
-                <p class="text-xs text-sub mt-2 tracking-widest uppercase">TRAIN TIMETABLE (>30MIN)</p>
+                <div class="w-10 h-1 bg-gold mx-auto mt-2 mb-1"></div>
+                <p class="text-[10px] text-sub tracking-widest uppercase">LONG DISTANCE TRAINS</p>
             </div>
 
             <template x-for="train in trainSchedule">
                 <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-stone-200">
-                    <div class="bg-stone-50 px-4 py-3 border-b border-stone-100 flex justify-between items-center">
-                        <span class="font-bold text-sm text-ink" x-text="train.date"></span>
-                        <span class="text-[10px] px-2 py-1 bg-indigo-100 text-indigo-700 rounded font-bold" x-text="train.name"></span>
+                    <div class="bg-stone-50 px-4 py-2 border-b border-stone-100 flex justify-between items-center">
+                        <span class="font-bold text-xs text-stone-500" x-text="train.date"></span>
+                        <span class="text-[10px] px-2 py-1 bg-indigo-50 text-indigo-600 rounded font-bold border border-indigo-100" x-text="train.name"></span>
                     </div>
                     <div class="p-4 flex items-center justify-between relative">
                         <!-- Left -->
@@ -179,43 +182,37 @@
                             <div class="text-xs text-sub mt-1" x-text="train.arrStn"></div>
                         </div>
                     </div>
-                    <!-- Notes -->
-                    <div class="px-4 pb-3 pt-0" x-show="train.note">
-                        <div class="text-[10px] text-orange-600 bg-orange-50 p-2 rounded border border-orange-100">
-                            <i class="fas fa-info-circle mr-1"></i> <span x-text="train.note"></span>
-                        </div>
-                    </div>
                 </div>
             </template>
         </div>
 
-        <!-- Tab: 準備 & 預算 (Prep) - 簡化版 -->
-        <div x-show="activeTab === 'prep'" class="px-4 space-y-6">
-            <h2 class="text-2xl font-serif font-bold text-ink mt-6 mb-4">行前準備</h2>
+        <!-- Tab: 準備 (Prep) -->
+        <div x-show="activeTab === 'prep'" class="px-4 space-y-6 pt-24 pb-28">
+            <h2 class="text-2xl font-serif font-bold text-ink mb-4">行前準備</h2>
             
             <!-- Visit Japan -->
-            <div class="bg-gradient-to-r from-pink-500 to-rose-400 rounded-xl p-6 text-white shadow-lg relative overflow-hidden">
+            <div class="bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden group">
                 <div class="relative z-10">
-                    <h3 class="font-bold text-lg mb-1">Visit Japan Web</h3>
-                    <p class="text-xs opacity-90 mb-4">入境審查、海關申報 QR Code</p>
-                    <a href="https://vjw-lp.digital.go.jp/en/" target="_blank" class="inline-block bg-white text-pink-600 text-xs font-bold px-4 py-2 rounded-full shadow-sm">
-                        前往填寫 <i class="fas fa-arrow-right ml-1"></i>
+                    <h3 class="font-bold text-xl mb-1">Visit Japan Web</h3>
+                    <p class="text-xs opacity-90 mb-4 font-light">入境審查、海關申報 QR Code 必備</p>
+                    <a href="https://vjw-lp.digital.go.jp/en/" target="_blank" class="inline-flex items-center bg-white text-pink-600 text-xs font-bold px-4 py-2 rounded-full shadow-sm hover:bg-stone-100 transition">
+                        前往填寫 <i class="fas fa-arrow-right ml-2"></i>
                     </a>
                 </div>
-                <i class="fas fa-qrcode absolute -right-4 -bottom-4 text-9xl opacity-20 rotate-12"></i>
+                <i class="fas fa-qrcode absolute -right-6 -bottom-6 text-[140px] opacity-20 rotate-12 group-hover:rotate-0 transition duration-500"></i>
             </div>
 
-            <!-- Budget (Simple) -->
-            <div class="bg-white rounded-xl p-5 border border-stone-200">
-                <h3 class="font-serif font-bold text-lg mb-4">預算概覽</h3>
+            <!-- Budget -->
+            <div class="bg-white rounded-xl p-5 border border-stone-200 shadow-sm">
+                <h3 class="font-serif font-bold text-lg mb-4 flex items-center"><i class="fas fa-wallet text-gold mr-2"></i>預算概覽</h3>
                 <div class="space-y-3">
                     <template x-for="item in budgetItems">
-                        <div class="flex justify-between text-sm border-b border-stone-100 pb-2">
-                            <span class="text-sub" x-text="item.name"></span>
+                        <div class="flex justify-between text-sm border-b border-stone-50 pb-2 last:border-0">
+                            <span class="text-stone-600" x-text="item.name"></span>
                             <span class="font-mono font-medium" x-text="'¥' + item.price.toLocaleString()"></span>
                         </div>
                     </template>
-                    <div class="flex justify-between text-lg font-bold pt-2 text-ink">
+                    <div class="flex justify-between text-xl font-bold pt-3 text-ink border-t border-stone-200 mt-2">
                         <span>Total</span>
                         <span x-text="'¥' + totalBudget.toLocaleString()"></span>
                     </div>
@@ -225,61 +222,52 @@
 
     </main>
 
-    <!-- Detail Modal (The "Magazine" Overlay) -->
+    <!-- Detail Modal -->
     <div x-show="modalOpen" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center pointer-events-none" x-cloak>
-        <!-- Backdrop -->
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm pointer-events-auto transition-opacity duration-300" 
              x-show="modalOpen" x-transition.opacity @click="modalOpen = false"></div>
         
-        <!-- Card -->
         <div class="bg-paper w-full max-w-md h-[85vh] sm:h-auto sm:rounded-2xl rounded-t-3xl shadow-2xl overflow-y-auto pointer-events-auto transform transition-transform duration-300 flex flex-col"
              x-show="modalOpen" 
              x-transition:enter="translate-y-full" x-transition:enter-end="translate-y-0"
              x-transition:leave="translate-y-0" x-transition:leave-end="translate-y-full">
             
-            <!-- Close Button -->
             <button @click="modalOpen = false" class="absolute top-4 right-4 z-20 w-8 h-8 bg-black/20 backdrop-blur text-white rounded-full flex items-center justify-center hover:bg-black/40 transition">
                 <i class="fas fa-times"></i>
             </button>
 
-            <!-- Modal Image -->
             <div class="h-64 shrink-0 relative">
                 <img :src="selectedEvent?.image" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-paper to-transparent"></div>
             </div>
 
-            <!-- Content -->
             <div class="px-6 pb-8 -mt-12 relative z-10 flex-1">
-                <!-- Header -->
                 <div class="mb-6">
                     <div class="flex items-center space-x-2 mb-2">
-                        <span class="text-xs font-bold text-gold tracking-widest uppercase border border-gold/30 px-2 py-0.5 rounded" x-text="selectedEvent?.category"></span>
+                        <span class="text-[10px] font-bold text-white bg-gold px-2 py-0.5 rounded tracking-widest uppercase" x-text="selectedEvent?.category"></span>
                         <span class="text-xs text-sub font-mono" x-text="selectedEvent?.time"></span>
                     </div>
                     <h2 class="text-3xl font-serif font-bold text-ink leading-tight mb-2" x-text="selectedEvent?.title"></h2>
-                    <p class="text-sm text-sub" x-text="selectedEvent?.location_detail || '九州, 日本'"></p>
+                    <p class="text-sm text-sub" x-text="selectedEvent?.location_detail"></p>
                 </div>
 
-                <!-- Description -->
                 <div class="prose prose-stone prose-sm mb-8 text-stone-600 leading-relaxed" x-html="selectedEvent?.desc"></div>
 
-                <!-- Point & Speak (指差会話) -->
-                <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100 mb-6" x-show="selectedEvent?.japanese">
-                    <h4 class="text-xs font-bold text-stone-400 uppercase mb-3 tracking-widest">指差会話 Point & Speak</h4>
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100 mb-6" x-show="selectedEvent?.japanese && selectedEvent?.japanese.length > 0">
+                    <h4 class="text-[10px] font-bold text-stone-400 uppercase mb-3 tracking-widest border-b border-stone-100 pb-2">指差会話 Point & Speak</h4>
                     <div class="space-y-4">
                         <template x-for="phrase in selectedEvent?.japanese">
-                            <div class="border-b border-stone-100 pb-3 last:border-0 last:pb-0">
-                                <p class="text-lg font-bold text-ink mb-1" x-text="phrase.jp"></p>
+                            <div>
+                                <p class="text-lg font-bold text-ink mb-0.5" x-text="phrase.jp"></p>
                                 <p class="text-xs text-sub" x-text="phrase.zh"></p>
                             </div>
                         </template>
                     </div>
                 </div>
 
-                <!-- Actions -->
                 <div class="grid grid-cols-2 gap-3 mt-auto">
                     <a :href="'https://www.google.com/maps/search/?api=1&query=' + selectedEvent?.title" target="_blank" 
-                       class="flex items-center justify-center bg-stone-800 text-white py-3 rounded-lg font-bold text-sm hover:bg-stone-700 transition">
+                       class="flex items-center justify-center bg-stone-800 text-white py-3 rounded-lg font-bold text-sm hover:bg-stone-700 transition shadow-lg shadow-stone-200">
                         <i class="fas fa-location-arrow mr-2"></i> Google Maps
                     </a>
                     <button class="flex items-center justify-center bg-white border border-stone-300 text-stone-700 py-3 rounded-lg font-bold text-sm hover:bg-stone-50 transition">
@@ -290,7 +278,7 @@
         </div>
     </div>
 
-    <!-- Bottom Tab Bar (Floating Glass) -->
+    <!-- Bottom Tab Bar -->
     <nav class="fixed bottom-6 left-6 right-6 h-16 glass-panel rounded-full flex justify-around items-center z-40 shadow-[0_8px_30px_rgba(0,0,0,0.12)] max-w-md mx-auto">
         <button @click="activeTab = 'itinerary'" class="flex flex-col items-center justify-center w-12 h-12 rounded-full transition relative" :class="activeTab === 'itinerary' ? 'text-ink' : 'text-stone-400'">
             <i class="fas fa-map text-lg mb-0.5"></i>
@@ -310,18 +298,16 @@
     </nav>
 
     <script>
-        function tripApp() {
-            return {
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('tripApp', () => ({
                 activeTab: 'itinerary',
                 activeDayIndex: 0,
                 scrolled: false,
                 modalOpen: false,
                 selectedEvent: null,
                 
-                // Scroll Handling
                 handleScroll(e) {
-                    this.scrolled = e.target.scrollTop > 20;
-                    // Simple scroll spy logic could go here to update activeDayIndex
+                    this.scrolled = e.target.scrollTop > 50;
                 },
                 scrollToDay(index) {
                     this.activeDayIndex = index;
@@ -329,11 +315,11 @@
                     const el = document.getElementById('day-' + index);
                     if (el) {
                         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        // Adjust for header offset
+                        // 修正滾動位置，避免被 Header 擋住
                         setTimeout(() => {
                             const container = document.getElementById('mainContainer');
-                            container.scrollTop -= 140; 
-                        }, 100); // small delay for smooth scroll to start
+                            // container.scrollTop -= 80; 
+                        }, 100);
                     }
                 },
                 openModal(event) {
@@ -345,26 +331,22 @@
                     if (file) {
                         const reader = new FileReader();
                         reader.onload = (e) => {
-                            // Update data
                             this.itinerary[dIndex].events[eIndex].image = e.target.result;
-                            // Force Alpine to react (sometimes deep arrays need help)
-                            this.itinerary = [...this.itinerary];
+                            this.itinerary = JSON.parse(JSON.stringify(this.itinerary)); // Force Update
                         };
                         reader.readAsDataURL(file);
                     }
                 },
 
-                // Data: Train Schedule (>30 mins)
                 trainSchedule: [
-                    { date: '2/27 (五)', name: '36+3 觀光列車', depTime: '15:00', depStn: '博多', arrTime: '21:26', arrStn: '鹿兒島中央', duration: '6h 26m', note: '全車指定席，需提前劃位。含豪華便當。' },
-                    { date: '3/1 (日)', name: '新幹線 Tsubame', depTime: '10:00', depStn: '鹿兒島中央', arrTime: '11:00', arrStn: '熊本', duration: '1h 00m', note: '舒適快捷，可欣賞沿途風景。' },
-                    { date: '3/2 (一)', name: '特急 Kirishima', depTime: '10:00', depStn: '熊本', arrTime: '12:00', arrStn: '宮崎', duration: '2h 00m', note: '需經由新八代轉乘 B&S 巴士或經大分。' },
-                    { date: '3/3 (二)', name: '海幸山幸', depTime: '14:00', depStn: '宮崎', arrTime: '15:00', arrStn: '南鄉', duration: '1h 00m', note: '全木造觀光列車，特色體驗。' },
-                    { date: '3/4 (三)', name: '特急 Sonic', depTime: '10:00', depStn: '宮崎', arrTime: '13:00', arrStn: '博多', duration: '3h 00m', note: '經大分，日豐本線。' },
-                    { date: '3/5 (四)', name: '機場線', depTime: '12:00', depStn: '博多', arrTime: '12:10', arrStn: '福岡機場', duration: '10m', note: '請務必準時。' }
+                    { date: '2/27 (五)', name: '36+3 觀光列車', depTime: '15:00', depStn: '博多', arrTime: '21:26', arrStn: '鹿兒島中央', duration: '6h 26m' },
+                    { date: '3/1 (日)', name: '新幹線 Tsubame', depTime: '10:00', depStn: '鹿兒島中央', arrTime: '11:00', arrStn: '熊本', duration: '1h 00m' },
+                    { date: '3/2 (一)', name: '特急 Kirishima', depTime: '10:00', depStn: '熊本', arrTime: '12:00', arrStn: '宮崎', duration: '2h 00m' },
+                    { date: '3/3 (二)', name: '海幸山幸', depTime: '14:00', depStn: '宮崎', arrTime: '15:00', arrStn: '南鄉', duration: '1h 00m' },
+                    { date: '3/4 (三)', name: '特急 Sonic', depTime: '10:00', depStn: '宮崎', arrTime: '13:00', arrStn: '博多', duration: '3h 00m' },
+                    { date: '3/5 (四)', name: '機場線', depTime: '12:00', depStn: '博多', arrTime: '12:10', arrStn: '福岡機場', duration: '10m' }
                 ],
 
-                // Data: Budget
                 budgetItems: [
                     { name: 'JR Pass 全九州', price: 20000 },
                     { name: '36+3 列車', price: 25000 },
@@ -373,28 +355,23 @@
                 ],
                 get totalBudget() { return this.budgetItems.reduce((sum, i) => sum + i.price, 0); },
 
-                // Data: Itinerary
                 itinerary: [
                     {
                         date_full: '2025.02.27', weekday_en: 'FRI', day: '27', location: 'Fukuoka', weatherIcon: 'fas fa-sun',
                         events: [
                             { 
                                 time: '15:00', category: 'Train', title: '36+3 豪華列車', location_detail: '博多站 -> 鹿兒島中央',
-                                image: 'https://images.unsplash.com/photo-1535205500668-35790d931969?w=800&q=80',
-                                desc: '九州最頂級的觀光列車體驗。車廂內鋪設榻榻米，提供精緻的當地食材便當。途中會停靠玉名站享受足湯，以及牛之濱站欣賞絕美海景。',
+                                image: 'https://res.klook.com/image/upload/fl_lossy.progressive,q_85/c_fill,w_1000/v1601446347/blog/y8s8s8s8s8s8s8s8.jpg',
+                                desc: '【封面行程】九州最頂級的觀光列車體驗。車廂內鋪設榻榻米，提供精緻的當地食材便當。',
                                 japanese: [
-                                    { jp: '36ぷらす3の乗り場はどこですか？', zh: '請問 36+3 列車的月台在哪裡？' },
-                                    { jp: '駅弁を買いたいです。', zh: '我想買火車便當。' }
+                                    { jp: '36ぷらす3の乗り場はどこですか？', zh: '請問 36+3 列車的月台在哪裡？' }
                                 ]
                             },
                             { 
                                 time: '21:30', category: 'Food', title: '吾愛人 (Wakana)', location_detail: '鹿兒島天文館通',
                                 image: 'https://images.unsplash.com/photo-1604642202352-79eff37d8966?w=800&q=80',
-                                desc: '鹿兒島必吃的黑豚涮涮鍋名店。創立於昭和21年，湯頭鮮美，黑豬肉片入口即化。建議搭配當地的燒酒（Shochu）。',
-                                japanese: [
-                                    { jp: '予約しています。', zh: '我有預約。' },
-                                    { jp: '黒豚しゃぶしゃぶをお願いします。', zh: '請給我黑豚涮涮鍋。' }
-                                ]
+                                desc: '鹿兒島必吃的黑豚涮涮鍋名店。',
+                                japanese: [{ jp: '黒豚しゃぶしゃぶをお願いします。', zh: '請給我黑豚涮涮鍋。' }]
                             }
                         ]
                     },
@@ -404,13 +381,13 @@
                             { 
                                 time: '09:00', category: 'Sight', title: '仙巖園', location_detail: '鹿兒島市吉野町',
                                 image: 'https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800&q=80',
-                                desc: '薩摩藩主島津家的別邸，以壯闊的櫻島火山為假山，錦江灣為池塘的借景庭園。園內的「兩棒餅」是必吃甜點。',
+                                desc: '借景櫻島火山的日式庭園。',
                                 japanese: [{ jp: '大人2枚お願いします。', zh: '請給我兩張成人票。' }]
                             },
                             { 
                                 time: '13:00', category: 'Food', title: '天文館 無邪氣', location_detail: '天文館通',
                                 image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=800&q=80',
-                                desc: '鹿兒島名物「白熊冰」的創始店。巨大的刨冰淋上煉乳，擺滿水果，從上方看像一隻白熊的臉。',
+                                desc: '鹿兒島名物「白熊冰」的創始店。',
                                 japanese: [{ jp: '白熊（しろくま）を一つください。', zh: '請給我一份白熊冰。' }]
                             }
                         ]
@@ -421,17 +398,14 @@
                             { 
                                 time: '12:00', category: 'Sight', title: '熊本城', location_detail: '熊本市中央區',
                                 image: 'https://images.unsplash.com/photo-1624606282855-333d0267a051?w=800&q=80',
-                                desc: '日本三大名城之一，別名「銀杏城」。雖然在地震中受損，但天守閣已修復完成，黑色的外觀極具氣勢。',
+                                desc: '日本三大名城之一，黑色天守閣極具氣勢。',
                                 japanese: []
                             },
                             { 
                                 time: '13:15', category: 'Food', title: '魚飯時 (Sahanji)', location_detail: '熊本市中央區細工町',
                                 image: 'https://images.unsplash.com/photo-1625937751876-4515cd8e7752?w=800&q=80',
-                                desc: '【必嚐：時令海鮮豪華御膳】這是店內的招牌。包含了厚切刺身（通常有熊本特產的真鯛、車海老）、鮮味十足的茶碗蒸。',
-                                japanese: [
-                                    { jp: '海鮮贅沢御膳をお願いします。', zh: '請給我海鮮豪華御膳。' },
-                                    { jp: 'お会計をお願いします。', zh: '麻煩結帳。' }
-                                ]
+                                desc: '【必嚐：時令海鮮豪華御膳】店內招牌，包含厚切刺身與茶碗蒸。',
+                                japanese: [{ jp: '海鮮贅沢御膳をお願いします。', zh: '請給我海鮮豪華御膳。' }]
                             }
                         ]
                     },
@@ -441,13 +415,13 @@
                             { 
                                 time: '14:00', category: 'Sight', title: '油津港', location_detail: '宮崎縣日南市',
                                 image: 'https://images.unsplash.com/photo-1544298621-26732709298c?w=800&q=80',
-                                desc: '充滿昭和風情的港口小鎮。可以漫步在紅磚倉庫群，感受悠閒的漁港氛圍。',
+                                desc: '充滿昭和風情的港口小鎮。',
                                 japanese: []
                             },
                             { 
                                 time: '17:00', category: 'Hotel', title: '宮崎溫泉旅館', location_detail: '青島溫泉',
                                 image: 'https://images.unsplash.com/photo-1560200353-ce0a76b1d438?w=800&q=80',
-                                desc: '入住海邊的溫泉旅館，享受著名的「美人之湯」。晚餐享用宮崎牛與伊勢龍蝦。',
+                                desc: '入住海邊的溫泉旅館，享受美人之湯。',
                                 japanese: [{ jp: 'チェックインをお願いします。', zh: '我要辦理入住。' }]
                             }
                         ]
@@ -458,13 +432,13 @@
                             { 
                                 time: '09:00', category: 'Sight', title: '青島神社', location_detail: '宮崎縣青島',
                                 image: 'https://images.unsplash.com/photo-1528360983277-13d9b152c6d1?w=800&q=80',
-                                desc: '位於小島上的神社，周圍被奇特的波狀岩「鬼之洗衣板」包圍。這裡是著名的結緣神社。',
+                                desc: '鬼之洗衣板包圍的海上神社。',
                                 japanese: []
                             },
                             { 
                                 time: '14:00', category: 'Train', title: '海幸山幸', location_detail: '宮崎 -> 南鄉',
                                 image: 'https://images.unsplash.com/photo-1508906973562-b25859666c88?w=800&q=80',
-                                desc: '使用當地飫肥杉製作的觀光列車，充滿木頭香氣。車掌會講述海幸彥與山幸彥的神話故事。',
+                                desc: '全木造觀光列車，充滿木頭香氣。',
                                 japanese: []
                             }
                         ]
@@ -475,13 +449,13 @@
                             { 
                                 time: '15:00', category: 'Sight', title: '博多運河城', location_detail: '福岡市博多區',
                                 image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=800&q=80',
-                                desc: '大型複合購物中心，有運河貫穿其中。每小時有音樂噴水秀。',
+                                desc: '大型複合購物中心與噴水秀。',
                                 japanese: []
                             },
                             { 
                                 time: '19:00', category: 'Sight', title: '福岡塔', location_detail: '百道濱',
                                 image: 'https://images.unsplash.com/photo-1623838634842-45e35327d6d3?w=800&q=80',
-                                desc: '日本最高的海濱塔。夜晚的燈光秀非常迷人，可以俯瞰整個福岡市夜景。',
+                                desc: '日本最高海濱塔，俯瞰福岡夜景。',
                                 japanese: []
                             }
                         ]
@@ -492,20 +466,20 @@
                             { 
                                 time: '10:00', category: 'Shop', title: '博多站購物', location_detail: 'JR博多城',
                                 image: 'https://images.unsplash.com/photo-1491933382434-500287f9b54b?w=800&q=80',
-                                desc: '最後衝刺！購買明太子、博多通饅頭等伴手禮。',
+                                desc: '最後衝刺！購買伴手禮。',
                                 japanese: []
                             },
                             { 
                                 time: '12:00', category: 'Flight', title: '前往機場', location_detail: '福岡機場 (FUK)',
                                 image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80',
-                                desc: '搭乘地鐵空港線只需 5 分鐘即可抵達機場。請務必預留時間辦理登機。',
+                                desc: '搭乘地鐵空港線前往機場。',
                                 japanese: []
                             }
                         ]
                     }
                 ]
-            }
-        }
+            }))
+        })
     </script>
 </body>
 </html>
