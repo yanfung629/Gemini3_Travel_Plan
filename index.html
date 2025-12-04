@@ -15,75 +15,83 @@
 
     <style>
         body { font-family: 'Noto Sans TC', sans-serif; background-color: #F5F5F0; -webkit-tap-highlight-color: transparent; }
-        .zen-card { background: white; border-radius: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); border: 1px solid #E5E5E5; }
+        .zen-card { background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #E5E5E5; overflow: hidden; }
         .tag-food { background-color: #FFF0F0; color: #C53030; border: 1px solid #FECACA; }
         .tag-transport { background-color: #F0F9FF; color: #0369A1; border: 1px solid #BAE6FD; }
         .tag-tip { background-color: #F0FDF4; color: #15803D; border: 1px solid #BBF7D0; }
         .tag-sight { background-color: #FAF5FF; color: #6B21A8; border: 1px solid #E9D5FF; }
-        .nav-active { color: #1F2937; font-weight: 700; }
+        .nav-active { color: #4F46E5; font-weight: 700; }
         .nav-inactive { color: #9CA3AF; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        /* Safe area for iPhone home indicator */
         .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+        /* Image aspect ratio helper */
+        .aspect-video-cover { width: 100%; height: 140px; object-fit: cover; }
     </style>
 </head>
 <body class="text-stone-800 h-screen flex flex-col overflow-hidden" x-data="tripApp()">
 
     <!-- Header -->
-    <header class="bg-white/90 backdrop-blur-md border-b border-stone-200 px-6 py-4 flex justify-between items-center z-10 fixed top-0 w-full">
+    <header class="bg-white/90 backdrop-blur-md border-b border-stone-200 px-6 py-4 flex justify-between items-center z-10 fixed top-0 w-full shadow-sm">
         <div>
             <h1 class="text-xl font-bold tracking-widest text-stone-800">九州慢旅</h1>
             <p class="text-xs text-stone-500">2/27 - 3/5 (7 Days)</p>
         </div>
         <div class="text-right">
-            <div class="text-xs font-bold bg-stone-100 px-2 py-1 rounded text-stone-600">
-                <i class="fas fa-cloud-sun mr-1"></i><span x-text="currentWeather"></span>
+            <div class="text-xs font-bold bg-indigo-50 px-3 py-1.5 rounded-full text-indigo-600 border border-indigo-100">
+                <i class="fas fa-cloud-sun mr-1"></i><span x-text="todayWeather"></span>
             </div>
         </div>
     </header>
 
     <!-- Main Content Area -->
-    <main class="flex-1 overflow-y-auto pt-20 pb-24 px-4 no-scrollbar scroll-smooth">
+    <main class="flex-1 overflow-y-auto pt-20 pb-24 px-4 no-scrollbar scroll-smooth bg-[#F5F5F0]">
         
         <!-- Tab 1: 行程 (Itinerary) -->
-        <div x-show="activeTab === 'itinerary'" class="space-y-6" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
+        <div x-show="activeTab === 'itinerary'" class="space-y-8" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
             <template x-for="(day, index) in itinerary" :key="index">
                 <div class="space-y-3">
                     <!-- Date Header -->
-                    <div class="flex items-center space-x-2 sticky top-0 bg-[#F5F5F0]/95 backdrop-blur-sm py-2 z-10">
-                        <div class="w-2 h-8 bg-indigo-600 rounded-full"></div>
-                        <h2 class="text-lg font-bold text-stone-700" x-text="day.date"></h2>
-                        <span class="text-sm text-stone-500" x-text="day.location"></span>
+                    <div class="flex items-center space-x-3 sticky top-0 bg-[#F5F5F0]/95 backdrop-blur-sm py-3 z-10 border-b border-stone-200/50">
+                        <div class="flex flex-col items-center justify-center bg-white border border-stone-200 rounded-lg w-10 h-10 shadow-sm">
+                            <span class="text-[10px] text-stone-400 font-bold uppercase" x-text="day.month"></span>
+                            <span class="text-lg font-bold text-stone-800 leading-none" x-text="day.day"></span>
+                        </div>
+                        <div>
+                            <h2 class="text-base font-bold text-stone-800" x-text="day.weekday"></h2>
+                            <span class="text-xs text-stone-500" x-text="day.location"></span>
+                        </div>
                     </div>
 
                     <!-- Events Loop -->
                     <template x-for="event in day.events">
-                        <div class="zen-card p-4 relative overflow-hidden transition active:scale-[0.98]">
-                            <!-- Type Indicator Line -->
-                            <div class="absolute left-0 top-0 bottom-0 w-1" 
-                                 :class="{
-                                    'bg-red-400': event.type === 'food',
-                                    'bg-blue-400': event.type === 'transport',
-                                    'bg-purple-400': event.type === 'sight'
-                                 }"></div>
-                            
-                            <div class="pl-3">
+                        <div class="zen-card relative transition active:scale-[0.99]">
+                            <!-- Image (Optional) -->
+                            <template x-if="event.image">
+                                <div class="relative">
+                                    <img :src="event.image" class="aspect-video-cover" alt="Event Image">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                    <div class="absolute bottom-2 left-3 text-white text-xs font-bold px-2 py-1 bg-black/30 backdrop-blur-sm rounded">
+                                        <i class="fas fa-camera mr-1"></i>Photo
+                                    </div>
+                                </div>
+                            </template>
+
+                            <div class="p-4">
                                 <div class="flex justify-between items-start mb-2">
-                                    <span class="text-xs font-mono text-stone-400 bg-stone-100 px-1.5 py-0.5 rounded" x-text="event.time"></span>
-                                    <!-- Navigation Button -->
+                                    <span class="text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded" x-text="event.time"></span>
                                     <a :href="'https://www.google.com/maps/search/?api=1&query=' + event.title" target="_blank" 
-                                       class="text-stone-400 hover:text-indigo-600 transition-colors p-1">
+                                       class="text-stone-300 hover:text-indigo-600 transition-colors p-1">
                                         <i class="fas fa-location-arrow text-lg"></i>
                                     </a>
                                 </div>
                                 
-                                <h3 class="font-bold text-lg mb-1" x-text="event.title"></h3>
+                                <h3 class="font-bold text-lg mb-1 text-stone-800" x-text="event.title"></h3>
                                 
                                 <!-- Tags -->
-                                <div class="flex flex-wrap gap-2 mb-2" x-show="event.tags && event.tags.length > 0">
+                                <div class="flex flex-wrap gap-2 mb-3" x-show="event.tags && event.tags.length > 0">
                                     <template x-for="tag in event.tags">
-                                        <span class="text-[10px] px-2 py-0.5 rounded-full border"
+                                        <span class="text-[10px] px-2 py-0.5 rounded-full border font-medium"
                                               :class="{
                                                 'tag-food': tag.type === 'food',
                                                 'tag-transport': tag.type === 'transport',
@@ -94,14 +102,15 @@
                                 </div>
 
                                 <p class="text-sm text-stone-600 leading-relaxed" x-html="event.desc"></p>
-                                
-                                <!-- Rating -->
-                                <div x-show="event.rating" class="mt-2 flex items-center text-sm">
-                                    <span class="text-yellow-500 mr-1"><i class="fas fa-star"></i></span>
-                                    <span class="font-bold text-stone-800" x-text="event.rating"></span>
-                                    <span class="text-xs text-stone-400 ml-1">(Tabelog)</span>
-                                </div>
                             </div>
+                            
+                            <!-- Type Stripe -->
+                            <div class="absolute left-0 top-0 bottom-0 w-1.5" 
+                                 :class="{
+                                    'bg-red-400': event.type === 'food',
+                                    'bg-blue-500': event.type === 'transport',
+                                    'bg-purple-500': event.type === 'sight'
+                                 }"></div>
                         </div>
                     </template>
                 </div>
@@ -110,88 +119,181 @@
         </div>
 
         <!-- Tab 2: 資訊 (Info) -->
-        <div x-show="activeTab === 'info'" class="space-y-4" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
-            <h2 class="text-xl font-bold mb-4">旅程資訊</h2>
+        <div x-show="activeTab === 'info'" class="space-y-5" x-transition:enter="transition ease-out duration-300">
+            <h2 class="text-xl font-bold mb-2 pl-1 border-l-4 border-indigo-500">旅程資訊</h2>
             
+            <!-- Flights -->
             <div class="zen-card p-5">
-                <h3 class="font-bold text-stone-800 mb-3"><i class="fas fa-plane text-indigo-500 mr-2"></i>航班資訊</h3>
-                <div class="space-y-3 text-sm">
-                    <div class="flex justify-between border-b border-stone-100 pb-2">
-                        <span class="text-stone-500">去程 (2/27)</span>
-                        <span class="font-medium">HX640 | 13:55 抵達福岡</span>
+                <h3 class="font-bold text-stone-800 mb-4 flex items-center"><i class="fas fa-plane-departure text-indigo-500 mr-2"></i>航班資訊</h3>
+                <div class="space-y-4 text-sm">
+                    <!-- Outbound -->
+                    <div class="bg-stone-50 p-3 rounded-lg border border-stone-100">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-stone-700">去程 (2/27 週五)</span>
+                            <span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded">HX640</span>
+                        </div>
+                        <div class="flex justify-between text-stone-600 my-2">
+                            <div class="text-center">
+                                <div class="font-bold text-lg">09:40</div>
+                                <div class="text-xs">HKG</div>
+                            </div>
+                            <div class="text-stone-300 self-center"><i class="fas fa-arrow-right"></i></div>
+                            <div class="text-center">
+                                <div class="font-bold text-lg">13:55</div>
+                                <div class="text-xs">FUK</div>
+                            </div>
+                        </div>
+                        <div class="text-xs text-red-500 font-bold mt-2 flex items-center">
+                            <i class="fas fa-clock mr-1"></i> 請於 07:00 前抵達香港機場
+                        </div>
                     </div>
-                    <div class="flex justify-between">
-                        <span class="text-stone-500">回程 (3/5)</span>
-                        <span class="font-medium">HX641 | 14:55 起飛</span>
-                    </div>
-                    <div class="bg-red-50 p-2 rounded text-xs text-red-600 mt-2">
-                        <i class="fas fa-exclamation-circle mr-1"></i> 回程請於 13:00 前抵達機場。
+
+                    <!-- Inbound -->
+                    <div class="bg-stone-50 p-3 rounded-lg border border-stone-100">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-stone-700">回程 (3/5 週四)</span>
+                            <span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded">HX641</span>
+                        </div>
+                        <div class="flex justify-between text-stone-600 my-2">
+                            <div class="text-center">
+                                <div class="font-bold text-lg">14:55</div>
+                                <div class="text-xs">FUK</div>
+                            </div>
+                            <div class="text-stone-300 self-center"><i class="fas fa-arrow-right"></i></div>
+                            <div class="text-center">
+                                <div class="font-bold text-lg">18:15</div>
+                                <div class="text-xs">HKG</div>
+                            </div>
+                        </div>
+                        <div class="text-xs text-red-500 font-bold mt-2 flex items-center">
+                            <i class="fas fa-clock mr-1"></i> 請於 12:00 前抵達福岡機場
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Hotels -->
             <div class="zen-card p-5">
-                <h3 class="font-bold text-stone-800 mb-3"><i class="fas fa-bed text-indigo-500 mr-2"></i>住宿清單</h3>
+                <h3 class="font-bold text-stone-800 mb-3 flex items-center"><i class="fas fa-hotel text-indigo-500 mr-2"></i>住宿清單</h3>
                 <ul class="space-y-3 text-sm text-stone-600">
-                    <li><strong class="text-stone-800">鹿兒島 (2晚):</strong> 中央站附近</li>
-                    <li><strong class="text-stone-800">熊本 (1晚):</strong> 熊本站前</li>
-                    <li><strong class="text-stone-800">宮崎 (2晚):</strong> 溫泉旅館</li>
-                    <li><strong class="text-stone-800">博多 (1晚):</strong> 博多站築紫口</li>
+                    <li class="flex items-start"><span class="w-16 font-bold text-stone-800 shrink-0">鹿兒島</span> <span>中央站附近 (2晚)</span></li>
+                    <li class="flex items-start"><span class="w-16 font-bold text-stone-800 shrink-0">熊本</span> <span>熊本站附近 (1晚)</span></li>
+                    <li class="flex items-start"><span class="w-16 font-bold text-stone-800 shrink-0">宮崎</span> <span>宮崎溫泉旅館 (2晚)</span></li>
+                    <li class="flex items-start"><span class="w-16 font-bold text-stone-800 shrink-0">博多</span> <span>博多站附近 (1晚)</span></li>
                 </ul>
-            </div>
-
-             <div class="zen-card p-5 border-l-4 border-red-400">
-                <h3 class="font-bold text-stone-800 mb-3"><i class="fas fa-phone-alt text-red-500 mr-2"></i>緊急聯絡</h3>
-                <div class="grid grid-cols-2 gap-4 text-sm">
-                    <div class="bg-stone-50 p-2 rounded text-center">
-                        <div class="text-xs text-stone-400">報警</div>
-                        <div class="font-bold text-xl">110</div>
-                    </div>
-                    <div class="bg-stone-50 p-2 rounded text-center">
-                        <div class="text-xs text-stone-400">救護車</div>
-                        <div class="font-bold text-xl">119</div>
-                    </div>
-                </div>
             </div>
         </div>
 
         <!-- Tab 3: 預算 (Budget) -->
-        <div x-show="activeTab === 'budget'" class="space-y-4" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
-             <h2 class="text-xl font-bold mb-4">預算管理</h2>
-             <div class="zen-card p-5 text-center">
-                 <p class="text-stone-500 text-sm">總預算 (估計)</p>
-                 <p class="text-3xl font-bold text-indigo-600 mt-1">¥ 250,000</p>
+        <div x-show="activeTab === 'budget'" class="space-y-5" x-transition:enter="transition ease-out duration-300">
+             <h2 class="text-xl font-bold mb-2 pl-1 border-l-4 border-indigo-500">預算管理</h2>
+             
+             <!-- Total Card -->
+             <div class="zen-card p-6 text-center bg-gradient-to-br from-indigo-600 to-blue-700 text-white border-none shadow-lg">
+                 <p class="text-blue-100 text-sm mb-1">目前總支出 (¥)</p>
+                 <p class="text-4xl font-bold tracking-tight" x-text="totalExpenses.toLocaleString()"></p>
              </div>
              
+             <!-- Add Item Form -->
+             <div class="zen-card p-4 bg-stone-50">
+                <h4 class="text-xs font-bold text-stone-500 uppercase mb-2">新增項目</h4>
+                <div class="flex gap-2 mb-2">
+                    <input type="text" x-model="newItemName" placeholder="項目名稱 (如: 拉麵)" class="w-2/3 p-2 rounded border border-stone-300 text-sm focus:outline-none focus:border-indigo-500">
+                    <input type="number" x-model="newItemPrice" placeholder="金額" class="w-1/3 p-2 rounded border border-stone-300 text-sm focus:outline-none focus:border-indigo-500">
+                </div>
+                <button @click="addItem()" class="w-full bg-stone-800 text-white py-2 rounded font-bold text-sm hover:bg-stone-700 transition">
+                    <i class="fas fa-plus mr-1"></i> 加入清單
+                </button>
+             </div>
+
+             <!-- List -->
              <div class="zen-card p-0 overflow-hidden">
                  <table class="w-full text-sm text-left">
-                     <thead class="bg-stone-100 text-stone-600">
-                         <tr><th class="p-3">項目</th><th class="p-3 text-right">金額 (¥)</th></tr>
+                     <thead class="bg-stone-100 text-stone-600 font-bold">
+                         <tr><th class="p-3 pl-4">項目</th><th class="p-3 text-right pr-4">金額 (¥)</th><th class="w-8"></th></tr>
                      </thead>
                      <tbody class="divide-y divide-stone-100">
-                         <tr><td class="p-3">JR Pass</td><td class="p-3 text-right">20,000</td></tr>
-                         <tr><td class="p-3">36+3 列車</td><td class="p-3 text-right">25,000</td></tr>
-                         <tr><td class="p-3">住宿 (6晚)</td><td class="p-3 text-right">90,000</td></tr>
-                         <tr><td class="p-3">餐飲</td><td class="p-3 text-right">70,000</td></tr>
+                         <template x-for="(item, index) in budgetItems" :key="index">
+                             <tr class="hover:bg-stone-50 transition">
+                                 <td class="p-3 pl-4" x-text="item.name"></td>
+                                 <td class="p-3 text-right font-mono text-stone-600" x-text="item.price.toLocaleString()"></td>
+                                 <td class="p-3 text-center">
+                                     <button @click="removeItem(index)" class="text-stone-300 hover:text-red-500"><i class="fas fa-times"></i></button>
+                                 </td>
+                             </tr>
+                         </template>
                      </tbody>
                  </table>
              </div>
         </div>
+
+        <!-- Tab 4: 準備 (Prep) -->
+        <div x-show="activeTab === 'prep'" class="space-y-5" x-transition:enter="transition ease-out duration-300">
+            <h2 class="text-xl font-bold mb-2 pl-1 border-l-4 border-indigo-500">行前準備</h2>
+
+            <!-- Visit Japan Web -->
+            <div class="zen-card p-5 border-l-4 border-pink-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="font-bold text-lg text-stone-800">Visit Japan Web</h3>
+                        <p class="text-xs text-stone-500 mt-1">入境日本必填，請提前截圖 QR Code。</p>
+                    </div>
+                    <i class="fas fa-qrcode text-3xl text-stone-200"></i>
+                </div>
+                <a href="https://vjw-lp.digital.go.jp/en/" target="_blank" class="mt-4 block w-full text-center bg-pink-500 text-white py-2 rounded-lg font-bold text-sm hover:bg-pink-600 transition shadow-md">
+                    前往填寫 <i class="fas fa-external-link-alt ml-1"></i>
+                </a>
+            </div>
+
+            <!-- Weather Forecast -->
+            <div class="zen-card p-5">
+                <h3 class="font-bold text-stone-800 mb-3"><i class="fas fa-temperature-high text-orange-500 mr-2"></i>天氣預測 (福岡/九州)</h3>
+                <div class="bg-orange-50 text-orange-800 text-xs p-2 rounded mb-3">
+                    <i class="fas fa-info-circle mr-1"></i> 3月初早晚溫差大，建議洋蔥式穿搭。
+                </div>
+                <div class="grid grid-cols-4 gap-2">
+                    <template x-for="w in weatherForecast">
+                        <div class="flex flex-col items-center p-2 bg-stone-50 rounded border border-stone-100">
+                            <span class="text-[10px] text-stone-500" x-text="w.date"></span>
+                            <i class="my-1 text-lg" :class="w.icon" :style="{color: w.color}"></i>
+                            <span class="text-xs font-bold" x-text="w.temp"></span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+            
+            <!-- Checklist -->
+             <div class="zen-card p-5">
+                <h3 class="font-bold text-stone-800 mb-3">檢查清單</h3>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> 護照 (有效期6個月以上)</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> Visit Japan QR Code</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> 網卡 / Roaming</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> 日幣現金 (小店用)</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> 預約確認信 (JR/飯店)</li>
+                </ul>
+            </div>
+        </div>
+
     </main>
 
     <!-- Bottom Navigation Bar -->
-    <nav class="fixed bottom-0 w-full bg-white border-t border-stone-200 pb-safe pt-2 px-6 flex justify-between items-center z-20 h-20 shadow-[0_-5px_15px_rgba(0,0,0,0.02)]">
-        <button @click="activeTab = 'itinerary'" class="flex flex-col items-center space-y-1 w-1/3 transition" :class="activeTab === 'itinerary' ? 'nav-active' : 'nav-inactive'">
-            <i class="fas fa-map-marked-alt text-xl"></i>
-            <span class="text-[10px]">行程</span>
+    <nav class="fixed bottom-0 w-full bg-white/95 backdrop-blur border-t border-stone-200 pb-safe pt-1 px-2 flex justify-around items-center z-20 h-[80px] shadow-[0_-5px_20px_rgba(0,0,0,0.03)]">
+        <button @click="activeTab = 'itinerary'" class="flex flex-col items-center justify-center w-16 h-14 rounded-lg transition active:scale-95" :class="activeTab === 'itinerary' ? 'nav-active' : 'nav-inactive'">
+            <i class="fas fa-map-marked-alt text-xl mb-1"></i>
+            <span class="text-[10px] font-medium">行程</span>
         </button>
-        <button @click="activeTab = 'info'" class="flex flex-col items-center space-y-1 w-1/3 transition" :class="activeTab === 'info' ? 'nav-active' : 'nav-inactive'">
-            <i class="fas fa-passport text-xl"></i>
-            <span class="text-[10px]">資訊</span>
+        <button @click="activeTab = 'info'" class="flex flex-col items-center justify-center w-16 h-14 rounded-lg transition active:scale-95" :class="activeTab === 'info' ? 'nav-active' : 'nav-inactive'">
+            <i class="fas fa-ticket-alt text-xl mb-1"></i>
+            <span class="text-[10px] font-medium">資訊</span>
         </button>
-        <button @click="activeTab = 'budget'" class="flex flex-col items-center space-y-1 w-1/3 transition" :class="activeTab === 'budget' ? 'nav-active' : 'nav-inactive'">
-            <i class="fas fa-wallet text-xl"></i>
-            <span class="text-[10px]">預算</span>
+        <button @click="activeTab = 'budget'" class="flex flex-col items-center justify-center w-16 h-14 rounded-lg transition active:scale-95" :class="activeTab === 'budget' ? 'nav-active' : 'nav-inactive'">
+            <i class="fas fa-wallet text-xl mb-1"></i>
+            <span class="text-[10px] font-medium">預算</span>
+        </button>
+        <button @click="activeTab = 'prep'" class="flex flex-col items-center justify-center w-16 h-14 rounded-lg transition active:scale-95" :class="activeTab === 'prep' ? 'nav-active' : 'nav-inactive'">
+            <i class="fas fa-suitcase-rolling text-xl mb-1"></i>
+            <span class="text-[10px] font-medium">準備</span>
         </button>
     </nav>
 
@@ -199,67 +301,108 @@
         function tripApp() {
             return {
                 activeTab: 'itinerary',
-                currentWeather: '福岡 12°C 晴',
+                todayWeather: '福岡 12°C',
+                // Budget Data
+                newItemName: '',
+                newItemPrice: '',
+                budgetItems: [
+                    { name: 'JR Pass (全九州)', price: 20000 },
+                    { name: '36+3 豪華列車', price: 25000 },
+                    { name: '住宿 (6晚)', price: 90000 },
+                    { name: '餐飲預估', price: 70000 }
+                ],
+                // Weather Data (Mock)
+                weatherForecast: [
+                    { date: '2/27', icon: 'fas fa-sun', color: '#F59E0B', temp: '13°' },
+                    { date: '2/28', icon: 'fas fa-cloud-sun', color: '#F59E0B', temp: '14°' },
+                    { date: '3/1', icon: 'fas fa-cloud', color: '#9CA3AF', temp: '12°' },
+                    { date: '3/2', icon: 'fas fa-cloud-rain', color: '#60A5FA', temp: '10°' },
+                    { date: '3/3', icon: 'fas fa-sun', color: '#F59E0B', temp: '15°' },
+                    { date: '3/4', icon: 'fas fa-cloud-sun', color: '#F59E0B', temp: '14°' },
+                    { date: '3/5', icon: 'fas fa-sun', color: '#F59E0B', temp: '16°' }
+                ],
+                
+                // Methods
+                addItem() {
+                    if (this.newItemName && this.newItemPrice) {
+                        this.budgetItems.push({ 
+                            name: this.newItemName, 
+                            price: parseInt(this.newItemPrice) 
+                        });
+                        this.newItemName = '';
+                        this.newItemPrice = '';
+                    }
+                },
+                removeItem(index) {
+                    this.budgetItems.splice(index, 1);
+                },
+                get totalExpenses() {
+                    return this.budgetItems.reduce((sum, item) => sum + item.price, 0);
+                },
+
+                // Itinerary Data
                 itinerary: [
                     {
-                        date: 'Day 1 (2/27 週五)',
+                        month: 'Feb', day: '27', weekday: '週五',
                         location: '福岡 → 鹿兒島',
                         events: [
-                            { time: '14:25', title: '博多站 (Hakata)', type: 'transport', desc: '取 JR Pass 並劃位。建議在車站購買便當。', tags: [{text:'重要', type:'tip'}] },
-                            { time: '15:00', title: '36+3 豪華列車', type: 'sight', desc: '前往鹿兒島中央。途中停靠玉名(足湯)、牛之濱(海景)。', tags: [{text:'觀光列車', type:'transport'}] },
-                            { time: '21:26', title: '抵達鹿兒島中央', type: 'transport', desc: '入住車站附近飯店。', tags: [] },
-                            { time: '晚餐', title: '吾愛人 (Wakana)', type: 'food', desc: '鹿兒島黑豚涮涮鍋名店。', rating: '3.72', tags: [{text:'必吃', type:'food'}] }
+                            { time: '07:00', title: '香港機場 (HKG)', type: 'transport', desc: '抵達機場辦理登機。', tags: [{text:'重要', type:'tip'}] },
+                            { time: '13:55', title: '抵達福岡機場', type: 'transport', desc: '入境、領取 JR Pass。', tags: [] },
+                            { time: '15:00', title: '36+3 豪華列車', type: 'transport', desc: '博多 → 鹿兒島中央。途中停靠玉名(足湯)、牛之濱(海景)。', image: 'https://images.unsplash.com/photo-1535205500668-35790d931969?w=800&q=80', tags: [{text:'觀光列車', type:'transport'}] },
+                            { time: '21:26', title: '抵達鹿兒島', type: 'sight', desc: '入住中央站附近飯店。', tags: [] }
                         ]
                     },
                     {
-                        date: 'Day 2 (2/28 週六)',
+                        month: 'Feb', day: '28', weekday: '週六',
                         location: '鹿兒島深度遊',
                         events: [
-                            { time: '09:00', title: '仙巖園', type: 'sight', desc: '借景櫻島火山的日式庭園。', tags: [{text:'世界遺產', type:'sight'}] },
-                            { time: '12:00', title: '炸豬排 川久', type: 'food', desc: '鹿兒島必吃炸豬排。', rating: '3.75', tags: [{text:'排隊名店', type:'food'}] },
-                            { time: '14:00', title: '天文館通', type: 'sight', desc: '逛街購物，必吃「白熊冰」。', tags: [] }
+                            { time: '09:00', title: '仙巖園', type: 'sight', desc: '借景櫻島火山的日式庭園。', image: 'https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800&q=80', tags: [{text:'世界遺產', type:'sight'}] },
+                            { time: '13:00', title: '天文館通', type: 'sight', desc: '鹿兒島最熱鬧商店街，必吃白熊冰。', tags: [] },
+                            { time: '18:00', title: '鹿兒島黑豚', type: 'food', desc: '晚餐推薦黑豚涮涮鍋。', image: 'https://images.unsplash.com/photo-1604642202352-79eff37d8966?w=800&q=80', tags: [{text:'必吃', type:'food'}] }
                         ]
                     },
                     {
-                        date: 'Day 3 (3/1 週日)',
+                        month: 'Mar', day: '01', weekday: '週日',
                         location: '鹿兒島 → 熊本',
                         events: [
-                            { time: '10:00', title: '新幹線 Tsubame', type: 'transport', desc: '前往熊本 (1小時)。', tags: [{text:'舒適', type:'transport'}] },
-                            { time: '12:00', title: '勝烈亭', type: 'food', desc: '熊本排名第一炸豬排。', rating: '3.80', tags: [{text:'米其林', type:'food'}] },
-                            { time: '14:00', title: '熊本城', type: 'sight', desc: '參觀日本三大名城之一。', tags: [] }
+                            { time: '10:00', title: '新幹線 Tsubame', type: 'transport', desc: '前往熊本 (約1小時)。', tags: [{text:'舒適', type:'transport'}] },
+                            { time: '12:00', title: '熊本城', type: 'sight', desc: '參觀修復後的熊本城天守閣。', image: 'https://images.unsplash.com/photo-1624606282855-333d0267a051?w=800&q=80', tags: [{text:'名城', type:'sight'}] },
+                            { time: '18:00', title: '熊本美食街', type: 'food', desc: '熊本站附近享用馬肉料理或拉麵。', tags: [] }
                         ]
                     },
                     {
-                        date: 'Day 4 (3/2 週一)',
+                        month: 'Mar', day: '02', weekday: '週一',
                         location: '熊本 → 宮崎',
                         events: [
-                            { time: '10:00', title: '特急 Kirishima', type: 'transport', desc: '前往宮崎 (2小時)。', tags: [] },
-                            { time: '13:00', title: 'Ogura Honten', type: 'food', desc: '宮崎名物「南蠻雞」創始店。', rating: '3.65', tags: [{text:'元祖', type:'food'}] },
-                            { time: '15:00', title: '宮崎溫泉', type: 'sight', desc: '入住溫泉旅館放鬆。', tags: [] }
+                            { time: '10:00', title: '特急 Kirishima', type: 'transport', desc: '前往宮崎 (約2小時)。', tags: [] },
+                            { time: '14:00', title: '油津港', type: 'sight', desc: '感受港口風情。', tags: [] },
+                            { time: '17:00', title: '宮崎溫泉', type: 'sight', desc: '入住溫泉旅館，享受放鬆時光。', image: 'https://images.unsplash.com/photo-1544298621-26732709298c?w=800&q=80', tags: [{text:'溫泉', type:'sight'}] }
                         ]
                     },
                     {
-                        date: 'Day 5 (3/3 週二)',
+                        month: 'Mar', day: '03', weekday: '週二',
                         location: '宮崎深度遊',
                         events: [
-                            { time: '09:00', title: '青島神社', type: 'sight', desc: '海邊的神社，鬼之洗衣板。', tags: [{text:'絕景', type:'sight'}] },
-                            { time: '14:00', title: '海幸山幸', type: 'transport', desc: '宮崎 → 南鄉。全木造觀光列車。', tags: [{text:'需預約', type:'transport'}] }
+                            { time: '09:00', title: '青島神社', type: 'sight', desc: '鬼之洗衣板、海邊神社。', image: 'https://images.unsplash.com/photo-1528360983277-13d9b152c6d1?w=800&q=80', tags: [{text:'絕景', type:'sight'}] },
+                            { time: '14:00', title: '海幸山幸列車', type: 'transport', desc: '宮崎 → 南鄉。全木造觀光列車體驗。', image: 'https://images.unsplash.com/photo-1508906973562-b25859666c88?w=800&q=80', tags: [{text:'特色火車', type:'transport'}] }
                         ]
                     },
                     {
-                        date: 'Day 6 (3/4 週三)',
+                        month: 'Mar', day: '04', weekday: '週三',
                         location: '宮崎 → 博多',
                         events: [
-                            { time: '10:00', title: '博多回程', type: 'transport', desc: '搭乘 JR 返回博多。', tags: [] },
-                            { time: '18:00', title: '中洲屋台', type: 'food', desc: '體驗博多夜市文化。', tags: [{text:'體驗', type:'food'}] }
+                            { time: '10:00', title: '特急 Sonic', type: 'transport', desc: '經大分返回博多 (約3小時)。', tags: [] },
+                            { time: '15:00', title: '博多運河城', type: 'sight', desc: '購物中心與噴水秀。', tags: [] },
+                            { time: '19:00', title: '福岡塔', type: 'sight', desc: '欣賞福岡夜景。', image: 'https://images.unsplash.com/photo-1623838634842-45e35327d6d3?w=800&q=80', tags: [{text:'夜景', type:'sight'}] }
                         ]
                     },
                     {
-                        date: 'Day 7 (3/5 週四)',
-                        location: '博多 → 機場',
+                        month: 'Mar', day: '05', weekday: '週四',
+                        location: '博多 → 返程',
                         events: [
-                            { time: '11:00', title: '博多運河城', type: 'sight', desc: '最後購物。', tags: [] },
-                            { time: '13:00', title: '前往機場', type: 'transport', desc: '務必提早抵達。', tags: [{text:'重要', type:'tip'}] }
+                            { time: '10:00', title: '博多站購物', type: 'sight', desc: '最後採買伴手禮。', tags: [] },
+                            { time: '12:00', title: '抵達機場', type: 'transport', desc: '搭乘機場線前往福岡機場 (FUK)。', tags: [{text:'重要', type:'tip'}] },
+                            { time: '14:55', title: 'HX641 起飛', type: 'transport', desc: '返回甜蜜的家。', tags: [] }
                         ]
                     }
                 ]
