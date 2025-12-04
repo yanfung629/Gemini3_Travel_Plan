@@ -184,22 +184,12 @@
         </div>
 
         <!-- Tab: 準備 -->
-        <div x-show="activeTab === 'prep'" class="px-4 space-y-6 pt-24 pb-28">
+        <div class="px-4 space-y-6 pt-24 pb-28">
             <h2 class="text-2xl font-serif font-bold text-ink mb-4">行前準備</h2>
-            <div class="bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden group">
-                <div class="relative z-10">
-                    <h3 class="font-bold text-xl mb-1">Visit Japan Web</h3>
-                    <p class="text-xs opacity-90 mb-4 font-light">入境審查、海關申報 QR Code 必備</p>
-                    <a href="https://vjw-lp.digital.go.jp/en/" target="_blank" class="inline-flex items-center bg-white text-pink-600 text-xs font-bold px-4 py-2 rounded-full shadow-sm hover:bg-stone-100 transition">
-                        前往填寫 <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
-                </div>
-                <i class="fas fa-qrcode absolute -right-6 -bottom-6 text-[140px] opacity-20 rotate-12 group-hover:rotate-0 transition duration-500"></i>
-            </div>
             <div class="bg-white rounded-xl p-5 border border-stone-200 shadow-sm">
                 <h3 class="font-serif font-bold text-lg mb-4 flex items-center"><i class="fas fa-wallet text-gold mr-2"></i>預算概覽</h3>
                 <div class="space-y-3">
-                    <template x-for="item in budgetItems">
+                    <template x-for="item in budgetItems" :key="item.name">
                         <div class="flex justify-between text-sm border-b border-stone-50 pb-2 last:border-0">
                             <span class="text-stone-600" x-text="item.name"></span>
                             <span class="font-mono font-medium" x-text="'¥' + item.price.toLocaleString()"></span>
@@ -208,6 +198,16 @@
                     <div class="flex justify-between text-xl font-bold pt-3 text-ink border-t border-stone-200 mt-2">
                         <span>Total</span>
                         <span x-text="'¥' + totalBudget.toLocaleString()"></span>
+                    </div>
+                </div>
+        
+                <!-- Add Expense Form -->
+                <div class="mt-4">
+                    <h4 class="text-sm font-bold text-stone-600 mb-2">新增支出</h4>
+                    <div class="flex items-center space-x-2">
+                        <input type="text" placeholder="支出名稱" x-model="newExpenseName" class="border border-stone-300 rounded px-2 py-1 flex-1">
+                        <input type="number" placeholder="價格" x-model="newExpensePrice" class="border border-stone-300 rounded px-2 py-1 w-24">
+                        <button @click="addExpense" class="bg-gold text-white rounded px-4 py-1">新增</button>
                     </div>
                 </div>
             </div>
@@ -299,6 +299,17 @@
                 scrolled: false,
                 modalOpen: false,
                 selectedEvent: null,
+
+                newExpenseName: '', // To hold the name of the new expense
+                newExpensePrice: 0, // To hold the price of the new expense
+
+                addExpense() {
+                    if (this.newExpenseName && this.newExpensePrice > 0) {
+                        this.budgetItems.push({ name: this.newExpenseName, price: parseFloat(this.newExpensePrice) });
+                        this.newExpenseName = ''; // Clear the input
+                        this.newExpensePrice = 0;  // Reset price
+                    }
+                },
                 
                 handleScroll(e) {
                     this.scrolled = e.target.scrollTop > 50;
