@@ -1,3 +1,8 @@
+To combine the provided HTML code for the Kyushu trip with the Firebase budget tracking functionality we discussed earlier, I'll integrate the two pieces of code. This combined version will create a cohesive web application that retains the trip itinerary features while also incorporating the budget tracking feature.
+
+### Combined `index.html` Code
+
+```html
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -10,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <script>
         tailwind.config = {
             theme: {
@@ -72,12 +77,9 @@
         
         <!-- Tab: 行程 (Itinerary) -->
         <div x-show="activeTab === 'itinerary'">
-            <!-- 直接由行程開始（已移除首頁大相） -->
             <div class="space-y-12 pb-28 pt-24 relative z-10 px-4">
                 <template x-for="(day, dIndex) in itinerary" :key="dIndex">
                     <div :id="'day-' + dIndex" class="relative pt-6">
-                        
-                        <!-- Day Header -->
                         <div class="mb-4 flex items-end justify-between px-2">
                             <div>
                                 <h2 class="text-5xl font-serif font-bold text-stone-200 relative z-0 -mb-9 -ml-1 select-none" x-text="'0' + (dIndex + 1)"></h2>
@@ -168,7 +170,6 @@
         <!-- Tab: 準備 -->
         <div x-show="activeTab === 'prep'" class="px-4 space-y-6 pt-24 pb-28">
             <h2 class="text-2xl font-serif font-bold text-ink mb-4">行前準備</h2>
-
             <!-- Visit Japan Web -->
             <div class="bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden group">
                 <div class="relative z-10">
@@ -180,13 +181,11 @@
                 </div>
                 <i class="fas fa-qrcode absolute -right-6 -bottom-6 text-[140px] opacity-20 rotate-12 group-hover:rotate-0 transition duration-500"></i>
             </div>
-
             <!-- 預算概覽 + 新增項目 -->
             <div class="bg-white rounded-xl p-5 border border-stone-200 shadow-sm">
                 <h3 class="font-serif font-bold text-lg mb-4 flex items-center">
                     <i class="fas fa-wallet text-gold mr-2"></i>預算概覽
                 </h3>
-
                 <!-- 新增項目表單 -->
                 <div class="mb-4 border border-stone-100 rounded-lg p-3 bg-paper/60">
                     <p class="text-[11px] text-sub mb-2">新增預算項目</p>
@@ -213,7 +212,6 @@
                         <i class="fas fa-plus mr-1"></i>加入預算清單
                     </button>
                 </div>
-
                 <!-- 預算列表 -->
                 <div class="space-y-3">
                     <template x-for="(item, idx) in budgetItems" :key="idx">
@@ -232,7 +230,6 @@
                             </div>
                         </div>
                     </template>
-
                     <!-- Total -->
                     <div class="flex justify-between text-xl font-bold pt-3 text-ink border-t border-stone-200 mt-2">
                         <span>Total</span>
@@ -271,7 +268,7 @@
                 </div>
                 <div class="prose prose-stone prose-sm mb-8 text-stone-600 leading-relaxed" x-html="selectedEvent?.desc"></div>
                 <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100 mb-6" x-show="selectedEvent?.japanese && selectedEvent?.japanese.length > 0">
-                    <h4 class="text-[10px] font-bold text-stone-400 uppercase mb-3 tracking-widest border-b border-stone-100 pb-2">指差会話 Point &amp; Speak</h4>
+                    <h4 class="text-[10px] font-bold text-stone-400 uppercase mb-3 tracking-widest border-b border-stone-100 pb-2">指差會話 Point &amp; Speak</h4>
                     <div class="space-y-4">
                         <template x-for="phrase in selectedEvent?.japanese">
                             <div>
@@ -281,238 +278,4 @@
                         </template>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-3 mt-auto">
-                    <a :href="'https://www.google.com/maps/search/?api=1&query=' + selectedEvent?.title" target="_blank" 
-                       class="flex items-center justify-center bg-stone-800 text-white py-3 rounded-lg font-bold text-sm hover:bg-stone-700 transition shadow-lg shadow-stone-200">
-                        <i class="fas fa-location-arrow mr-2"></i> Google Maps
-                    </a>
-                    <button class="flex items-center justify-center bg-white border border-stone-300 text-stone-700 py-3 rounded-lg font-bold text-sm hover:bg-stone-50 transition">
-                        <i class="fas fa-globe mr-2"></i> 官方網站
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bottom Tab Bar -->
-    <nav class="fixed bottom-6 left-6 right-6 h-16 glass-panel rounded-full flex justify-around items-center z-40 shadow-[0_8px_30px_rgba(0,0,0,0.12)] max-w-md mx-auto">
-        <button @click="activeTab = 'itinerary'" class="flex flex-col items-center justify-center w-12 h-12 rounded-full transition relative" :class="activeTab === 'itinerary' ? 'text-ink' : 'text-stone-400'">
-            <i class="fas fa-map text-lg mb-0.5"></i>
-            <span class="text-[9px] font-medium">行程</span>
-            <div class="absolute -bottom-1 w-1 h-1 bg-ink rounded-full" x-show="activeTab === 'itinerary'"></div>
-        </button>
-        <button @click="activeTab = 'trains'" class="flex flex-col items-center justify-center w-12 h-12 rounded-full transition relative" :class="activeTab === 'trains' ? 'text-ink' : 'text-stone-400'">
-            <i class="fas fa-train text-lg mb-0.5"></i>
-            <span class="text-[9px] font-medium">鐵道</span>
-            <div class="absolute -bottom-1 w-1 h-1 bg-ink rounded-full" x-show="activeTab === 'trains'"></div>
-        </button>
-        <button @click="activeTab = 'prep'" class="flex flex-col items-center justify-center w-12 h-12 rounded-full transition relative" :class="activeTab === 'prep' ? 'text-ink' : 'text-stone-400'">
-            <i class="fas fa-suitcase text-lg mb-0.5"></i>
-            <span class="text-[9px] font-medium">準備</span>
-            <div class="absolute -bottom-1 w-1 h-1 bg-ink rounded-full" x-show="activeTab === 'prep'"></div>
-        </button>
-    </nav>
-
-    <!-- 邏輯程式碼 -->
-    <script>
-        function tripApp() {
-            return {
-                activeTab: 'itinerary',
-                activeDayIndex: 0,
-                scrolled: false,
-                modalOpen: false,
-                selectedEvent: null,
-
-                // 預算新增用
-                newBudgetName: '',
-                newBudgetPrice: null,
-                
-                handleScroll(e) {
-                    this.scrolled = e.target.scrollTop > 50;
-                },
-                scrollToDay(index) {
-                    this.activeDayIndex = index;
-                    this.activeTab = 'itinerary';
-                    const el = document.getElementById('day-' + index);
-                    if (el) {
-                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                },
-                openModal(event) {
-                    this.selectedEvent = event;
-                    this.modalOpen = true;
-                },
-                uploadImage(event, dIndex, eIndex) {
-                    const file = event.target.files[0];  // 修正 syntax
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (e) => {
-                            this.itinerary[dIndex].events[eIndex].image = e.target.result;
-                            // force Alpine refresh
-                            this.itinerary = JSON.parse(JSON.stringify(this.itinerary)); 
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                },
-
-                // 預算：新增 / 刪除
-                addBudgetItem() {
-                    if (!this.newBudgetName || !this.newBudgetPrice || this.newBudgetPrice <= 0) return;
-                    this.budgetItems.push({
-                        name: this.newBudgetName,
-                        price: Number(this.newBudgetPrice)
-                    });
-                    this.newBudgetName = '';
-                    this.newBudgetPrice = null;
-                },
-                removeBudgetItem(idx) {
-                    this.budgetItems.splice(idx, 1);
-                },
-
-                trainSchedule: [
-                    { date: '2/27 (五)', name: '36+3 觀光列車', depTime: '15:00', depStn: '博多', arrTime: '21:26', arrStn: '鹿兒島中央', duration: '6h 26m' },
-                    { date: '3/1 (日)', name: '新幹線 Tsubame', depTime: '10:00', depStn: '鹿兒島中央', arrTime: '11:00', arrStn: '熊本', duration: '1h 00m' },
-                    { date: '3/2 (一)', name: '特急 Kirishima', depTime: '10:00', depStn: '熊本', arrTime: '12:00', arrStn: '宮崎', duration: '2h 00m' },
-                    { date: '3/3 (二)', name: '海幸山幸', depTime: '14:00', depStn: '宮崎', arrTime: '15:00', arrStn: '南鄉', duration: '1h 00m' },
-                    { date: '3/4 (三)', name: '特急 Sonic', depTime: '10:00', depStn: '宮崎', arrTime: '13:00', arrStn: '博多', duration: '3h 00m' },
-                    { date: '3/5 (四)', name: '機場線', depTime: '12:00', depStn: '博多', arrTime: '12:10', arrStn: '福岡機場', duration: '10m' }
-                ],
-                budgetItems: [
-                    { name: 'JR Pass 全九州', price: 20000 },
-                    { name: '36+3 列車', price: 25000 },
-                    { name: '住宿 (6晚)', price: 90000 },
-                    { name: '餐飲預估', price: 70000 }
-                ],
-                get totalBudget() { return this.budgetItems.reduce((sum, i) => sum + i.price, 0); },
-
-                itinerary: [
-                    {
-                        date_full: '2025.02.27', weekday_en: 'FRI', day: '27', location: '博多 鹿兒島', weatherIcon: 'fas fa-sun',
-                        events: [
-                            { 
-                                time: '15:00', category: 'Train', title: '36+3 豪華列車', location_detail: '博多站 -> 鹿兒島中央',
-                                image: 'https://res.klook.com/image/upload/fl_lossy.progressive,q_85/c_fill,w_1000/v1601446347/blog/y8s8s8s8s8s8s8s8.jpg',
-                                desc: '【封面行程】九州最頂級的觀光列車體驗。車廂內鋪設榻榻米，提供精緻的當地食材便當。',
-                                japanese: [
-                                    { jp: '36ぷらす3の乗り場はどこですか？', zh: '請問 36+3 列車的月台在哪裡？' }
-                                ]
-                            },
-                            { 
-                                time: '21:30', category: 'Food', title: '吾愛人 (Wakana)', location_detail: '鹿兒島天文館通',
-                                image: 'https://images.unsplash.com/photo-1604642202352-79eff37d8966?w=800&q=80',
-                                desc: '鹿兒島必吃的黑豚涮涮鍋名店。',
-                                japanese: [{ jp: '黒豚しゃぶしゃぶをお願いします。', zh: '請給我黑豚涮涮鍋。' }]
-                            }
-                        ]
-                    },
-                    {
-                        date_full: '2025.02.28', weekday_en: 'SAT', day: '28', location: '鹿兒島', weatherIcon: 'fas fa-cloud-sun',
-                        events: [
-                            { 
-                                time: '09:00', category: 'Sight', title: '仙巖園', location_detail: '鹿兒島市吉野町',
-                                image: 'https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800&q=80',
-                                desc: '借景櫻島火山的日式庭園。',
-                                japanese: [{ jp: '大人2枚お願いします。', zh: '請給我兩張成人票。' }]
-                            },
-                            { 
-                                time: '13:00', category: 'Food', title: '天文館 無邪氣', location_detail: '天文館通',
-                                image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=800&q=80',
-                                desc: '鹿兒島名物「白熊冰」的創始店。',
-                                japanese: [{ jp: '白熊（しろくま）を一つください。', zh: '請給我一份白熊冰。' }]
-                            }
-                        ]
-                    },
-                    {
-                        date_full: '2025.03.01', weekday_en: 'SUN', day: '01', location: '熊本', weatherIcon: 'fas fa-cloud',
-                        events: [
-                            { 
-                                time: '12:00', category: 'Sight', title: '熊本城', location_detail: '熊本市中央區',
-                                image: 'https://images.unsplash.com/photo-1624606282855-333d0267a051?w=800&q=80',
-                                desc: '日本三大名城之一，黑色天守閣極具氣勢。',
-                                japanese: []
-                            },
-                            { 
-                                time: '13:15', category: 'Food', title: '魚飯時 (Sahanji)', location_detail: '熊本市中央區細工町',
-                                image: 'https://images.unsplash.com/photo-1625937751876-4515cd8e7752?w=800&q=80',
-                                desc: '【必嚐：時令海鮮豪華御膳】店內招牌，包含厚切刺身與茶碗蒸。',
-                                japanese: [{ jp: '海鮮贅沢御膳をお願いします。', zh: '請給我海鮮豪華御膳。' }]
-                            }
-                        ]
-                    },
-                    {
-                        date_full: '2025.03.02', weekday_en: 'MON', day: '02', location: '宮崎', weatherIcon: 'fas fa-cloud-rain',
-                        events: [
-                            { 
-                                time: '14:00', category: 'Sight', title: '油津港', location_detail: '宮崎縣日南市',
-                                image: 'https://images.unsplash.com/photo-1544298621-26732709298c?w=800&q=80',
-                                desc: '充滿昭和風情的港口小鎮。',
-                                japanese: []
-                            },
-                            { 
-                                time: '17:00', category: 'Hotel', title: '宮崎溫泉旅館', location_detail: '青島溫泉',
-                                image: 'https://images.unsplash.com/photo-1560200353-ce0a76b1d438?w=800&q=80',
-                                desc: '入住海邊的溫泉旅館，享受美人之湯。',
-                                japanese: [{ jp: 'チェックインをお願いします。', zh: '我要辦理入住。' }]
-                            }
-                        ]
-                    },
-                    {
-                        date_full: '2025.03.03', weekday_en: 'TUE', day: '03', location: '宮崎', weatherIcon: 'fas fa-sun',
-                        events: [
-                            { 
-                                time: '09:00', category: 'Sight', title: '青島神社', location_detail: '宮崎縣青島',
-                                image: 'https://images.unsplash.com/photo-1528360983277-13d9b152c6d1?w=800&q=80',
-                                desc: '鬼之洗衣板包圍的海上神社。',
-                                japanese: []
-                            },
-                            { 
-                                time: '14:00', category: 'Train', title: '海幸山幸', location_detail: '宮崎 -> 南鄉',
-                                image: 'https://images.unsplash.com/photo-1508906973562-b25859666c88?w=800&q=80',
-                                desc: '全木造觀光列車，充滿木頭香氣。',
-                                japanese: []
-                            }
-                        ]
-                    },
-                    {
-                        date_full: '2025.03.04', weekday_en: 'WED', day: '04', location: '博多', weatherIcon: 'fas fa-cloud-sun',
-                        events: [
-                            { 
-                                time: '15:00', category: 'Sight', title: '博多運河城', location_detail: '福岡市博多區',
-                                image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=800&q=80',
-                                desc: '大型複合購物中心與噴水秀。',
-                                japanese: []
-                            },
-                            { 
-                                time: '19:00', category: 'Sight', title: '福岡塔', location_detail: '百道濱',
-                                image: 'https://images.unsplash.com/photo-1623838634842-45e35327d6d3?w=800&q=80',
-                                desc: '日本最高海濱塔，俯瞰福岡夜景。',
-                                japanese: []
-                            }
-                        ]
-                    },
-                    {
-                        date_full: '2025.03.05', weekday_en: 'THU', day: '05', location: '博多Airport', weatherIcon: 'fas fa-sun',
-                        events: [
-                            { 
-                                time: '10:00', category: 'Shop', title: '博多站購物', location_detail: 'JR博多城',
-                                image: 'https://images.unsplash.com/photo-1491933382434-500287f9b54b?w=800&q=80',
-                                desc: '最後衝刺！購買伴手禮。',
-                                japanese: []
-                            },
-                            { 
-                                time: '12:00', category: 'Flight', title: '前往機場', location_detail: '福岡機場 (FUK)',
-                                image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80',
-                                desc: '搭乘地鐵空港線前往機場。',
-                                japanese: []
-                            }
-                        ]
-                    }
-                ]
-            }
-        }
-    </script>
-
-    <!-- Alpine.js -->
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
-</body>
-</html>
+                <div class="grid grid-cols
