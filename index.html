@@ -1,614 +1,511 @@
 <!DOCTYPE html>
-<html lang="zh-Hant" x-data="tripApp()">
+<html lang="zh-TW">
 <head>
-  <meta charset="UTF-8" />
-  <title>九州旅行 | 行程</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>九州慢旅 | Kyushu Trip</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+    <!-- Google Fonts: Noto Serif TC (質感關鍵) & Noto Sans TC -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Alpine -->
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
-  <!-- Font / Icon -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <style>
-    body {
-      font-family: 'Noto Sans TC', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #F7F3EE;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    .nav-active { color: #111827; font-weight: 600; }
-    .nav-inactive { color: #9CA3AF; }
-  </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'paper': '#F9F9F7', // 日式米紙色背景
+                        'ink': '#2D2D2D',   // 墨色文字
+                        'gold': '#C5A065',  // 質感金
+                        'sub': '#8E8E93',   // 副標灰
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                        serif: ['"Noto Serif TC"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #F9F9F7; -webkit-tap-highlight-color: transparent; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .glass-panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.5); }
+        .fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease; }
+        .fade-enter-from, .fade-leave-to { opacity: 0; }
+        /* 模擬雜誌排版 */
+        .vertical-text { writing-mode: vertical-rl; text-orientation: mixed; }
+    </style>
 </head>
+<body class="text-ink h-screen flex flex-col font-sans" x-data="tripApp()">
 
-<body class="min-h-screen flex flex-col bg-[#F7F3EE] text-stone-800">
-
-  <!-- 整個 App 容器 -->
-  <div class="flex-1 flex flex-col max-w-md mx-auto w-full relative">
-
-    <!-- ====== 頂部 Header + 日期時間軸 ====== -->
-    <header class="pt-6 pb-3 px-4 bg-[#F7F3EE] sticky top-0 z-20">
-      <div class="flex items-start justify-between mb-4">
-        <div>
-          <div class="text-[11px] tracking-[0.2em] text-stone-400 uppercase mb-1">FAMILY TRIP</div>
-          <div class="flex items-center gap-2">
-            <h1 class="text-xl font-semibold tracking-wide">九州旅行</h1>
-            <span class="text-xs text-stone-400 border border-stone-300 rounded-full px-2 py-0.5">2026</span>
-          </div>
+    <!-- Top Navigation / Date Picker -->
+    <header class="fixed top-0 w-full z-30 bg-paper/95 backdrop-blur-sm border-b border-stone-200 pt-safe transition-all duration-300" 
+            :class="{'shadow-sm': scrolled}">
+        <div class="flex justify-between items-center px-5 py-3">
+            <div>
+                <div class="text-[10px] tracking-[0.2em] text-gold font-bold uppercase mb-1">Family Trip</div>
+                <h1 class="text-xl font-serif font-bold tracking-wide">九州旅行 <span class="text-xs font-sans font-normal text-sub ml-1 border border-stone-300 rounded-full px-2 py-0.5">2025</span></h1>
+            </div>
+            <button class="w-8 h-8 rounded-full bg-stone-200 flex items-center justify-center text-stone-500">
+                <i class="fas fa-user"></i>
+            </button>
         </div>
-        <button class="w-8 h-8 flex items-center justify-center rounded-full border border-stone-300 text-stone-400 text-xs">
-          ×
-        </button>
-      </div>
-
-      <!-- 日期時間軸 -->
-      <div class="flex items-center gap-3 overflow-x-auto no-scrollbar border-t border-b border-stone-200 py-2">
-        <template x-for="(day, index) in days" :key="index">
-          <button
-            class="flex flex-col items-center min-w-[44px] px-1 py-1 rounded-full transition"
-            :class="currentDayIndex === index ? 'bg-white shadow-sm' : 'bg-transparent'"
-            @click="selectDay(index)"
-          >
-            <span class="text-[10px] uppercase tracking-wide"
-                  :class="currentDayIndex === index ? 'text-stone-700' : 'text-stone-400'">
-              <span x-text="day.weekdayEn"></span>
-            </span>
-            <span class="text-sm font-semibold"
-                  :class="currentDayIndex === index ? 'text-stone-900' : 'text-stone-500'">
-              <span x-text="day.date"></span>
-            </span>
-            <!-- 紅點 -->
-            <span class="mt-1 w-1 h-1 rounded-full"
-                  :class="currentDayIndex === index ? 'bg-red-500' : 'bg-transparent'"></span>
-          </button>
-        </template>
-      </div>
+        
+        <!-- Date Slider -->
+        <div class="flex overflow-x-auto hide-scrollbar px-4 pb-3 space-x-4">
+            <template x-for="(day, index) in itinerary" :key="index">
+                <button @click="scrollToDay(index)" 
+                        class="flex flex-col items-center min-w-[50px] space-y-1 transition-all duration-300"
+                        :class="activeDayIndex === index ? 'opacity-100 scale-110' : 'opacity-40 scale-90'">
+                    <span class="text-[10px] font-bold tracking-widest uppercase" x-text="day.weekday_en"></span>
+                    <span class="text-lg font-serif font-bold" :class="activeDayIndex === index ? 'text-ink' : 'text-sub'" x-text="day.day"></span>
+                    <div class="w-1 h-1 rounded-full bg-gold" x-show="activeDayIndex === index"></div>
+                </button>
+            </template>
+        </div>
     </header>
 
-    <!-- ====== 主內容：行程 / 火車時間表 ====== -->
-    <main class="flex-1 overflow-y-auto no-scrollbar px-4 pb-28">
-
-      <!-- Tab 切換（行程 / 火車） -->
-      <div class="flex justify-center gap-6 text-xs mt-4 mb-3">
-        <button
-          class="pb-1 border-b-2"
-          :class="activePage === 'itinerary' ? 'border-stone-900 text-stone-900' : 'border-transparent text-stone-400'"
-          @click="activePage = 'itinerary'">
-          行程
-        </button>
-        <button
-          class="pb-1 border-b-2"
-          :class="activePage === 'trains' ? 'border-stone-900 text-stone-900' : 'border-transparent text-stone-400'"
-          @click="activePage = 'trains'">
-          火車時間表
-        </button>
-      </div>
-
-      <!-- =========== 行程主頁 =========== -->
-      <section x-show="activePage === 'itinerary'" x-transition>
-        <!-- 當日標題 -->
-        <div class="flex items-center justify-between mb-2">
-          <div class="flex items-center gap-2">
-            <div class="text-sm text-stone-500">
-              <span class="mr-1" x-text="`第 ${days[currentDayIndex].dayNo} 天`"></span>
-              <span class="text-xs align-middle" x-text="days[currentDayIndex].weekdayZh"></span>
-            </div>
-          </div>
-          <div class="text-[11px] text-stone-400">
-            <span x-text="days[currentDayIndex].city"></span>
-          </div>
-        </div>
-
-        <!-- 大圖卡：今日 highlight + 圖片 upload -->
-        <div class="bg-white rounded-2xl overflow-hidden shadow-sm mb-4 border border-stone-200">
-          <div class="relative">
-            <!-- 已經有圖就顯示圖；冇就顯示 placeholder -->
-            <template x-if="days[currentDayIndex].coverImage">
-              <img :src="days[currentDayIndex].coverImage"
-                   class="w-full h-44 object-cover" alt="cover">
-            </template>
-            <template x-if="!days[currentDayIndex].coverImage">
-              <div class="w-full h-44 bg-stone-200 flex flex-col items-center justify-center text-stone-500 text-xs">
-                <i class="fa-regular fa-image text-2xl mb-1"></i>
-                尚未上載今日封面照片
-              </div>
-            </template>
-
-            <!-- 圖片 Upload 按鈕 -->
-            <button
-              class="absolute right-3 top-3 bg-white/90 border border-stone-200 text-[11px] px-2 py-1 rounded-full flex items-center gap-1 shadow-sm"
-              @click="$refs.coverInput.click()">
-              <i class="fa-solid fa-camera text-[11px]"></i>
-              上載圖片
-            </button>
-            <input
-              type="file"
-              accept="image/*"
-              class="hidden"
-              x-ref="coverInput"
-              @change="onCoverUpload($event)"
-            >
-
-            <!-- 圖上文字 -->
-            <div class="absolute left-4 bottom-4 text-white drop-shadow-md">
-              <div class="text-[11px] mb-1 tracking-[0.18em]" x-text="days[currentDayIndex].label"></div>
-              <div class="text-lg font-semibold" x-text="days[currentDayIndex].highlight"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 天氣 -->
-        <section class="mb-4">
-          <div class="flex items-center justify-between mb-1">
-            <div class="text-sm">
-              <span x-text="days[currentDayIndex].city"></span>
-            </div>
-            <div class="text-[10px] text-stone-400">
-              未來 24 小時預報 · Open‑Meteo（示意）
-            </div>
-          </div>
-
-          <div class="bg-[#F9F5F0] rounded-2xl border border-stone-200 px-3 py-2">
-            <div class="flex justify-between text-[10px] text-stone-400 mb-1">
-              <span>現在</span>
-              <template x-for="(w, idx) in weather[currentDayIndex]" :key="idx">
-                <span x-text="w.hour"></span>
-              </template>
-            </div>
-            <div class="flex justify-between items-center text-xs">
-              <span class="flex items-center gap-1">
-                <i class="fa-regular fa-cloud"></i>
-                <span x-text="weather[currentDayIndex],[object Object],temp + '°'"></span>
-              </span>
-              <template x-for="(w, idx) in weather[currentDayIndex]" :key="idx">
-                <div class="flex flex-col items-center text-[11px] text-stone-500">
-                  <i :class="w.icon"></i>
-                  <span x-text="w.temp + '°'"></span>
-                </div>
-              </template>
-            </div>
-          </div>
-        </section>
-
-        <!-- 今日行程摘要卡 -->
-        <section class="mb-4">
-          <div class="bg-white rounded-2xl border border-stone-200 px-4 py-3">
-            <div class="flex items-center justify-between mb-2">
-              <div class="text-xs tracking-[0.25em] text-stone-400">TODAY</div>
-              <div class="text-[11px] text-stone-400" x-text="days[currentDayIndex].summaryLabel"></div>
-            </div>
-
-            <div class="space-y-3 text-sm">
-              <template x-for="(item, idx) in days[currentDayIndex].events" :key="idx">
-                <button
-                  class="w-full text-left border-t border-stone-100 pt-2 first:border-0 first:pt-0"
-                  @click="openEventModal(item)"
-                >
-                  <div class="flex justify-between items-center">
-                    <div class="text-[13px] text-stone-500">
-                      <span class="mr-2 font-mono" x-text="item.time"></span>
-                      <span class="font-medium" x-text="item.title"></span>
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto pt-[130px] pb-28 px-0 hide-scrollbar scroll-smooth" id="mainContainer" @scroll="handleScroll">
+        
+        <!-- Tab: 行程 (Itinerary) -->
+        <div x-show="activeTab === 'itinerary'" class="space-y-12 pb-10">
+            <template x-for="(day, dIndex) in itinerary" :key="dIndex">
+                <div :id="'day-' + dIndex" class="relative">
+                    
+                    <!-- Day Header (Magazine Style) -->
+                    <div class="px-6 mb-4 flex items-end justify-between">
+                        <div>
+                            <h2 class="text-4xl font-serif font-bold text-ink/10 relative z-0 -mb-8 ml-[-10px]" x-text="'Day ' + (dIndex + 1)"></h2>
+                            <div class="relative z-10 pl-2">
+                                <span class="block text-xs font-bold tracking-widest text-gold mb-1" x-text="day.date_full"></span>
+                                <span class="text-2xl font-serif font-bold text-ink" x-text="day.location"></span>
+                            </div>
+                        </div>
+                        <!-- Weather Widget (Mini) -->
+                        <div class="text-right">
+                            <i class="text-2xl text-stone-400 mb-1" :class="day.weatherIcon"></i>
+                            <div class="text-xs text-sub font-mono">11° / 18°</div>
+                        </div>
                     </div>
-                    <span class="text-[11px] text-stone-400" x-text="item.typeLabel"></span>
-                  </div>
-                  <p class="text-[11px] text-stone-400 mt-1 line-clamp-2" x-text="item.brief"></p>
-                </button>
-              </template>
-            </div>
-          </div>
-        </section>
 
-        <!-- 下方「播放列」風格：下一個行程 -->
-        <section class="fixed bottom-3 left-0 right-0">
-          <div class="max-w-md mx-auto px-4">
-            <template x-if="nextEvent">
-              <div class="bg-white border border-stone-200 rounded-2xl shadow-sm px-3 py-2 flex items-center gap-3">
-                <div class="flex-1">
-                  <div class="flex items-center gap-2 text-xs text-stone-400 mb-0.5">
-                    <i class="fa-regular fa-clock text-[11px]"></i>
-                    <span>下一個行程</span>
-                  </div>
-                  <div class="flex items-baseline gap-2">
-                    <span class="text-base font-semibold font-mono" x-text="nextEvent.time"></span>
-                    <span class="text-[13px]" x-text="nextEvent.title"></span>
-                    <span class="ml-1 text-[10px] px-1.5 py-0.5 rounded-full border border-stone-300 text-stone-500">
-                      行程預覽
-                    </span>
-                  </div>
+                    <!-- Weather Timeline (Like Screenshot) -->
+                    <div class="mx-4 mb-6 bg-white rounded-xl p-4 shadow-[0_2px_15px_rgba(0,0,0,0.03)] border border-stone-100 flex justify-between text-center overflow-x-auto">
+                        <template x-for="t in [9, 12, 15, 18, 21]">
+                            <div class="min-w-[40px]">
+                                <div class="text-[10px] text-sub mb-2" x-text="t + ':00'"></div>
+                                <i class="fas fa-sun text-gold text-lg mb-2" x-show="t < 18"></i>
+                                <i class="fas fa-moon text-indigo-300 text-lg mb-2" x-show="t >= 18"></i>
+                                <div class="text-xs font-bold text-ink">12°</div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Events Timeline -->
+                    <div class="space-y-6 px-4">
+                        <template x-for="(event, eIndex) in day.events" :key="eIndex">
+                            <div @click="openModal(event)" class="group relative bg-white rounded-2xl overflow-hidden shadow-[0_5px_20px_rgba(0,0,0,0.04)] transition-all duration-300 active:scale-[0.98] border border-stone-100 cursor-pointer">
+                                
+                                <!-- Image Section -->
+                                <div class="relative h-48 w-full overflow-hidden">
+                                    <img :src="event.image" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" :id="'img-' + dIndex + '-' + eIndex">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                                    
+                                    <!-- Upload Button (Hidden by default, visible on card) -->
+                                    <div class="absolute top-3 right-3 z-20" @click.stop>
+                                        <label class="bg-black/30 backdrop-blur text-white text-[10px] px-2 py-1 rounded-full cursor-pointer hover:bg-black/50 transition">
+                                            <i class="fas fa-camera mr-1"></i>更換
+                                            <input type="file" class="hidden" accept="image/*" @change="uploadImage($event, dIndex, eIndex)">
+                                        </label>
+                                    </div>
+
+                                    <div class="absolute bottom-4 left-4 text-white">
+                                        <div class="flex items-center space-x-2 mb-1">
+                                            <span class="bg-white/20 backdrop-blur px-2 py-0.5 rounded text-[10px] font-mono tracking-wider" x-text="event.time"></span>
+                                            <span class="text-[10px] uppercase tracking-widest opacity-80" x-text="event.category"></span>
+                                        </div>
+                                        <h3 class="text-xl font-serif font-bold tracking-wide shadow-black drop-shadow-md" x-text="event.title"></h3>
+                                    </div>
+                                </div>
+
+                                <!-- Mini Details -->
+                                <div class="p-4 flex justify-between items-center">
+                                    <p class="text-sm text-sub line-clamp-1" x-text="event.desc"></p>
+                                    <i class="fas fa-chevron-right text-stone-300 text-xs"></i>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
                 </div>
-                <div class="text-right text-[11px] text-stone-400">
-                  <div>預計</div>
-                  <div x-text="nextEvent.endTime || '--:--'"></div>
-                </div>
-              </div>
             </template>
-          </div>
-        </section>
-      </section>
-
-      <!-- =========== 火車時間表 Page =========== -->
-      <section x-show="activePage === 'trains'" x-transition>
-        <h2 class="text-sm tracking-[0.25em] text-stone-500 mt-2 mb-3">
-          火車時間表（30 分鐘以上）
-        </h2>
-
-        <!-- 篩選 / 排序（示意，可按需要再擴充） -->
-        <div class="flex gap-2 mb-3 text-[11px]">
-          <div class="flex-1">
-            <label class="block text-stone-400 mb-1">列車種類</label>
-            <select x-model="trainFilter.type"
-                    class="w-full text-xs rounded-full border border-stone-300 bg-[#F7F3EE] px-3 py-1.5 focus:outline-none">
-              <option value="">全部</option>
-              <option value="shinkansen">新幹線</option>
-              <option value="limited">特急</option>
-              <option value="sightseeing">觀光列車</option>
-            </select>
-          </div>
-          <div class="w-28">
-            <label class="block text-stone-400 mb-1">排序</label>
-            <select x-model="trainFilter.sort"
-                    class="w-full text-xs rounded-full border border-stone-300 bg-[#F7F3EE] px-3 py-1.5 focus:outline-none">
-              <option value="day">按日子</option>
-              <option value="time">按時間</option>
-              <option value="duration">按車程</option>
-            </select>
-          </div>
         </div>
 
-        <!-- 列表 -->
-        <div class="space-y-3 mb-10">
-          <template x-for="(t, idx) in filteredTrains" :key="idx">
-            <article class="bg-white rounded-2xl border border-stone-200 px-4 py-3 text-sm">
-              <div class="flex items-center justify-between mb-1">
-                <div class="flex items-center gap-2">
-                  <span class="text-[11px] px-2 py-0.5 rounded-full border border-stone-300 text-stone-500">
-                    <span x-text="t.dayLabel"></span>
-                  </span>
-                  <span class="font-semibold" x-text="t.name"></span>
-                </div>
-                <span class="text-[11px] text-stone-400" x-text="t.typeLabel"></span>
-              </div>
+        <!-- Tab: 鐵道時刻 (Trains) -->
+        <div x-show="activeTab === 'trains'" class="px-4 space-y-6" x-transition:enter="transition ease-out duration-300">
+            <div class="text-center py-6">
+                <h2 class="text-2xl font-serif font-bold text-ink">鐵道時刻表</h2>
+                <p class="text-xs text-sub mt-2 tracking-widest uppercase">TRAIN TIMETABLE (>30MIN)</p>
+            </div>
 
-              <div class="flex items-center justify-between mt-1 mb-1 text-[13px]">
-                <div class="flex flex-col">
-                  <span class="text-stone-500" x-text="t.from"></span>
-                  <span class="text-[11px] text-stone-400">出發 <span x-text="t.depart"></span></span>
+            <template x-for="train in trainSchedule">
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-stone-200">
+                    <div class="bg-stone-50 px-4 py-3 border-b border-stone-100 flex justify-between items-center">
+                        <span class="font-bold text-sm text-ink" x-text="train.date"></span>
+                        <span class="text-[10px] px-2 py-1 bg-indigo-100 text-indigo-700 rounded font-bold" x-text="train.name"></span>
+                    </div>
+                    <div class="p-4 flex items-center justify-between relative">
+                        <!-- Left -->
+                        <div class="text-center w-1/3">
+                            <div class="text-xl font-bold font-mono text-ink" x-text="train.depTime"></div>
+                            <div class="text-xs text-sub mt-1" x-text="train.depStn"></div>
+                        </div>
+                        <!-- Center Arrow -->
+                        <div class="flex-1 flex flex-col items-center px-2">
+                            <div class="text-[10px] text-stone-400 mb-1" x-text="train.duration"></div>
+                            <div class="w-full h-[1px] bg-stone-300 relative">
+                                <div class="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-stone-300 rounded-full"></div>
+                                <i class="fas fa-train absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-stone-400 bg-white px-1 text-xs"></i>
+                            </div>
+                        </div>
+                        <!-- Right -->
+                        <div class="text-center w-1/3">
+                            <div class="text-xl font-bold font-mono text-ink" x-text="train.arrTime"></div>
+                            <div class="text-xs text-sub mt-1" x-text="train.arrStn"></div>
+                        </div>
+                    </div>
+                    <!-- Notes -->
+                    <div class="px-4 pb-3 pt-0" x-show="train.note">
+                        <div class="text-[10px] text-orange-600 bg-orange-50 p-2 rounded border border-orange-100">
+                            <i class="fas fa-info-circle mr-1"></i> <span x-text="train.note"></span>
+                        </div>
+                    </div>
                 </div>
-                <div class="text-stone-300">
-                  <i class="fa-solid fa-arrow-right-long"></i>
-                </div>
-                <div class="flex flex-col text-right">
-                  <span class="text-stone-500" x-text="t.to"></span>
-                  <span class="text-[11px] text-stone-400">到達 <span x-text="t.arrive"></span></span>
-                </div>
-              </div>
-
-              <div class="flex items-center justify-between text-[11px] text-stone-400 mb-1">
-                <span>車程：約 <span x-text="t.durationText"></span></span>
-                <span x-text="t.note"></span>
-              </div>
-
-              <template x-if="t.description">
-                <p class="mt-1 text-[11px] text-stone-500" x-text="t.description"></p>
-              </template>
-            </article>
-          </template>
-
-          <template x-if="filteredTrains.length === 0">
-            <p class="text-xs text-stone-400 text-center mt-6">
-              暫時沒有符合條件的火車（≥ 30 分鐘）。
-            </p>
-          </template>
+            </template>
         </div>
-      </section>
+
+        <!-- Tab: 準備 & 預算 (Prep) - 簡化版 -->
+        <div x-show="activeTab === 'prep'" class="px-4 space-y-6">
+            <h2 class="text-2xl font-serif font-bold text-ink mt-6 mb-4">行前準備</h2>
+            
+            <!-- Visit Japan -->
+            <div class="bg-gradient-to-r from-pink-500 to-rose-400 rounded-xl p-6 text-white shadow-lg relative overflow-hidden">
+                <div class="relative z-10">
+                    <h3 class="font-bold text-lg mb-1">Visit Japan Web</h3>
+                    <p class="text-xs opacity-90 mb-4">入境審查、海關申報 QR Code</p>
+                    <a href="https://vjw-lp.digital.go.jp/en/" target="_blank" class="inline-block bg-white text-pink-600 text-xs font-bold px-4 py-2 rounded-full shadow-sm">
+                        前往填寫 <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                <i class="fas fa-qrcode absolute -right-4 -bottom-4 text-9xl opacity-20 rotate-12"></i>
+            </div>
+
+            <!-- Budget (Simple) -->
+            <div class="bg-white rounded-xl p-5 border border-stone-200">
+                <h3 class="font-serif font-bold text-lg mb-4">預算概覽</h3>
+                <div class="space-y-3">
+                    <template x-for="item in budgetItems">
+                        <div class="flex justify-between text-sm border-b border-stone-100 pb-2">
+                            <span class="text-sub" x-text="item.name"></span>
+                            <span class="font-mono font-medium" x-text="'¥' + item.price.toLocaleString()"></span>
+                        </div>
+                    </template>
+                    <div class="flex justify-between text-lg font-bold pt-2 text-ink">
+                        <span>Total</span>
+                        <span x-text="'¥' + totalBudget.toLocaleString()"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
-    <!-- ====== 行程詳情 Modal ====== -->
-    <div
-      class="fixed inset-0 bg-black/40 flex items-end justify-center z-30"
-      x-show="showModal"
-      x-transition
-      @click.self="closeModal()"
-    >
-      <div class="bg-[#F7F3EE] w-full max-w-md rounded-t-3xl px-5 pt-4 pb-7 shadow-xl">
-        <header class="flex items-start justify-between mb-3">
-          <div>
-            <div class="flex items-center gap-2 mb-1">
-              <span class="text-[10px] px-2 py-0.5 rounded-full border border-red-300 text-red-600"
-                    x-text="modalEvent.tag || 'FOOD'"></span>
-              <span class="text-[11px] text-stone-400" x-text="modalEvent.time"></span>
+    <!-- Detail Modal (The "Magazine" Overlay) -->
+    <div x-show="modalOpen" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center pointer-events-none" x-cloak>
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm pointer-events-auto transition-opacity duration-300" 
+             x-show="modalOpen" x-transition.opacity @click="modalOpen = false"></div>
+        
+        <!-- Card -->
+        <div class="bg-paper w-full max-w-md h-[85vh] sm:h-auto sm:rounded-2xl rounded-t-3xl shadow-2xl overflow-y-auto pointer-events-auto transform transition-transform duration-300 flex flex-col"
+             x-show="modalOpen" 
+             x-transition:enter="translate-y-full" x-transition:enter-end="translate-y-0"
+             x-transition:leave="translate-y-0" x-transition:leave-end="translate-y-full">
+            
+            <!-- Close Button -->
+            <button @click="modalOpen = false" class="absolute top-4 right-4 z-20 w-8 h-8 bg-black/20 backdrop-blur text-white rounded-full flex items-center justify-center hover:bg-black/40 transition">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <!-- Modal Image -->
+            <div class="h-64 shrink-0 relative">
+                <img :src="selectedEvent?.image" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-paper to-transparent"></div>
             </div>
-            <h3 class="text-base font-semibold" x-text="modalEvent.title"></h3>
-          </div>
-          <button class="text-stone-400 text-lg" @click="closeModal()">×</button>
-        </header>
 
-        <!-- 地址 -->
-        <div class="flex items-center gap-2 text-xs text-stone-500 mb-3" x-show="modalEvent.address">
-          <i class="fa-solid fa-location-dot text-[11px] text-stone-400"></i>
-          <span x-text="modalEvent.address"></span>
-        </div>
+            <!-- Content -->
+            <div class="px-6 pb-8 -mt-12 relative z-10 flex-1">
+                <!-- Header -->
+                <div class="mb-6">
+                    <div class="flex items-center space-x-2 mb-2">
+                        <span class="text-xs font-bold text-gold tracking-widest uppercase border border-gold/30 px-2 py-0.5 rounded" x-text="selectedEvent?.category"></span>
+                        <span class="text-xs text-sub font-mono" x-text="selectedEvent?.time"></span>
+                    </div>
+                    <h2 class="text-3xl font-serif font-bold text-ink leading-tight mb-2" x-text="selectedEvent?.title"></h2>
+                    <p class="text-sm text-sub" x-text="selectedEvent?.location_detail || '九州, 日本'"></p>
+                </div>
 
-        <!-- 兩個主按鈕 -->
-        <div class="flex flex-col gap-2 mb-4">
-          <a :href="modalEvent.mapUrl" target="_blank"
-             class="w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white text-xs py-2.5 rounded-xl font-medium">
-            <i class="fa-solid fa-location-arrow mr-1"></i> Google Maps 導航
-          </a>
-          <a :href="modalEvent.siteUrl" target="_blank"
-             class="w-full text-center bg-black/90 hover:bg-black text-white text-xs py-2.5 rounded-xl font-medium">
-            官方網站
-          </a>
-        </div>
+                <!-- Description -->
+                <div class="prose prose-stone prose-sm mb-8 text-stone-600 leading-relaxed" x-html="selectedEvent?.desc"></div>
 
-        <!-- 介紹內容 -->
-        <div class="space-y-2 text-[12px] text-stone-600 leading-relaxed mb-4">
-          <template x-for="(p, idx) in modalEvent.paragraphs" :key="idx">
-            <p x-text="p"></p>
-          </template>
-        </div>
+                <!-- Point & Speak (指差会話) -->
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100 mb-6" x-show="selectedEvent?.japanese">
+                    <h4 class="text-xs font-bold text-stone-400 uppercase mb-3 tracking-widest">指差会話 Point & Speak</h4>
+                    <div class="space-y-4">
+                        <template x-for="phrase in selectedEvent?.japanese">
+                            <div class="border-b border-stone-100 pb-3 last:border-0 last:pb-0">
+                                <p class="text-lg font-bold text-ink mb-1" x-text="phrase.jp"></p>
+                                <p class="text-xs text-sub" x-text="phrase.zh"></p>
+                            </div>
+                        </template>
+                    </div>
+                </div>
 
-        <!-- 指差し會話 -->
-        <div class="mb-4" x-show="modalEvent.pointSpeak && modalEvent.pointSpeak.length">
-          <div class="text-[11px] text-stone-400 mb-1">✍ 指差し會話（POINT &amp; SPEAK）</div>
-          <div class="border border-stone-200 rounded-xl overflow-hidden text-[11px]">
-            <template x-for="row in modalEvent.pointSpeak">
-              <div class="grid grid-cols-2 border-t border-stone-200 first:border-0">
-                <div class="px-3 py-1.5 bg-white" x-text="row.cn"></div>
-                <div class="px-3 py-1.5 bg-stone-50" x-text="row.jp"></div>
-              </div>
-            </template>
-          </div>
+                <!-- Actions -->
+                <div class="grid grid-cols-2 gap-3 mt-auto">
+                    <a :href="'https://www.google.com/maps/search/?api=1&query=' + selectedEvent?.title" target="_blank" 
+                       class="flex items-center justify-center bg-stone-800 text-white py-3 rounded-lg font-bold text-sm hover:bg-stone-700 transition">
+                        <i class="fas fa-location-arrow mr-2"></i> Google Maps
+                    </a>
+                    <button class="flex items-center justify-center bg-white border border-stone-300 text-stone-700 py-3 rounded-lg font-bold text-sm hover:bg-stone-50 transition">
+                        <i class="fas fa-globe mr-2"></i> 官方網站
+                    </button>
+                </div>
+            </div>
         </div>
-
-        <!-- 電話 / GPS -->
-        <div class="bg-white rounded-xl border border-stone-200 px-3 py-2 flex items-center justify-between text-[11px] text-stone-600" x-show="modalEvent.phone">
-          <div class="flex items-center gap-2">
-            <i class="fa-solid fa-location-arrow text-[11px] text-stone-400"></i>
-            <span>CAR GPS / PHONE</span>
-          </div>
-          <span class="font-mono" x-text="modalEvent.phone"></span>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <!-- Alpine Data -->
-  <script>
-    function tripApp() {
-      return {
-        activePage: 'itinerary',
-        currentDayIndex: 0,
-        showModal: false,
-        modalEvent: {},
-        trainFilter: {
-          type: '',
-          sort: 'day'
-        },
+    <!-- Bottom Tab Bar (Floating Glass) -->
+    <nav class="fixed bottom-6 left-6 right-6 h-16 glass-panel rounded-full flex justify-around items-center z-40 shadow-[0_8px_30px_rgba(0,0,0,0.12)] max-w-md mx-auto">
+        <button @click="activeTab = 'itinerary'" class="flex flex-col items-center justify-center w-12 h-12 rounded-full transition relative" :class="activeTab === 'itinerary' ? 'text-ink' : 'text-stone-400'">
+            <i class="fas fa-map text-lg mb-0.5"></i>
+            <span class="text-[9px] font-medium">行程</span>
+            <div class="absolute -bottom-1 w-1 h-1 bg-ink rounded-full" x-show="activeTab === 'itinerary'"></div>
+        </button>
+        <button @click="activeTab = 'trains'" class="flex flex-col items-center justify-center w-12 h-12 rounded-full transition relative" :class="activeTab === 'trains' ? 'text-ink' : 'text-stone-400'">
+            <i class="fas fa-train text-lg mb-0.5"></i>
+            <span class="text-[9px] font-medium">鐵道</span>
+            <div class="absolute -bottom-1 w-1 h-1 bg-ink rounded-full" x-show="activeTab === 'trains'"></div>
+        </button>
+        <button @click="activeTab = 'prep'" class="flex flex-col items-center justify-center w-12 h-12 rounded-full transition relative" :class="activeTab === 'prep' ? 'text-ink' : 'text-stone-400'">
+            <i class="fas fa-suitcase text-lg mb-0.5"></i>
+            <span class="text-[9px] font-medium">準備</span>
+            <div class="absolute -bottom-1 w-1 h-1 bg-ink rounded-full" x-show="activeTab === 'prep'"></div>
+        </button>
+    </nav>
 
-        // 行程日資料（Demo：你可以之後自己改內容）
-        days: [
-          {
-            dayNo: 1,
-            weekdayEn: 'SAT',
-            weekdayZh: '第一天',
-            date: '14',
-            city: '熊本市',
-            label: 'DAY 1  熊本市',
-            highlight: '加藤清正的熊本城',
-            summaryLabel: '本日景點 / 餐食',
-            coverImage: '',
-            events: [
-              {
-                time: '13:00',
-                title: '午餐：魚飯時（sahanji）',
-                type: 'food',
-                typeLabel: '餐食',
-                brief: '時令海鮮豪華御膳 · 熊本市人氣名店',
-                address: '熊本市中央區紺屋町2-14',
-                mapUrl: 'https://www.google.com/maps',
-                siteUrl: 'https://example.com',
-                paragraphs: [
-                  '油脂分佈最完美的頂級漁獲，招牌為「時令海鮮豪華御膳」。',
-                  '套餐包含厚切刺身、鮮味十足的茶碗蒸，以及各式精緻小料理。'
+    <script>
+        function tripApp() {
+            return {
+                activeTab: 'itinerary',
+                activeDayIndex: 0,
+                scrolled: false,
+                modalOpen: false,
+                selectedEvent: null,
+                
+                // Scroll Handling
+                handleScroll(e) {
+                    this.scrolled = e.target.scrollTop > 20;
+                    // Simple scroll spy logic could go here to update activeDayIndex
+                },
+                scrollToDay(index) {
+                    this.activeDayIndex = index;
+                    this.activeTab = 'itinerary';
+                    const el = document.getElementById('day-' + index);
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // Adjust for header offset
+                        setTimeout(() => {
+                            const container = document.getElementById('mainContainer');
+                            container.scrollTop -= 140; 
+                        }, 100); // small delay for smooth scroll to start
+                    }
+                },
+                openModal(event) {
+                    this.selectedEvent = event;
+                    this.modalOpen = true;
+                },
+                uploadImage(event, dIndex, eIndex) {
+                    const file = event.target.files,[object Object],;
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            // Update data
+                            this.itinerary[dIndex].events[eIndex].image = e.target.result;
+                            // Force Alpine to react (sometimes deep arrays need help)
+                            this.itinerary = [...this.itinerary];
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                },
+
+                // Data: Train Schedule (>30 mins)
+                trainSchedule: [
+                    { date: '2/27 (五)', name: '36+3 觀光列車', depTime: '15:00', depStn: '博多', arrTime: '21:26', arrStn: '鹿兒島中央', duration: '6h 26m', note: '全車指定席，需提前劃位。含豪華便當。' },
+                    { date: '3/1 (日)', name: '新幹線 Tsubame', depTime: '10:00', depStn: '鹿兒島中央', arrTime: '11:00', arrStn: '熊本', duration: '1h 00m', note: '舒適快捷，可欣賞沿途風景。' },
+                    { date: '3/2 (一)', name: '特急 Kirishima', depTime: '10:00', depStn: '熊本', arrTime: '12:00', arrStn: '宮崎', duration: '2h 00m', note: '需經由新八代轉乘 B&S 巴士或經大分。' },
+                    { date: '3/3 (二)', name: '海幸山幸', depTime: '14:00', depStn: '宮崎', arrTime: '15:00', arrStn: '南鄉', duration: '1h 00m', note: '全木造觀光列車，特色體驗。' },
+                    { date: '3/4 (三)', name: '特急 Sonic', depTime: '10:00', depStn: '宮崎', arrTime: '13:00', arrStn: '博多', duration: '3h 00m', note: '經大分，日豐本線。' },
+                    { date: '3/5 (四)', name: '機場線', depTime: '12:00', depStn: '博多', arrTime: '12:10', arrStn: '福岡機場', duration: '10m', note: '請務必準時。' }
                 ],
-                pointSpeak: [
-                  { cn: '海鮮豪華御膳', jp: '海鮮贅沢御膳' },
-                  { cn: '荒炊魚頭', jp: '荒炊き（Aradaki）' },
-                  { cn: '生魚片', jp: '刺身' }
+
+                // Data: Budget
+                budgetItems: [
+                    { name: 'JR Pass 全九州', price: 20000 },
+                    { name: '36+3 列車', price: 25000 },
+                    { name: '住宿 (6晚)', price: 90000 },
+                    { name: '餐飲預估', price: 70000 }
                 ],
-                phone: '096-356-0382',
-                endTime: '13:45'
-              },
-              {
-                time: '16:30',
-                title: 'AMU Plaza 熊本 · 購物',
-                type: 'sight',
-                typeLabel: '自由活動',
-                brief: '車站上蓋大型商場，各自覓食 / 購物。',
-                endTime: '19:00'
-              }
-            ]
-          },
-          {
-            dayNo: 4,
-            weekdayEn: 'TUE',
-            weekdayZh: '第四天',
-            date: '17',
-            city: '福岡（博多）',
-            label: 'DAY 4  福岡（博多）',
-            highlight: '豪華觀光列車',
-            summaryLabel: '本日重點 · 豪華觀光列車',
-            coverImage: '',
-            events: [
-              {
-                time: '09:00',
-                title: '博多站集合',
-                type: 'transport',
-                typeLabel: '集合',
-                brief: '於博多站月台集合，準備登上觀光列車。',
-                endTime: '09:30'
-              },
-              {
-                time: '10:00',
-                title: '豪華觀光列車 36+3',
-                type: 'train',
-                typeLabel: '觀光列車',
-                brief: '沿路欣賞九州山巒與海岸風景，途中停靠玉名、牛之濱。',
-                endTime: '16:30'
-              },
-              {
-                time: '18:30',
-                title: '博多晚餐 · 屋台',
-                type: 'food',
-                typeLabel: '晚餐',
-                brief: '於中州屋台街享用拉麵或燒物，體驗夜間氛圍。',
-                endTime: '20:00'
-              }
-            ]
-          }
-        ],
+                get totalBudget() { return this.budgetItems.reduce((sum, i) => sum + i.price, 0); },
 
-        // 非真實天氣，只係 Demo
-        weather: [
-          [
-            { hour: '01:00', icon: 'fa-regular fa-sun', temp: 9 },
-            { hour: '02:00', icon: 'fa-regular fa-sun', temp: 8 },
-            { hour: '03:00', icon: 'fa-regular fa-sun', temp: 8 },
-            { hour: '04:00', icon: 'fa-regular fa-sun', temp: 8 }
-          ],
-          [
-            { hour: '01:00', icon: 'fa-regular fa-cloud', temp: 11 },
-            { hour: '02:00', icon: 'fa-regular fa-sun', temp: 11 },
-            { hour: '03:00', icon: 'fa-regular fa-sun', temp: 11 },
-            { hour: '04:00', icon: 'fa-regular fa-sun', temp: 10 }
-          ]
-        ],
-
-        // 火車資料（≥30 分鐘先會顯示）
-        trains: [
-          {
-            dayIndex: 0,
-            dayLabel: 'DAY 1 · 熊本',
-            name: '新幹線 Tsubame',
-            from: '鹿兒島中央',
-            to: '熊本',
-            depart: '10:00',
-            arrive: '11:00',
-            durationMin: 60,
-            type: 'shinkansen',
-            typeLabel: '新幹線',
-            note: '已包含 JR Pass',
-            description: '舒適自由席，沿途可欣賞九州平原景色。'
-          },
-          {
-            dayIndex: 0,
-            dayLabel: 'DAY 1 · 熊本',
-            name: '特急 Kirishima',
-            from: '熊本',
-            to: '宮崎',
-            depart: '13:00',
-            arrive: '15:00',
-            durationMin: 120,
-            type: 'limited',
-            typeLabel: '特急',
-            note: '建議預約指定席',
-            description: '經過霧島一帶，景色優美。'
-          },
-          {
-            dayIndex: 1,
-            dayLabel: 'DAY 4 · 福岡',
-            name: '36+3 豪華列車',
-            from: '博多',
-            to: '鹿兒島中央',
-            depart: '10:00',
-            arrive: '16:30',
-            durationMin: 390,
-            type: 'sightseeing',
-            typeLabel: '觀光列車',
-            note: '需提前預約 · 餐食另計',
-            description: '途中停靠玉名（足湯）、牛之濱（海景），享受慢旅時光。'
-          }
-        ],
-
-        // ===== Method / 計算屬性 =====
-        selectDay(index) {
-          this.currentDayIndex = index;
-        },
-
-        get nextEvent() {
-          const events = this.days[this.currentDayIndex].events || [];
-          if (!events.length) return null;
-          return events,[object Object],; // 簡單示範：預設第一個當作「下一個行程」
-        },
-
-        openEventModal(item) {
-          // 若 event 自己有詳細資料就直接用；冇就簡單包裝
-          this.modalEvent = Object.assign(
-            {
-              tag: item.type === 'food' ? 'FOOD' : 'NOTE',
-              address: item.address || '',
-              mapUrl: item.mapUrl || 'https://www.google.com/maps',
-              siteUrl: item.siteUrl || '#',
-              paragraphs: item.paragraphs || [item.brief || ''],
-              pointSpeak: item.pointSpeak || [],
-              phone: item.phone || ''
-            },
-            item
-          );
-          this.showModal = true;
-        },
-
-        closeModal() {
-          this.showModal = false;
-          this.modalEvent = {};
-        },
-
-        onCoverUpload(e) {
-          const file = e.target.files,[object Object],;
-          if (!file) return;
-          const url = URL.createObjectURL(file);
-          this.days[this.currentDayIndex].coverImage = url;
-        },
-
-        get filteredTrains() {
-          // 只取 duration ≥ 30 min
-          let list = this.trains.filter(t => t.durationMin >= 30);
-
-          if (this.trainFilter.type) {
-            list = list.filter(t => t.type === this.trainFilter.type);
-          }
-
-          if (this.trainFilter.sort === 'time') {
-            list = list.slice().sort((a, b) => a.depart.localeCompare(b.depart));
-          } else if (this.trainFilter.sort === 'duration') {
-            list = list.slice().sort((a, b) => a.durationMin - b.durationMin);
-          } else {
-            // 按日子
-            list = list.slice().sort((a, b) => a.dayIndex - b.dayIndex);
-          }
-
-          // 轉換 duration 文案
-          return list.map(t => ({
-            ...t,
-            durationText: this.formatDuration(t.durationMin)
-          }));
-        },
-
-        formatDuration(min) {
-          const h = Math.floor(min / 60);
-          const m = min % 60;
-          if (!h) return `${m} 分鐘`;
-          if (!m) return `${h} 小時`;
-          return `${h} 小時 ${m} 分鐘`;
+                // Data: Itinerary
+                itinerary: [
+                    {
+                        date_full: '2025.02.27', weekday_en: 'FRI', day: '27', location: 'Fukuoka', weatherIcon: 'fas fa-sun',
+                        events: [
+                            { 
+                                time: '15:00', category: 'Train', title: '36+3 豪華列車', location_detail: '博多站 -> 鹿兒島中央',
+                                image: 'https://images.unsplash.com/photo-1535205500668-35790d931969?w=800&q=80',
+                                desc: '九州最頂級的觀光列車體驗。車廂內鋪設榻榻米，提供精緻的當地食材便當。途中會停靠玉名站享受足湯，以及牛之濱站欣賞絕美海景。',
+                                japanese: [
+                                    { jp: '36ぷらす3の乗り場はどこですか？', zh: '請問 36+3 列車的月台在哪裡？' },
+                                    { jp: '駅弁を買いたいです。', zh: '我想買火車便當。' }
+                                ]
+                            },
+                            { 
+                                time: '21:30', category: 'Food', title: '吾愛人 (Wakana)', location_detail: '鹿兒島天文館通',
+                                image: 'https://images.unsplash.com/photo-1604642202352-79eff37d8966?w=800&q=80',
+                                desc: '鹿兒島必吃的黑豚涮涮鍋名店。創立於昭和21年，湯頭鮮美，黑豬肉片入口即化。建議搭配當地的燒酒（Shochu）。',
+                                japanese: [
+                                    { jp: '予約しています。', zh: '我有預約。' },
+                                    { jp: '黒豚しゃぶしゃぶをお願いします。', zh: '請給我黑豚涮涮鍋。' }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        date_full: '2025.02.28', weekday_en: 'SAT', day: '28', location: 'Kagoshima', weatherIcon: 'fas fa-cloud-sun',
+                        events: [
+                            { 
+                                time: '09:00', category: 'Sight', title: '仙巖園', location_detail: '鹿兒島市吉野町',
+                                image: 'https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800&q=80',
+                                desc: '薩摩藩主島津家的別邸，以壯闊的櫻島火山為假山，錦江灣為池塘的借景庭園。園內的「兩棒餅」是必吃甜點。',
+                                japanese: [{ jp: '大人2枚お願いします。', zh: '請給我兩張成人票。' }]
+                            },
+                            { 
+                                time: '13:00', category: 'Food', title: '天文館 無邪氣', location_detail: '天文館通',
+                                image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=800&q=80',
+                                desc: '鹿兒島名物「白熊冰」的創始店。巨大的刨冰淋上煉乳，擺滿水果，從上方看像一隻白熊的臉。',
+                                japanese: [{ jp: '白熊（しろくま）を一つください。', zh: '請給我一份白熊冰。' }]
+                            }
+                        ]
+                    },
+                    {
+                        date_full: '2025.03.01', weekday_en: 'SUN', day: '01', location: 'Kumamoto', weatherIcon: 'fas fa-cloud',
+                        events: [
+                            { 
+                                time: '12:00', category: 'Sight', title: '熊本城', location_detail: '熊本市中央區',
+                                image: 'https://images.unsplash.com/photo-1624606282855-333d0267a051?w=800&q=80',
+                                desc: '日本三大名城之一，別名「銀杏城」。雖然在地震中受損，但天守閣已修復完成，黑色的外觀極具氣勢。',
+                                japanese: []
+                            },
+                            { 
+                                time: '13:15', category: 'Food', title: '魚飯時 (Sahanji)', location_detail: '熊本市中央區細工町',
+                                image: 'https://images.unsplash.com/photo-1625937751876-4515cd8e7752?w=800&q=80',
+                                desc: '【必嚐：時令海鮮豪華御膳】這是店內的招牌。包含了厚切刺身（通常有熊本特產的真鯛、車海老）、鮮味十足的茶碗蒸。',
+                                japanese: [
+                                    { jp: '海鮮贅沢御膳をお願いします。', zh: '請給我海鮮豪華御膳。' },
+                                    { jp: 'お会計をお願いします。', zh: '麻煩結帳。' }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        date_full: '2025.03.02', weekday_en: 'MON', day: '02', location: 'Miyazaki', weatherIcon: 'fas fa-cloud-rain',
+                        events: [
+                            { 
+                                time: '14:00', category: 'Sight', title: '油津港', location_detail: '宮崎縣日南市',
+                                image: 'https://images.unsplash.com/photo-1544298621-26732709298c?w=800&q=80',
+                                desc: '充滿昭和風情的港口小鎮。可以漫步在紅磚倉庫群，感受悠閒的漁港氛圍。',
+                                japanese: []
+                            },
+                            { 
+                                time: '17:00', category: 'Hotel', title: '宮崎溫泉旅館', location_detail: '青島溫泉',
+                                image: 'https://images.unsplash.com/photo-1560200353-ce0a76b1d438?w=800&q=80',
+                                desc: '入住海邊的溫泉旅館，享受著名的「美人之湯」。晚餐享用宮崎牛與伊勢龍蝦。',
+                                japanese: [{ jp: 'チェックインをお願いします。', zh: '我要辦理入住。' }]
+                            }
+                        ]
+                    },
+                    {
+                        date_full: '2025.03.03', weekday_en: 'TUE', day: '03', location: 'Miyazaki', weatherIcon: 'fas fa-sun',
+                        events: [
+                            { 
+                                time: '09:00', category: 'Sight', title: '青島神社', location_detail: '宮崎縣青島',
+                                image: 'https://images.unsplash.com/photo-1528360983277-13d9b152c6d1?w=800&q=80',
+                                desc: '位於小島上的神社，周圍被奇特的波狀岩「鬼之洗衣板」包圍。這裡是著名的結緣神社。',
+                                japanese: []
+                            },
+                            { 
+                                time: '14:00', category: 'Train', title: '海幸山幸', location_detail: '宮崎 -> 南鄉',
+                                image: 'https://images.unsplash.com/photo-1508906973562-b25859666c88?w=800&q=80',
+                                desc: '使用當地飫肥杉製作的觀光列車，充滿木頭香氣。車掌會講述海幸彥與山幸彥的神話故事。',
+                                japanese: []
+                            }
+                        ]
+                    },
+                    {
+                        date_full: '2025.03.04', weekday_en: 'WED', day: '04', location: 'Hakata', weatherIcon: 'fas fa-cloud-sun',
+                        events: [
+                            { 
+                                time: '15:00', category: 'Sight', title: '博多運河城', location_detail: '福岡市博多區',
+                                image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=800&q=80',
+                                desc: '大型複合購物中心，有運河貫穿其中。每小時有音樂噴水秀。',
+                                japanese: []
+                            },
+                            { 
+                                time: '19:00', category: 'Sight', title: '福岡塔', location_detail: '百道濱',
+                                image: 'https://images.unsplash.com/photo-1623838634842-45e35327d6d3?w=800&q=80',
+                                desc: '日本最高的海濱塔。夜晚的燈光秀非常迷人，可以俯瞰整個福岡市夜景。',
+                                japanese: []
+                            }
+                        ]
+                    },
+                    {
+                        date_full: '2025.03.05', weekday_en: 'THU', day: '05', location: 'Airport', weatherIcon: 'fas fa-sun',
+                        events: [
+                            { 
+                                time: '10:00', category: 'Shop', title: '博多站購物', location_detail: 'JR博多城',
+                                image: 'https://images.unsplash.com/photo-1491933382434-500287f9b54b?w=800&q=80',
+                                desc: '最後衝刺！購買明太子、博多通饅頭等伴手禮。',
+                                japanese: []
+                            },
+                            { 
+                                time: '12:00', category: 'Flight', title: '前往機場', location_detail: '福岡機場 (FUK)',
+                                image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80',
+                                desc: '搭乘地鐵空港線只需 5 分鐘即可抵達機場。請務必預留時間辦理登機。',
+                                japanese: []
+                            }
+                        ]
+                    }
+                ]
+            }
         }
-      };
-    }
-  </script>
+    </script>
 </body>
 </html>
