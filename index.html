@@ -10,9 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Alpine.js (放在最後載入) -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
-
+    
     <script>
         tailwind.config = {
             theme: {
@@ -39,9 +37,10 @@
         [x-cloak] { display: none !important; }
     </style>
 </head>
-<body class="text-ink h-screen flex flex-col font-sans" x-data="tripApp">
+<!-- 注意：這裡改成了 x-data="tripApp()" -->
+<body class="text-ink h-screen flex flex-col font-sans" x-data="tripApp()">
 
-    <!-- Top Navigation (Transparent to White on scroll) -->
+    <!-- Top Navigation -->
     <header class="fixed top-0 w-full z-30 transition-all duration-300" 
             :class="scrolled ? 'bg-paper/95 backdrop-blur shadow-sm pt-safe' : 'bg-transparent pt-safe text-white'">
         <div class="flex justify-between items-center px-5 py-4">
@@ -54,7 +53,7 @@
             </div>
         </div>
         
-        <!-- Date Slider (Only visible when scrolled down) -->
+        <!-- Date Slider -->
         <div class="overflow-hidden transition-all duration-300" :style="scrolled ? 'max-height: 80px; opacity: 1;' : 'max-height: 0; opacity: 0;'">
             <div class="flex overflow-x-auto hide-scrollbar px-4 pb-2 space-x-4">
                 <template x-for="(day, index) in itinerary" :key="index">
@@ -78,6 +77,7 @@
             
             <!-- Hero Cover Section -->
             <div class="relative h-[60vh] w-full overflow-hidden">
+                <!-- 這裡直接使用 src 確保圖片一定會載入，不依賴 JS -->
                 <img src="https://res.klook.com/image/upload/fl_lossy.progressive,q_85/c_fill,w_1000/v1601446347/blog/y8s8s8s8s8s8s8s8.jpg" 
                      class="w-full h-full object-cover object-center">
                 <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-paper"></div>
@@ -101,19 +101,19 @@
                                     <span class="text-2xl font-serif font-bold text-ink" x-text="day.location"></span>
                                 </div>
                             </div>
-                            <!-- Weather Widget -->
+                            <!-- Weather -->
                             <div class="flex flex-col items-end">
                                 <i class="text-xl text-stone-400 mb-1" :class="day.weatherIcon"></i>
                                 <div class="text-xs text-sub font-mono">11° / 18°</div>
                             </div>
                         </div>
 
-                        <!-- Events Timeline -->
+                        <!-- Events -->
                         <div class="space-y-6">
                             <template x-for="(event, eIndex) in day.events" :key="eIndex">
                                 <div @click="openModal(event)" class="group relative bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-transform active:scale-[0.98] border border-stone-100 cursor-pointer">
                                     
-                                    <!-- Image Section -->
+                                    <!-- Image -->
                                     <div class="relative h-48 w-full overflow-hidden">
                                         <img :src="event.image" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
                                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
@@ -135,7 +135,7 @@
                                         </div>
                                     </div>
 
-                                    <!-- Mini Details -->
+                                    <!-- Details -->
                                     <div class="p-4 flex justify-between items-center bg-white">
                                         <p class="text-sm text-stone-500 line-clamp-1" x-text="event.desc"></p>
                                         <i class="fas fa-chevron-right text-stone-300 text-xs"></i>
@@ -148,8 +148,8 @@
             </div>
         </div>
 
-        <!-- Tab: 鐵道時刻 (Trains) -->
-        <div x-show="activeTab === 'trains'" class="px-4 space-y-6 pt-24 pb-28" x-transition:enter="transition ease-out duration-300">
+        <!-- Tab: 鐵道時刻 -->
+        <div x-show="activeTab === 'trains'" class="px-4 space-y-6 pt-24 pb-28">
             <div class="text-center mb-8">
                 <h2 class="text-2xl font-serif font-bold text-ink">鐵道時刻表</h2>
                 <div class="w-10 h-1 bg-gold mx-auto mt-2 mb-1"></div>
@@ -163,12 +163,10 @@
                         <span class="text-[10px] px-2 py-1 bg-indigo-50 text-indigo-600 rounded font-bold border border-indigo-100" x-text="train.name"></span>
                     </div>
                     <div class="p-4 flex items-center justify-between relative">
-                        <!-- Left -->
                         <div class="text-center w-1/3">
                             <div class="text-xl font-bold font-mono text-ink" x-text="train.depTime"></div>
                             <div class="text-xs text-sub mt-1" x-text="train.depStn"></div>
                         </div>
-                        <!-- Center Arrow -->
                         <div class="flex-1 flex flex-col items-center px-2">
                             <div class="text-[10px] text-stone-400 mb-1" x-text="train.duration"></div>
                             <div class="w-full h-[1px] bg-stone-300 relative">
@@ -176,7 +174,6 @@
                                 <i class="fas fa-train absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-stone-400 bg-white px-1 text-xs"></i>
                             </div>
                         </div>
-                        <!-- Right -->
                         <div class="text-center w-1/3">
                             <div class="text-xl font-bold font-mono text-ink" x-text="train.arrTime"></div>
                             <div class="text-xs text-sub mt-1" x-text="train.arrStn"></div>
@@ -186,11 +183,9 @@
             </template>
         </div>
 
-        <!-- Tab: 準備 (Prep) -->
+        <!-- Tab: 準備 -->
         <div x-show="activeTab === 'prep'" class="px-4 space-y-6 pt-24 pb-28">
             <h2 class="text-2xl font-serif font-bold text-ink mb-4">行前準備</h2>
-            
-            <!-- Visit Japan -->
             <div class="bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden group">
                 <div class="relative z-10">
                     <h3 class="font-bold text-xl mb-1">Visit Japan Web</h3>
@@ -201,8 +196,6 @@
                 </div>
                 <i class="fas fa-qrcode absolute -right-6 -bottom-6 text-[140px] opacity-20 rotate-12 group-hover:rotate-0 transition duration-500"></i>
             </div>
-
-            <!-- Budget -->
             <div class="bg-white rounded-xl p-5 border border-stone-200 shadow-sm">
                 <h3 class="font-serif font-bold text-lg mb-4 flex items-center"><i class="fas fa-wallet text-gold mr-2"></i>預算概覽</h3>
                 <div class="space-y-3">
@@ -297,9 +290,10 @@
         </button>
     </nav>
 
+    <!-- 邏輯程式碼：移到最下方，確保穩定性 -->
     <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('tripApp', () => ({
+        function tripApp() {
+            return {
                 activeTab: 'itinerary',
                 activeDayIndex: 0,
                 scrolled: false,
@@ -315,11 +309,6 @@
                     const el = document.getElementById('day-' + index);
                     if (el) {
                         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        // 修正滾動位置，避免被 Header 擋住
-                        setTimeout(() => {
-                            const container = document.getElementById('mainContainer');
-                            // container.scrollTop -= 80; 
-                        }, 100);
                     }
                 },
                 openModal(event) {
@@ -332,7 +321,7 @@
                         const reader = new FileReader();
                         reader.onload = (e) => {
                             this.itinerary[dIndex].events[eIndex].image = e.target.result;
-                            this.itinerary = JSON.parse(JSON.stringify(this.itinerary)); // Force Update
+                            this.itinerary = JSON.parse(JSON.stringify(this.itinerary)); 
                         };
                         reader.readAsDataURL(file);
                     }
@@ -478,8 +467,10 @@
                         ]
                     }
                 ]
-            }))
-        })
+            }
+        }
     </script>
+    <!-- Alpine.js 放在最後面，確保函式已經定義好 -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
 </body>
 </html>
