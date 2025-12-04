@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>九州慢旅 | Kyushu Trip</title>
+    <title>九州慢旅 27/2 - 5/3 | Kyushu Trip</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -37,9 +37,8 @@
         [x-cloak] { display: none !important; }
     </style>
 </head>
-<!-- 注意：這裡改成了 x-data="tripApp()" -->
-<body class="text-ink h-screen flex flex-col font-sans" x-data="tripApp()">
 
+<body class="text-ink h-screen flex flex-col font-sans" x-data="tripApp()">
     <!-- Top Navigation -->
     <header class="fixed top-0 w-full z-30 transition-all duration-300" 
             :class="scrolled ? 'bg-paper/95 backdrop-blur shadow-sm pt-safe' : 'bg-transparent pt-safe text-white'">
@@ -74,21 +73,8 @@
         
         <!-- Tab: 行程 (Itinerary) -->
         <div x-show="activeTab === 'itinerary'">
-            
-            <!-- Hero Cover Section -->
-            <div class="relative h-[60vh] w-full overflow-hidden">
-                <!-- 這裡直接使用 src 確保圖片一定會載入，不依賴 JS -->
-                <img src="https://res.klook.com/image/upload/fl_lossy.progressive,q_85/c_fill,w_1000/v1601446347/blog/y8s8s8s8s8s8s8s8.jpg" 
-                     class="w-full h-full object-cover object-center">
-                <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-paper"></div>
-                <div class="absolute bottom-10 left-6 text-ink">
-                    <p class="text-gold font-bold tracking-[0.3em] text-xs mb-2 uppercase">Family Trip 2025</p>
-                    <h2 class="text-4xl font-serif font-bold mb-2">九州鐵道紀行</h2>
-                    <p class="text-sm opacity-80 font-medium"><i class="fas fa-map-marker-alt mr-1"></i>福岡 · 鹿兒島 · 宮崎</p>
-                </div>
-            </div>
-
-            <div class="space-y-12 pb-28 -mt-6 relative z-10 px-4">
+            <!-- 直接由行程開始（已移除首頁大相） -->
+            <div class="space-y-12 pb-28 pt-24 relative z-10 px-4">
                 <template x-for="(day, dIndex) in itinerary" :key="dIndex">
                     <div :id="'day-' + dIndex" class="relative pt-6">
                         
@@ -125,7 +111,6 @@
                                                 <input type="file" class="hidden" accept="image/*" @change="uploadImage($event, dIndex, eIndex)">
                                             </label>
                                         </div>
-
                                         <div class="absolute bottom-3 left-4 text-white">
                                             <div class="flex items-center space-x-2 mb-1">
                                                 <span class="bg-white/20 backdrop-blur px-2 py-0.5 rounded text-[10px] font-mono tracking-wider" x-text="event.time"></span>
@@ -134,7 +119,6 @@
                                             <h3 class="text-lg font-serif font-bold tracking-wide shadow-black drop-shadow-md" x-text="event.title"></h3>
                                         </div>
                                     </div>
-
                                     <!-- Details -->
                                     <div class="p-4 flex justify-between items-center bg-white">
                                         <p class="text-sm text-stone-500 line-clamp-1" x-text="event.desc"></p>
@@ -155,7 +139,6 @@
                 <div class="w-10 h-1 bg-gold mx-auto mt-2 mb-1"></div>
                 <p class="text-[10px] text-sub tracking-widest uppercase">LONG DISTANCE TRAINS</p>
             </div>
-
             <template x-for="train in trainSchedule">
                 <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-stone-200">
                     <div class="bg-stone-50 px-4 py-2 border-b border-stone-100 flex justify-between items-center">
@@ -186,6 +169,8 @@
         <!-- Tab: 準備 -->
         <div x-show="activeTab === 'prep'" class="px-4 space-y-6 pt-24 pb-28">
             <h2 class="text-2xl font-serif font-bold text-ink mb-4">行前準備</h2>
+
+            <!-- Visit Japan Web -->
             <div class="bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden group">
                 <div class="relative z-10">
                     <h3 class="font-bold text-xl mb-1">Visit Japan Web</h3>
@@ -196,15 +181,60 @@
                 </div>
                 <i class="fas fa-qrcode absolute -right-6 -bottom-6 text-[140px] opacity-20 rotate-12 group-hover:rotate-0 transition duration-500"></i>
             </div>
+
+            <!-- 預算概覽 + 新增項目 -->
             <div class="bg-white rounded-xl p-5 border border-stone-200 shadow-sm">
-                <h3 class="font-serif font-bold text-lg mb-4 flex items-center"><i class="fas fa-wallet text-gold mr-2"></i>預算概覽</h3>
+                <h3 class="font-serif font-bold text-lg mb-4 flex items-center">
+                    <i class="fas fa-wallet text-gold mr-2"></i>預算概覽
+                </h3>
+
+                <!-- 新增項目表單 -->
+                <div class="mb-4 border border-stone-100 rounded-lg p-3 bg-paper/60">
+                    <p class="text-[11px] text-sub mb-2">新增預算項目</p>
+                    <div class="flex gap-2 mb-2">
+                        <input
+                            type="text"
+                            placeholder="項目名稱（例如：拉麵、購物）"
+                            class="flex-1 border border-stone-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-gold"
+                            x-model="newBudgetName"
+                        >
+                        <input
+                            type="number"
+                            min="0"
+                            placeholder="金額 (¥)"
+                            class="w-28 border border-stone-300 rounded-lg px-2.5 py-1.5 text-xs text-right focus:outline-none focus:ring-1 focus:ring-gold"
+                            x-model.number="newBudgetPrice"
+                        >
+                    </div>
+                    <button
+                        @click="addBudgetItem()"
+                        class="w-full bg-ink text-white text-xs font-bold py-2 rounded-lg hover:bg-black transition disabled:opacity-40"
+                        :disabled="!newBudgetName || !newBudgetPrice"
+                    >
+                        <i class="fas fa-plus mr-1"></i>加入預算清單
+                    </button>
+                </div>
+
+                <!-- 預算列表 -->
                 <div class="space-y-3">
-                    <template x-for="item in budgetItems">
-                        <div class="flex justify-between text-sm border-b border-stone-50 pb-2 last:border-0">
-                            <span class="text-stone-600" x-text="item.name"></span>
-                            <span class="font-mono font-medium" x-text="'¥' + item.price.toLocaleString()"></span>
+                    <template x-for="(item, idx) in budgetItems" :key="idx">
+                        <div class="flex justify-between items-center text-sm border-b border-stone-50 pb-2 last:border-0">
+                            <div>
+                                <span class="text-stone-600" x-text="item.name"></span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono font-medium" x-text="'¥' + item.price.toLocaleString()"></span>
+                                <button
+                                    class="text-[11px] text-sub hover:text-rose-500"
+                                    @click="removeBudgetItem(idx)"
+                                >
+                                    刪除
+                                </button>
+                            </div>
                         </div>
                     </template>
+
+                    <!-- Total -->
                     <div class="flex justify-between text-xl font-bold pt-3 text-ink border-t border-stone-200 mt-2">
                         <span>Total</span>
                         <span x-text="'¥' + totalBudget.toLocaleString()"></span>
@@ -212,7 +242,6 @@
                 </div>
             </div>
         </div>
-
     </main>
 
     <!-- Detail Modal -->
@@ -228,12 +257,10 @@
             <button @click="modalOpen = false" class="absolute top-4 right-4 z-20 w-8 h-8 bg-black/20 backdrop-blur text-white rounded-full flex items-center justify-center hover:bg-black/40 transition">
                 <i class="fas fa-times"></i>
             </button>
-
             <div class="h-64 shrink-0 relative">
                 <img :src="selectedEvent?.image" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-paper to-transparent"></div>
             </div>
-
             <div class="px-6 pb-8 -mt-12 relative z-10 flex-1">
                 <div class="mb-6">
                     <div class="flex items-center space-x-2 mb-2">
@@ -243,11 +270,9 @@
                     <h2 class="text-3xl font-serif font-bold text-ink leading-tight mb-2" x-text="selectedEvent?.title"></h2>
                     <p class="text-sm text-sub" x-text="selectedEvent?.location_detail"></p>
                 </div>
-
                 <div class="prose prose-stone prose-sm mb-8 text-stone-600 leading-relaxed" x-html="selectedEvent?.desc"></div>
-
                 <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100 mb-6" x-show="selectedEvent?.japanese && selectedEvent?.japanese.length > 0">
-                    <h4 class="text-[10px] font-bold text-stone-400 uppercase mb-3 tracking-widest border-b border-stone-100 pb-2">指差会話 Point & Speak</h4>
+                    <h4 class="text-[10px] font-bold text-stone-400 uppercase mb-3 tracking-widest border-b border-stone-100 pb-2">指差会話 Point &amp; Speak</h4>
                     <div class="space-y-4">
                         <template x-for="phrase in selectedEvent?.japanese">
                             <div>
@@ -257,7 +282,6 @@
                         </template>
                     </div>
                 </div>
-
                 <div class="grid grid-cols-2 gap-3 mt-auto">
                     <a :href="'https://www.google.com/maps/search/?api=1&query=' + selectedEvent?.title" target="_blank" 
                        class="flex items-center justify-center bg-stone-800 text-white py-3 rounded-lg font-bold text-sm hover:bg-stone-700 transition shadow-lg shadow-stone-200">
@@ -290,7 +314,7 @@
         </button>
     </nav>
 
-    <!-- 邏輯程式碼：移到最下方，確保穩定性 -->
+    <!-- 邏輯程式碼 -->
     <script>
         function tripApp() {
             return {
@@ -299,6 +323,10 @@
                 scrolled: false,
                 modalOpen: false,
                 selectedEvent: null,
+
+                // 預算新增用
+                newBudgetName: '',
+                newBudgetPrice: null,
                 
                 handleScroll(e) {
                     this.scrolled = e.target.scrollTop > 50;
@@ -316,7 +344,7 @@
                     this.modalOpen = true;
                 },
                 uploadImage(event, dIndex, eIndex) {
-                    const file = event.target.files[0];
+                    const file = event.target.files,[object Object],;
                     if (file) {
                         const reader = new FileReader();
                         reader.onload = (e) => {
@@ -327,6 +355,20 @@
                     }
                 },
 
+                // 預算：新增 / 刪除
+                addBudgetItem() {
+                    if (!this.newBudgetName || !this.newBudgetPrice || this.newBudgetPrice <= 0) return;
+                    this.budgetItems.push({
+                        name: this.newBudgetName,
+                        price: Number(this.newBudgetPrice)
+                    });
+                    this.newBudgetName = '';
+                    this.newBudgetPrice = null;
+                },
+                removeBudgetItem(idx) {
+                    this.budgetItems.splice(idx, 1);
+                },
+
                 trainSchedule: [
                     { date: '2/27 (五)', name: '36+3 觀光列車', depTime: '15:00', depStn: '博多', arrTime: '21:26', arrStn: '鹿兒島中央', duration: '6h 26m' },
                     { date: '3/1 (日)', name: '新幹線 Tsubame', depTime: '10:00', depStn: '鹿兒島中央', arrTime: '11:00', arrStn: '熊本', duration: '1h 00m' },
@@ -335,7 +377,6 @@
                     { date: '3/4 (三)', name: '特急 Sonic', depTime: '10:00', depStn: '宮崎', arrTime: '13:00', arrStn: '博多', duration: '3h 00m' },
                     { date: '3/5 (四)', name: '機場線', depTime: '12:00', depStn: '博多', arrTime: '12:10', arrStn: '福岡機場', duration: '10m' }
                 ],
-
                 budgetItems: [
                     { name: 'JR Pass 全九州', price: 20000 },
                     { name: '36+3 列車', price: 25000 },
@@ -346,7 +387,7 @@
 
                 itinerary: [
                     {
-                        date_full: '2025.02.27', weekday_en: 'FRI', day: '27', location: 'Fukuoka', weatherIcon: 'fas fa-sun',
+                        date_full: '2025.02.27', weekday_en: 'FRI', day: '27', location: '博多 鹿兒島', weatherIcon: 'fas fa-sun',
                         events: [
                             { 
                                 time: '15:00', category: 'Train', title: '36+3 豪華列車', location_detail: '博多站 -> 鹿兒島中央',
@@ -365,7 +406,7 @@
                         ]
                     },
                     {
-                        date_full: '2025.02.28', weekday_en: 'SAT', day: '28', location: 'Kagoshima', weatherIcon: 'fas fa-cloud-sun',
+                        date_full: '2025.02.28', weekday_en: 'SAT', day: '28', location: '鹿兒島', weatherIcon: 'fas fa-cloud-sun',
                         events: [
                             { 
                                 time: '09:00', category: 'Sight', title: '仙巖園', location_detail: '鹿兒島市吉野町',
@@ -382,7 +423,7 @@
                         ]
                     },
                     {
-                        date_full: '2025.03.01', weekday_en: 'SUN', day: '01', location: 'Kumamoto', weatherIcon: 'fas fa-cloud',
+                        date_full: '2025.03.01', weekday_en: 'SUN', day: '01', location: '熊本', weatherIcon: 'fas fa-cloud',
                         events: [
                             { 
                                 time: '12:00', category: 'Sight', title: '熊本城', location_detail: '熊本市中央區',
@@ -399,7 +440,7 @@
                         ]
                     },
                     {
-                        date_full: '2025.03.02', weekday_en: 'MON', day: '02', location: 'Miyazaki', weatherIcon: 'fas fa-cloud-rain',
+                        date_full: '2025.03.02', weekday_en: 'MON', day: '02', location: '宮崎', weatherIcon: 'fas fa-cloud-rain',
                         events: [
                             { 
                                 time: '14:00', category: 'Sight', title: '油津港', location_detail: '宮崎縣日南市',
@@ -416,7 +457,7 @@
                         ]
                     },
                     {
-                        date_full: '2025.03.03', weekday_en: 'TUE', day: '03', location: 'Miyazaki', weatherIcon: 'fas fa-sun',
+                        date_full: '2025.03.03', weekday_en: 'TUE', day: '03', location: '宮崎', weatherIcon: 'fas fa-sun',
                         events: [
                             { 
                                 time: '09:00', category: 'Sight', title: '青島神社', location_detail: '宮崎縣青島',
@@ -433,7 +474,7 @@
                         ]
                     },
                     {
-                        date_full: '2025.03.04', weekday_en: 'WED', day: '04', location: 'Hakata', weatherIcon: 'fas fa-cloud-sun',
+                        date_full: '2025.03.04', weekday_en: 'WED', day: '04', location: '博多', weatherIcon: 'fas fa-cloud-sun',
                         events: [
                             { 
                                 time: '15:00', category: 'Sight', title: '博多運河城', location_detail: '福岡市博多區',
@@ -450,7 +491,7 @@
                         ]
                     },
                     {
-                        date_full: '2025.03.05', weekday_en: 'THU', day: '05', location: 'Airport', weatherIcon: 'fas fa-sun',
+                        date_full: '2025.03.05', weekday_en: 'THU', day: '05', location: '博多Airport', weatherIcon: 'fas fa-sun',
                         events: [
                             { 
                                 time: '10:00', category: 'Shop', title: '博多站購物', location_detail: 'JR博多城',
@@ -470,8 +511,8 @@
             }
         }
     </script>
-    <!-- Alpine.js 放在最後面，確保函式已經定義好 -->
+
+    <!-- Alpine.js -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
 </body>
 </html>
-```
